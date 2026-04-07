@@ -8,10 +8,10 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - In-Memory Computing
-  - Distributed Database
-  - Data Grid
   - Caching
+  - Data Grid
+  - Distributed Database
+  - In-Memory Computing
   - Real-Time
 url: >-
   https://raw.githubusercontent.com/api-evangelist/gridgain/refs/heads/main/apis.yml
@@ -28,8 +28,8 @@ apis:
     humanURL: https://www.gridgain.com/docs/latest/developers-guide/rest-api
     baseURL: https://localhost:8080/ignite
     tags:
-      - In-Memory Computing
       - Distributed Database
+      - In-Memory Computing
       - REST
     properties:
       - type: Documentation
