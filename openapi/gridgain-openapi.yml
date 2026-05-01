@@ -1,0 +1,5582 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+paths:
+  /management/v1/authentication/jwt:
+    delete:
+      tags:
+      - authentication
+      summary: Revoke all JWTs
+      description: Revoke all issued JWTs.
+      operationId: revokeTokensByUsername
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Username to revoke all issued JWTs from.
+      responses:
+        '200':
+          description: All issued JWT were revoked.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/authentication/jwt/{token}:
+    delete:
+      tags:
+      - authentication
+      summary: Revoke JWT
+      description: Revoke a specific JWT.
+      operationId: revokeToken
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+          description: JWT to revoke.
+      responses:
+        '200':
+          description: JWT was revoked.
+        '400':
+          description: Token is invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/authentication/login:
+    post:
+      tags:
+      - authentication
+      summary: Get JWT
+      description: Get JWT for the user.
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginBody'
+        required: true
+      responses:
+        '200':
+          description: JWT returned.
+          content:
+            application/jwt:
+              schema:
+                type: string
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/replications:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get the list of CDC replications
+      description: Returns the list of all CDC replications.
+      operationId: getCdcReplications
+      responses:
+        '200':
+          description: Returns the list of all replications.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Replication'
+        '404':
+          description: No replications endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Create CDC replication. CDC replication is identified by unique name. CDC replication has a type, parameters
+        and a list of tables that should be replicated.
+      description: Creates a CDC replication.
+      operationId: createCdcReplication
+      requestBody:
+        description: Replication body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Replication'
+        required: true
+      responses:
+        '200':
+          description: Replication is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect replication.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The replication already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/replications/{name}:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC replication by name
+      description: Returns a CDC replication.
+      operationId: getCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a replication.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Replication'
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Start CDC replication by name
+      description: Start a CDC replication by name.
+      operationId: startCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Replication name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Replication is started.
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - cdcManagement
+      summary: Delete CDC replication by name
+      description: Deletes a CDC replication by name.
+      operationId: deleteCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Replication name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Replication is deleted.
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/replications/{name}/stop:
+    post:
+      tags:
+      - cdcManagement
+      summary: Stop CDC replication by name
+      description: Stop a CDC replication by name.
+      operationId: stopCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Replication name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Replication is started.
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sinks:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get the list of CDC sinks
+      description: Returns the list of all CDC sinks.
+      operationId: getSinks
+      responses:
+        '200':
+          description: Returns the list of all sinks.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sink'
+        '404':
+          description: No sources endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Create CDC sink. CDC sink is identified by unique name. CDC sink has a type, parameters and a list of tables
+        that should be replicated.
+      description: Creates a CDC sink.
+      operationId: createSink
+      requestBody:
+        description: Sink body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sink'
+        required: true
+      responses:
+        '200':
+          description: Sink is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect sink.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The sink already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sinks/{name}:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC sink by name
+      description: Returns a CDC sink.
+      operationId: getSink
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a sink.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Sink'
+        '404':
+          description: No such sink or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    put:
+      tags:
+      - cdcManagement
+      summary: Update CDC sink
+      description: Updates a CDC sink.
+      operationId: updateSink
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Sink body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sink'
+        required: true
+      responses:
+        '200':
+          description: CDC sink is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect sink.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The sink is already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - cdcManagement
+      summary: Delete CDC sink by name
+      description: Deletes a CDC sink by name.
+      operationId: deleteSink
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sink is deleted.
+        '404':
+          description: No such sink or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sinks/{name}/status:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC sink status by name
+      description: Returns a CDC sink status.
+      operationId: getSinkStatus
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a sink status.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SinkStatus'
+        '404':
+          description: No such sink or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sources:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get the list of CDC sources
+      description: Returns the list of all CDC sources.
+      operationId: getSources
+      responses:
+        '200':
+          description: Returns the list of all sources.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Source'
+        '404':
+          description: No sources endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Create CDC source. CDC source is identified by unique name. CDC source has a type, parameters and a list of
+        tables that should be replicated.
+      description: Creates a CDC source.
+      operationId: createSource
+      requestBody:
+        description: Source body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Source'
+        required: true
+      responses:
+        '200':
+          description: Source is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect source.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The source already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sources/{name}:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC source by name
+      description: Returns a CDC source.
+      operationId: getSource
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a source.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '404':
+          description: No such source or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    put:
+      tags:
+      - cdcManagement
+      summary: Update CDC source
+      description: Updates a CDC source.
+      operationId: updateSource
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Source body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Source'
+        required: true
+      responses:
+        '200':
+          description: CDC source is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect source.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The source is already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - cdcManagement
+      summary: Delete CDC source by name
+      description: Deletes a CDC source by name.
+      operationId: deleteSource
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Source is deleted.
+        '404':
+          description: No such source or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sources/{name}/status:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC source status by name
+      description: Returns a CDC source status.
+      operationId: getSourceStatus
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a source status.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SourceStatus'
+        '404':
+          description: No such source or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cluster/init:
+    post:
+      tags:
+      - clusterManagement
+      summary: Initialize cluster
+      description: Initialize a new cluster.
+      operationId: init
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitCommand'
+        required: true
+      responses:
+        '200':
+          description: Cluster initialized.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cluster/rename:
+    post:
+      tags:
+      - clusterManagement
+      summary: Rename cluster
+      description: Assigns a new name to the cluster.
+      operationId: rename
+      requestBody:
+        description: the new name of the cluster.
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Cluster renamed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterTag'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ClusterTag'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Invalid name.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cluster/state:
+    get:
+      tags:
+      - clusterManagement
+      summary: Get cluster state
+      description: Returns current cluster status.
+      operationId: clusterState
+      responses:
+        '200':
+          description: Cluster status returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterState'
+        '404':
+          description: Cluster status not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cluster/topology/logical:
+    get:
+      tags:
+      - topology
+      summary: Get logical topology
+      description: Gets information about logical cluster topology.
+      operationId: logical
+      responses:
+        '200':
+          description: Logical topology returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterNode'
+        '404':
+          description: Logical topology not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cluster/topology/physical:
+    get:
+      tags:
+      - topology
+      summary: Get physical topology
+      description: Gets information about physical cluster topology.
+      operationId: physical
+      responses:
+        '200':
+          description: Physical topology returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterNode'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/compute/jobs:
+    get:
+      tags:
+      - compute
+      summary: Retrieve all job states
+      description: Fetches the current states of all compute jobs.
+      operationId: jobStates
+      responses:
+        '200':
+          description: Successfully retrieved job states.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobState'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/compute/jobs/{jobId}:
+    get:
+      tags:
+      - compute
+      summary: Retrieve job state
+      description: Fetches the current state of a specific compute job identified by jobId.
+      operationId: jobState
+      parameters:
+      - name: jobId
+        in: path
+        description: The unique identifier of the compute job.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the compute job.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved the job state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobState'
+        '404':
+          description: Compute job not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - compute
+      summary: Cancel job
+      description: Cancels a specific compute job identified by jobId.
+      operationId: cancelJob
+      parameters:
+      - name: jobId
+        in: path
+        description: The unique identifier of the compute job.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the compute job.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully cancelled the job.
+          content:
+            application/json: {}
+        '404':
+          description: Compute job not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Compute job is in an illegal state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/compute/jobs/{jobId}/priority:
+    put:
+      tags:
+      - compute
+      summary: Update job priority
+      description: Updates the priority of a specific compute job identified by jobId.
+      operationId: updatePriority
+      parameters:
+      - name: jobId
+        in: path
+        description: The unique identifier of the compute job.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the compute job.
+          format: uuid
+      requestBody:
+        description: The new priority data for the job.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateJobPriorityBody'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated job priority.
+          content:
+            application/json: {}
+        '404':
+          description: Compute job not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Compute job is in an illegal state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/configuration/cluster:
+    get:
+      tags:
+      - clusterConfiguration
+      summary: Get cluster configuration
+      description: Gets the current configuration of the cluster. The configuration is returned in HOCON format.
+      operationId: getClusterConfiguration
+      responses:
+        '200':
+          description: Received cluster configuration.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Configuration not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    patch:
+      tags:
+      - clusterConfiguration
+      summary: Update cluster configuration
+      description: Updates cluster configuration. New configuration should be provided in HOCON format.
+      operationId: updateClusterConfiguration
+      requestBody:
+        description: The cluster configuration to update.
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Configuration updated.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Configuration not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '422':
+          description: Configuration parse error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/configuration/cluster/{path}:
+    get:
+      tags:
+      - clusterConfiguration
+      summary: Get configuration represented by path
+      description: Gets the configuration on the specific path. Configuration is in HOCON format
+      operationId: getClusterConfigurationByPath
+      parameters:
+      - name: path
+        in: path
+        description: 'Configuration tree address. For example: `element.subelement`.'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Configuration of the cluster on the specified path.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Configuration not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/configuration/node:
+    get:
+      tags:
+      - nodeConfiguration
+      summary: Get node configuration
+      description: Gets node configuration in HOCON format.
+      operationId: getNodeConfiguration
+      responses:
+        '200':
+          description: Full node configuration.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    patch:
+      tags:
+      - nodeConfiguration
+      summary: Update node configuration
+      description: Updates node configuration. New configuration should be provided in HOCON format.
+      operationId: updateNodeConfiguration
+      requestBody:
+        description: The node configuration to update.
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Configuration successfully updated.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '405':
+          description: Configuration is read-only.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '422':
+          description: Configuration parse/apply error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/configuration/node/{path}:
+    get:
+      tags:
+      - nodeConfiguration
+      summary: Get configuration represented by path
+      description: Gets a configuration of a specific node, in HOCON format.
+      operationId: getNodeConfigurationByPath
+      parameters:
+      - name: path
+        in: path
+        description: 'Configuration tree address. For example: `element.subelement`.'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returned node configuration.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications:
+    get:
+      tags:
+      - dcr
+      summary: Retrieve a list of replications for connected clusters
+      description: Retrieves a list of replications for connected clusters.
+      operationId: listReplications
+      responses:
+        '200':
+          description: Successful retrieval of all replication information.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReplicationInfo'
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - dcr
+      summary: Create a new replication for a cluster
+      description: Creates a new replication for a cluster.
+      operationId: createReplication
+      requestBody:
+        description: Details of the replication to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReplicationRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplicationInfo'
+        '400':
+          description: Replication already exists.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}:
+    get:
+      tags:
+      - dcr
+      summary: Get information about specific replication
+      description: Retrieves detailed information about a specific replication.
+      operationId: showReplication
+      parameters:
+      - name: name
+        in: path
+        description: The unique identifier of the replication to show.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the replication.
+      responses:
+        '200':
+          description: Successful retrieval of replication information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplicationInfo'
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/delete:
+    post:
+      tags:
+      - dcr
+      summary: Delete replication
+      description: Deletes the specified replication.
+      operationId: deleteReplication
+      parameters:
+      - name: name
+        in: path
+        description: The name of the replication to delete.
+        required: true
+        schema:
+          type: string
+          description: The name of the replication.
+      responses:
+        '200':
+          description: Replication successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/flush:
+    post:
+      tags:
+      - dcr
+      summary: Specifies timestamp for replication which will be used as flush point.
+      description: .
+      operationId: flushReplication
+      parameters:
+      - name: name
+        in: path
+        description: The name of the replication to flush.
+        required: true
+        schema:
+          type: string
+          description: The id of the replication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlushRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully flushed.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/start:
+    post:
+      tags:
+      - dcr
+      summary: Start replication
+      description: Starts the specified replication.
+      operationId: startReplication
+      parameters:
+      - name: name
+        in: path
+        description: The unique identifier of the replication to start.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the replication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartStopReplicationRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully started.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/stop:
+    post:
+      tags:
+      - dcr
+      summary: Stop replication
+      description: Stops the specified replication.
+      operationId: stopReplication
+      parameters:
+      - name: name
+        in: path
+        description: The id of the replication to stop.
+        required: true
+        schema:
+          type: string
+          description: The id of the replication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartStopReplicationRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully stopped.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/cluster/units:
+    get:
+      tags:
+      - deployment
+      summary: Get cluster unit statuses
+      description: Cluster unit statuses.
+      operationId: listClusterStatuses
+      parameters:
+      - name: statuses
+        in: query
+        schema:
+          type: array
+          description: Deployment status filter.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DeploymentStatus'
+      responses:
+        '200':
+          description: All statuses returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitStatus'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/cluster/units/{unitId}:
+    get:
+      tags:
+      - deployment
+      summary: Get specific cluster unit statuses
+      description: Cluster unit statuses by unit.
+      operationId: listClusterStatusesByUnit
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the deployment unit.
+      - name: version
+        in: query
+        schema:
+          type: string
+          description: Unit version filter.
+          nullable: true
+      - name: statuses
+        in: query
+        schema:
+          type: array
+          description: Deployment status filter.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DeploymentStatus'
+      responses:
+        '200':
+          description: All statuses returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitStatus'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/node/units:
+    get:
+      tags:
+      - deployment
+      summary: Get node unit statuses
+      description: Returns a list of unit statuses per node.
+      operationId: listNodeStatuses
+      parameters:
+      - name: statuses
+        in: query
+        schema:
+          type: array
+          description: Deployment status filter.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DeploymentStatus'
+      responses:
+        '200':
+          description: All statuses were returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitStatus'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/node/units/structure/{unitId}/{unitVersion}:
+    get:
+      tags:
+      - deployment
+      summary: Get unit contents.
+      description: Returns a folder representation with unit content.
+      operationId: unitContent
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the deployment unit.
+      - name: unitVersion
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The version of the deployment unit.
+      responses:
+        '200':
+          description: Unit content returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnitFolder'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/node/units/{unitId}:
+    get:
+      tags:
+      - deployment
+      summary: Get specific node unit statuses
+      description: Returns a list of node unit statuses by unit.
+      operationId: listNodeStatusesByUnit
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the deployment unit.
+      - name: version
+        in: query
+        schema:
+          type: string
+          description: Unit version filter.
+          nullable: true
+      - name: statuses
+        in: query
+        schema:
+          type: array
+          description: Deployment status filter.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DeploymentStatus'
+      responses:
+        '200':
+          description: All statuses returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitStatus'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/units/zip/{unitId}/{unitVersion}:
+    post:
+      tags:
+      - deployment
+      summary: Deploy unit with folders structure in zip.
+      description: Deploys provided unit in zip file to the cluster with folders structure.
+      operationId: deployZipUnit
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the deployment unit.
+      - name: unitVersion
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The version of the deployment unit.
+      - name: deployMode
+        in: query
+        schema:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/deployMode'
+          - description: ALL or MAJORITY.
+      - name: initialNodes
+        in: query
+        schema:
+          type: array
+          description: List of node identifiers to deploy to.
+          nullable: true
+          items:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - unitContent
+              type: object
+              properties:
+                unitContent:
+                  type: array
+                  description: The zip file with unit content to deploy.
+                  items:
+                    type: string
+                    format: binary
+            encoding: {}
+        required: true
+      responses:
+        '200':
+          description: Unit deployed successfully.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '409':
+          description: Unit with same identifier and version is already deployed.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Deployment unit with unzip supports only single zip file.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/deployment/units/{unitId}/{unitVersion}:
+    post:
+      tags:
+      - deployment
+      summary: Deploy unit
+      description: Deploys provided unit to the cluster.
+      operationId: deployUnit
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the deployment unit.
+      - name: unitVersion
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The version of the deployment unit.
+      - name: deployMode
+        in: query
+        schema:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/deployMode'
+          - description: ALL or MAJORITY.
+      - name: initialNodes
+        in: query
+        schema:
+          type: array
+          description: List of node identifiers to deploy to.
+          nullable: true
+          items:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - unitContent
+              type: object
+              properties:
+                unitContent:
+                  type: array
+                  description: The code to deploy.
+                  items:
+                    type: string
+                    format: binary
+            encoding: {}
+        required: true
+      responses:
+        '200':
+          description: Unit deployed successfully.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '409':
+          description: Unit with same identifier and version is already deployed.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - deployment
+      summary: Undeploy unit
+      description: Undeploys the unit with provided unitId and unitVersion.
+      operationId: undeployUnit
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the deployment unit.
+      - name: unitVersion
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The version of the deployment unit.
+      responses:
+        '200':
+          description: Unit undeployed successfully.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Unit with provided identifier and version does not exist.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/distribution/reset:
+    post:
+      tags:
+      - distribution
+      summary: Reset distribution
+      description: Recalculates distribution for all tables in the provided zones.
+      operationId: reset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetDistributionRequest'
+        required: true
+      responses:
+        '200':
+          description: Distribution reset successfully.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license
+      description: Get current license.
+      operationId: id
+      responses:
+        '200':
+          description: License.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/License'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - licenseManagement
+      summary: Apply new License
+      description: Applies provided license.
+      operationId: applyNewLicense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License'
+        required: true
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Invalid license provided.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/features:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license features
+      description: Get license features available to user.
+      operationId: features
+      responses:
+        '200':
+          description: License features set.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseFeatureSet'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/id:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license id
+      description: Get id of the current license.
+      operationId: id_1
+      responses:
+        '200':
+          description: License Id.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseId'
+        '401':
+          description: Invalid_1 credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/infos:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license info
+      description: Get info fields of the current license.
+      operationId: infos
+      responses:
+        '200':
+          description: License info fields.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseInfo'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/limits:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license limits
+      description: Get limits of the current license.
+      operationId: limits
+      responses:
+        '200':
+          description: License limits.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseLimits'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/raw:
+    post:
+      tags:
+      - licenseManagement
+      summary: Apply new License
+      description: Applies provided license
+      operationId: applyNewLicenseRaw
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Invalid license provided.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/cluster/disable:
+    post:
+      tags:
+      - clusterMetric
+      summary: Disable metric source
+      description: Disables the specified metric source.
+      operationId: disableClusterMetric
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Metric source disabled.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Metric source not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/cluster/enable:
+    post:
+      tags:
+      - clusterMetric
+      summary: Enable metric source
+      description: Enables the specified metric source.
+      operationId: enableClusterMetric
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Metric source enabled.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Metric source not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/cluster/source:
+    get:
+      tags:
+      - clusterMetric
+      summary: List metric sources
+      description: Gets a list of all available metric sources.
+      operationId: listClusterMetricSources
+      responses:
+        '200':
+          description: Returned a list of metric sources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NodeMetricSources'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/node/disable:
+    post:
+      tags:
+      - nodeMetric
+      summary: Disable metric source
+      description: Disables the specified metric source.
+      operationId: disableNodeMetric
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Metric source disabled.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Metric source not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/node/enable:
+    post:
+      tags:
+      - nodeMetric
+      summary: Enable metric source
+      description: Enables the specified metric source.
+      operationId: enableNodeMetric
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Metric source enabled.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Metric source not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/node/set:
+    get:
+      tags:
+      - nodeMetric
+      summary: List metric sets
+      description: Gets a list of all enabled metric sets.
+      operationId: listNodeMetricSets
+      responses:
+        '200':
+          description: Returned a list of metric sets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetricSet'
+        '500':
+          description: Internal error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/metric/node/source:
+    get:
+      tags:
+      - nodeMetric
+      summary: List metric sources
+      description: Gets a list of all available metric sources.
+      operationId: listNodeMetricSources
+      responses:
+        '200':
+          description: Returned a list of metric sources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetricSource'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/node/info:
+    get:
+      tags:
+      - nodeManagement
+      summary: Get node information
+      description: Gets information about the node.
+      operationId: nodeInfo
+      responses:
+        '200':
+          description: Node info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeInfo'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/node/state:
+    get:
+      tags:
+      - nodeManagement
+      summary: Get node state
+      description: Gets node state.
+      operationId: nodeState
+      responses:
+        '200':
+          description: Node state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeState'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/node/version:
+    get:
+      tags:
+      - nodeManagement
+      summary: Get application version on node
+      description: Gets the version of Apache Ignite the node uses.
+      operationId: nodeVersion
+      responses:
+        '200':
+          description: Node version.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/NodeVersion'
+        '500':
+          description: Internal error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/pg:
+    post:
+      tags:
+      - privilegesGrants
+      summary: Grant privileges
+      description: Grants privileges to roles.
+      operationId: grantPrivileges
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivilegeAssignment'
+        required: true
+      responses:
+        '200':
+          description: Privileges granted to roles.
+        '404':
+          description: No grant privilege endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - privilegesGrants
+      summary: Revoke privileges
+      description: Revokes privileges from roles.
+      operationId: revokePrivileges
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivilegeAssignment'
+        required: true
+      responses:
+        '200':
+          description: Privileges revoked from roles.
+        '404':
+          description: No revoke endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/pg/roles:
+    get:
+      tags:
+      - privilegesGrants
+      summary: Get all roles with privilege
+      description: Returns the list of all roles with granted privileges.
+      operationId: getRolesWithPrivileges
+      responses:
+        '200':
+          description: Returns the list of all roles with granted privileges.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RolePrivileges'
+        '404':
+          description: No privileges endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/pg/{roleName}:
+    get:
+      tags:
+      - privilegesGrants
+      summary: Get granted privileges
+      description: Returns the list of all granted privileges to role.
+      operationId: getPrivileges
+      parameters:
+      - name: roleName
+        in: path
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all granted privileges to role.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Privilege'
+        '404':
+          description: No privileges endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra:
+    post:
+      tags:
+      - roleAssignments
+      summary: Assign roles to users
+      description: Assigns roles to users.
+      operationId: assignRoles
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleAssignment'
+        required: true
+      responses:
+        '200':
+          description: Roles assigned to users.
+        '404':
+          description: No assign endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - roleAssignments
+      summary: Revoke roles from users
+      description: Revokes roles from users.
+      operationId: revokeRoles
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleAssignment'
+        required: true
+      responses:
+        '200':
+          description: Roles revoked from users.
+        '404':
+          description: No revoke endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/roles:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get roles with users and privileges
+      description: Returns the list of all roles with associated users and assigned privileges.
+      operationId: getRoleViews
+      responses:
+        '200':
+          description: Returns the list of all roles with associated users and assigned privileges.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleView'
+        '404':
+          description: No role endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/roles/{username}:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get user roles
+      description: Returns the list of all roles assigned to user.
+      operationId: getRolesByUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all roles assigned to user.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '404':
+          description: No roles endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/users:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get users who have all specified roles
+      description: Returns the list of all users with assigned roles.
+      operationId: getUsersWithRoles
+      responses:
+        '200':
+          description: Returns the list of all users with assigned roles.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRoles'
+        '404':
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/users/{roleName}:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get users who have role
+      description: Returns the list of all users assigned to role.
+      operationId: getUsersByRole
+      parameters:
+      - name: roleName
+        in: path
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all users assigned to role.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/roles:
+    get:
+      tags:
+      - roleManagement
+      summary: Get the list of roles
+      description: Returns the list of all roles.
+      operationId: getRoles
+      responses:
+        '200':
+          description: Returns the list of all roles.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '404':
+          description: No roles endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - roleManagement
+      summary: Create role
+      description: Create role.
+      operationId: createRole
+      requestBody:
+        description: Role body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+        required: true
+      responses:
+        '200':
+          description: Role is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The role already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/roles/{roleName}:
+    get:
+      tags:
+      - roleManagement
+      summary: Get role by name
+      description: Returns a role.
+      operationId: getRole
+      parameters:
+      - name: roleName
+        in: path
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a role.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '404':
+          description: No such role or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - roleManagement
+      summary: Delete role by name
+      description: Delete a role.
+      operationId: deleteRole
+      parameters:
+      - name: roleName
+        in: path
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      - name: revoke
+        in: query
+        required: true
+        schema:
+          type: boolean
+          description: Revoke role from all users.
+          default: false
+      responses:
+        '200':
+          description: Role is deleted.
+        '404':
+          description: No such role or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/users:
+    get:
+      tags:
+      - userManagement
+      summary: Get the list of users
+      description: Returns the list of all users.
+      operationId: getUsers
+      responses:
+        '200':
+          description: Returns the list of all users.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - userManagement
+      summary: Create user
+      description: Creates a user.
+      operationId: createUser
+      requestBody:
+        description: User body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: User is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The user already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/users/{username}:
+    get:
+      tags:
+      - userManagement
+      summary: Get user by username
+      description: Returns a user.
+      operationId: getUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: No such user or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    put:
+      tags:
+      - userManagement
+      summary: Update user
+      description: Updates a user.
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: User body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: User is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The user is already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - userManagement
+      summary: Delete user by username
+      description: Deletes a user by username.
+      operationId: deleteUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: User is deleted.
+        '404':
+          description: No such user or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/cluster/migrate:
+    post:
+      tags:
+      - recovery
+      - system
+      description: Migrates nodes from old cluster to new (repaired) cluster.
+      operationId: migrate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateRequest'
+        required: true
+      responses:
+        '200':
+          description: Migration initiated.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/cluster/reset:
+    post:
+      tags:
+      - recovery
+      - system
+      description: Initiates cluster reset to repair CMG/Metastorage group/both.
+      operationId: resetCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetClusterRequest'
+        required: true
+      responses:
+        '200':
+          description: Cluster reset initiated.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/tables:
+    post:
+      tags:
+      - recovery
+      description: Start a recovery process for tables.
+      operationId: recoverTables
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TablesRecoveryRequest'
+        required: true
+      responses:
+        '200':
+          description: Recovery state returned.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TablesRecoveryResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/tables/state/{operationId}:
+    get:
+      tags:
+      - recovery
+      description: Get a state of recovery process for tables.
+      operationId: getTablesRecoveryState
+      parameters:
+      - name: operationId
+        in: path
+        description: Operation ID.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Recovery process started.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TablesRecoveryStateResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/partitions/reset:
+    post:
+      tags:
+      - recovery
+      description: Updates assignments of zone's partitions in a forced manner, allowing for the recovery of raft groups with
+        lost majorities.
+      operationId: resetZonePartitions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetZonePartitionsRequest'
+        required: true
+      responses:
+        '200':
+          description: Partition states reset.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/partitions/restart:
+    post:
+      tags:
+      - recovery
+      description: Restarts replica service and raft group of passed zone partitions.
+      operationId: restartZonePartitions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestartZonePartitionsRequest'
+        required: true
+      responses:
+        '200':
+          description: Zone partitions restarted.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/partitions/restartWithCleanup:
+    post:
+      tags:
+      - recovery
+      description: Restarts replica service and raft group of passed zone partitions with cleaning up of the storage.
+      operationId: restartZonePartitionsWithCleanup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestartZonePartitionsRequest'
+        required: true
+      responses:
+        '200':
+          description: Zone partitions restarted.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/state/global:
+    get:
+      tags:
+      - recovery
+      description: Returns global zone partition states.
+      operationId: getZoneGlobalPartitionStates
+      parameters:
+      - name: zoneNames
+        in: query
+        schema:
+          type: array
+          description: Names specifying zones to get partition states from. Case-sensitive, all zones if empty.
+          nullable: true
+          items:
+            type: string
+      - name: partitionIds
+        in: query
+        schema:
+          type: array
+          description: IDs of partitions to get states of. All partitions if empty.
+          nullable: true
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Zone partition states returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalZonePartitionStatesResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/state/local:
+    get:
+      tags:
+      - recovery
+      description: Returns local zone partition states.
+      operationId: getZoneLocalPartitionStates
+      parameters:
+      - name: zoneNames
+        in: query
+        schema:
+          type: array
+          description: Names specifying zones to get partition states from. Case-sensitive, all zones if empty.
+          nullable: true
+          items:
+            type: string
+      - name: nodeNames
+        in: query
+        schema:
+          type: array
+          description: Names specifying nodes to get partition states from. Case-sensitive, all nodes if empty.
+          nullable: true
+          items:
+            type: string
+      - name: partitionIds
+        in: query
+        schema:
+          type: array
+          description: IDs of partitions to get states. All partitions if empty.
+          nullable: true
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Zone partition states returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalZonePartitionStatesResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/create:
+    post:
+      tags:
+      - snapshotManagement
+      summary: Create snapshot
+      description: Creates a new snapshot.
+      operationId: create
+      requestBody:
+        description: configuration for the snapshot.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommand'
+        required: true
+      responses:
+        '200':
+          description: Snapshot has been started.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Tables were not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/delete:
+    post:
+      tags:
+      - snapshotManagement
+      summary: Delete snapshot
+      description: Deletes a snapshot.
+      operationId: delete
+      requestBody:
+        description: Delete command configuration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCommand'
+        required: true
+      responses:
+        '200':
+          description: Snapshot deletion has been started.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/list:
+    get:
+      tags:
+      - snapshotManagement
+      summary: Returns a list of snapshots.
+      description: Returns a list of snapshots.
+      operationId: getList
+      parameters:
+      - name: source
+        in: query
+        description: Snapshot path name specified in the configuration, `null` means use all paths from the configuration.
+        schema:
+          type: string
+          nullable: true
+      - name: showNodeNames
+        in: query
+        description: Whether to show node names or only their numbers in the response.
+        required: true
+        schema:
+          type: boolean
+      - name: showTableNames
+        in: query
+        description: Whether to show table or only their numbers names in the response.
+        required: true
+        schema:
+          type: boolean
+      - name: showSourceUri
+        in: query
+        description: Whether to show snapshot path URI in the response.
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of snapshots has been retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SnapshotListItem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot source was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/operations:
+    get:
+      tags:
+      - snapshotManagement
+      summary: Get all snapshot operations
+      description: Returns all snapshot operations.
+      operationId: getOperations
+      responses:
+        '200':
+          description: Operations retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SnapshotOperation'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/operations/{operationId}:
+    get:
+      tags:
+      - snapshotManagement
+      summary: Get operation by ID
+      description: Returns operation by its ID.
+      operationId: getOperationById
+      parameters:
+      - name: operationId
+        in: path
+        description: ID of the operation.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: allNodes
+        in: query
+        description: if operation status for every node should be retrieved.
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Operation retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SnapshotOperation'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot operation was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/restore:
+    post:
+      tags:
+      - snapshotManagement
+      summary: Restore snapshot
+      description: Restores a snapshot.
+      operationId: restore
+      requestBody:
+        description: Restore command configuration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreCommand'
+        required: true
+      responses:
+        '200':
+          description: Snapshot restoration has been started.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot meta file was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/sql/plan/clear-cache:
+    get:
+      tags:
+      - sql
+      summary: Invalidates SQL planner cache.
+      description: Invalidates SQL planner cache records on node that related to provided table names.
+      operationId: clearCache
+      parameters:
+      - name: tableNames
+        in: query
+        schema:
+          type: array
+          description: SQL query plans, which are related to given tables, will be evicted from cache. Case-sensitive, cache
+            will be reset if empty.
+          nullable: true
+          items:
+            type: string
+      responses:
+        '200':
+          description: Successfully cleared SQL query plan cache.
+  /management/v1/sql/queries:
+    get:
+      tags:
+      - sql
+      summary: Retrieve all running sql queries.
+      description: Fetches all running sql queries.
+      operationId: queries
+      responses:
+        '200':
+          description: Successfully retrieved all running sql queries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SqlQuery'
+  /management/v1/sql/queries/{queryId}:
+    get:
+      tags:
+      - sql
+      summary: Retrieve sql query.
+      description: Fetches the current state of a specific sql query.
+      operationId: query
+      parameters:
+      - name: queryId
+        in: path
+        description: The unique identifier of the sql query.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the sql query.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved the sql query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlQuery'
+        '404':
+          description: Query not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - sql
+      summary: Kill sql query.
+      description: Kills a specific sql query identified by query id.
+      operationId: killQuery
+      parameters:
+      - name: queryId
+        in: path
+        description: The unique identifier of the sql query.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the sql query.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully killed the sql query.
+          content:
+            application/json: {}
+        '404':
+          description: Query not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Query is in an illegal state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/transactions:
+    get:
+      tags:
+      - transactions
+      summary: Retrieve all in progress transactions
+      description: Fetches all in progress transactions.
+      operationId: transactions
+      responses:
+        '200':
+          description: Successfully retrieved in progress transactions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+  /management/v1/transactions/{transactionId}:
+    get:
+      tags:
+      - transactions
+      summary: Retrieve transaction state
+      description: Fetches the current state of a specific transaction identified by transactionId.
+      operationId: transaction
+      parameters:
+      - name: transactionId
+        in: path
+        description: The unique identifier of the transaction.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the transaction.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved the transaction state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Transaction not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - transactions
+      summary: Kill transaction.
+      description: Kills a specific transaction identified by transactionId.
+      operationId: killTransaction
+      parameters:
+      - name: transactionId
+        in: path
+        description: The unique identifier of the transaction.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the transaction.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully killed the transaction.
+          content:
+            application/json: {}
+        '404':
+          description: Transaction not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Transaction is in an illegal state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/upgrade/cancel:
+    post:
+      tags:
+      - upgrade
+      summary: Cancel upgrade
+      description: Cancel the rolling upgrade
+      operationId: cancelUpgrade
+      responses:
+        '200':
+          description: Upgrade successfully canceled.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/upgrade/commit:
+    post:
+      tags:
+      - upgrade
+      summary: Commit upgrade
+      description: Commit the rolling upgrade
+      operationId: commitUpgrade
+      responses:
+        '200':
+          description: Upgrade successfully commited.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/upgrade/start:
+    post:
+      tags:
+      - upgrade
+      summary: Start upgrade
+      description: Starts the rolling upgrade
+      operationId: startUpgrade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - version
+              type: object
+              properties:
+                version:
+                  type: string
+                  description: The version to upgrade.
+        required: true
+      responses:
+        '200':
+          description: Upgrade successfully started.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/upgrade/state:
+    get:
+      tags:
+      - upgrade
+      summary: Upgrade state
+      description: Current state of the rolling upgrade
+      operationId: upgradeState
+      responses:
+        '200':
+          description: Successfully retrieved state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpgradeStateResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/zones/datanodes/reset:
+    post:
+      tags:
+      - dataNodes
+      description: Recalculates and resets data nodes for given zones.
+      operationId: resetDataNodesForZones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              description: Names specifying zones to recalculate data nodes for. Case-sensitive, if empty then all zones'
+                data nodes will be recalculated.
+              nullable: true
+              items:
+                type: string
+      responses:
+        '200':
+          description: Data nodes are recalculated and reset.
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/zones/{zoneName}/datanodes:
+    get:
+      tags:
+      - dataNodes
+      description: Returns current data nodes for zone.
+      operationId: getDataNodesForZone
+      parameters:
+      - name: zoneName
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Case-sensitive zone name to return data nodes for.
+      responses:
+        '200':
+          description: Data nodes are returned.
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+            application/problem+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/zones/{zoneName}/datanodes/reset:
+    post:
+      tags:
+      - dataNodes
+      description: Recalculates and resets data nodes for zone.
+      operationId: resetDataNodesForZone
+      parameters:
+      - name: zoneName
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Case-sensitive zone name to recalculate data nodes for.
+      responses:
+        '200':
+          description: Data nodes are recalculated and reset.
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    AuthConfig:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: Auth config of the connection to the source cluster.
+    CdcReplicationStatus:
+      type: string
+      description: CDC replication status. {@see org.gridgain.internal.cdc.api.replication.CdcReplicationStatus}
+      enum:
+      - CREATED
+      - RUNNING
+      - STOPPED
+      - FAILED
+    CheckResult:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Violation name
+        errorDetails:
+          type: string
+          description: Error details
+          nullable: true
+      description: Cdc sink/source check result
+    ClusterNode:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Node ID.
+          format: uuid
+        name:
+          type: string
+          description: Unique cluster name.
+        address:
+          allOf:
+          - $ref: '#/components/schemas/NetworkAddress'
+          - description: Cluster network address information.
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/NodeMetadata'
+          - description: Node metadata information.
+      description: Information about the cluster node.
+    ClusterState:
+      type: object
+      properties:
+        cmgNodes:
+          type: array
+          description: List of cluster management group nodes. These nodes are responsible for maintaining RAFT cluster topology.
+          items:
+            type: string
+        msNodes:
+          type: array
+          description: List of metastorage nodes. These nodes are responsible for storing RAFT cluster metadata.
+          items:
+            type: string
+        igniteVersion:
+          type: string
+          description: Version of Apache Ignite that the cluster was created on.
+        clusterTag:
+          allOf:
+          - $ref: '#/components/schemas/ClusterTag'
+          - description: Unique tag that identifies the cluster.
+        formerClusterIds:
+          type: array
+          description: IDs the cluster had before.
+          nullable: true
+          items:
+            type: string
+            format: uuid
+      description: Information about current cluster state.
+    ClusterTag:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: Unique cluster UUID. Generated automatically.
+          format: uuid
+        clusterName:
+          type: string
+          description: Unique cluster name.
+      description: Unique tag that identifies the cluster.
+    CreateCommand:
+      type: object
+      properties:
+        snapshotType:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotType'
+          - description: Type of the snapshot, FULL or INCREMENTAL.
+        tableNames:
+          type: array
+          description: Set of fully-qualified table names that will be parts of the snapshot. If both this and structureNames
+            are empty, all tables will be snapshotted.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Set of fully-qualified structure names that will be parts of the snapshot. If both this and tableNames
+            are empty, all structures will be snapshotted.
+          items:
+            type: string
+        timestampEpochMilli:
+          type: integer
+          description: Time for which the Snapshot should be taken in milliseconds since Unix Epoch format. If null, current
+            time will be used
+          format: int64
+        destination:
+          type: string
+          description: The name of the snapshot path to the snapshot; null to use the default path.
+        encryptionProvider:
+          type: string
+          description: The encryption provider name.
+      description: Snapshot creation configuration.
+    CreateReplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Replication name.
+        sourceClusterAddresses:
+          type: array
+          description: List of node addresses of the source cluster.
+          items:
+            type: string
+        authConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/AuthConfig'
+          - description: Auth config of the connection to the source cluster.
+        sslConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SslConfig'
+          - description: SSL config of the connection to the source cluster.
+        replicationNodes:
+          type: array
+          description: List of replication nodes names on target cluster.
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    CreateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        plainPassword:
+          type: string
+          description: Plain password
+      description: Create user request
+    DeleteCommand:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+          description: ID of the snapshot to delete
+          format: uuid
+      description: Snapshot restoration configuration.
+    DeploymentStatus:
+      type: string
+      description: Status of deployment process.
+      enum:
+      - UPLOADING
+      - DEPLOYED
+      - OBSOLETE
+      - REMOVING
+    FlushRequest:
+      type: object
+      properties:
+        flushPoint:
+          type: string
+          description: Flush point timestamp.
+          format: date-time
+      description: DTO for flush request.
+    GlobalZonePartitionStateResponse:
+      required:
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        state:
+          type: string
+      description: Information about global zone partition state.
+    GlobalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalZonePartitionStateResponse'
+      description: Information about global zone partition states.
+    InitCommand:
+      required:
+      - license
+      type: object
+      properties:
+        metaStorageNodes:
+          type: array
+          description: A list of RAFT metastorage nodes.
+          items:
+            type: string
+        cmgNodes:
+          type: array
+          description: A list of RAFT cluster management nodes.
+          items:
+            type: string
+        clusterName:
+          type: string
+          description: The name of the cluster.
+        clusterConfiguration:
+          type: string
+          description: Cluster configuration in HOCON format.
+        license:
+          type: string
+          description: Cluster license.
+      description: Cluster initialization configuration.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    JobState:
+      required:
+      - createTime
+      - id
+      - status
+      type: object
+      properties:
+        id:
+          type: string
+          description: Job ID.
+          format: uuid
+        status:
+          description: Job status.
+          allOf:
+          - $ref: '#/components/schemas/JobStatus'
+          - {}
+        createTime:
+          type: string
+          description: Job create time.
+          format: date-time
+        startTime:
+          type: string
+          description: Job start time.
+          format: date-time
+          nullable: true
+        finishTime:
+          type: string
+          description: Job finish time.
+          format: date-time
+          nullable: true
+      description: Rest representation of org.apache.ignite.compute.JobState.
+    JobStatus:
+      type: string
+      description: Job status.
+      enum:
+      - QUEUED
+      - EXECUTING
+      - FAILED
+      - COMPLETED
+      - CANCELING
+      - CANCELED
+    License:
+      type: object
+      properties:
+        edition:
+          type: string
+          description: Edition
+        features:
+          type: array
+          description: List of enabled features
+          items:
+            type: string
+        signatures:
+          allOf:
+          - $ref: '#/components/schemas/Signatures'
+          - description: Signatures
+        releaseType:
+          type: string
+          description: Release type
+        id:
+          type: string
+          description: Unique identifier of the license
+        infos:
+          allOf:
+          - $ref: '#/components/schemas/LicenseInfo'
+          - description: Company and contact information
+        limits:
+          allOf:
+          - $ref: '#/components/schemas/LicenseLimits'
+          - description: License limitations
+      description: License information
+    LicenseFeature:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Feature identifier.
+        name:
+          type: string
+          description: Feature name.
+      description: License feature representation.
+    LicenseFeatureSet:
+      required:
+      - features
+      type: object
+      properties:
+        features:
+          type: array
+          description: License features set.
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+      description: License features set representation.
+    LicenseId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+      description: License Id
+    LicenseInfo:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the company
+        companyWebsite:
+          type: string
+          description: Company's website URL
+        contactEmail:
+          type: string
+          description: Contact person's email address
+        contactName:
+          type: string
+          description: Contact person's name
+        contractEndDate:
+          type: string
+          description: Contract end date
+        contractStartDate:
+          type: string
+          description: Contract start date
+        licenseNote:
+          type: string
+          description: Additional notes about the license
+      description: License information fields
+    LicenseLimits:
+      type: object
+      properties:
+        expireDate:
+          type: string
+          description: License expiration date
+        maxComputers:
+          type: integer
+          description: Maximum number of computers allowed
+          format: int32
+        maxCores:
+          type: integer
+          description: Maximum number of cores allowed
+          format: int32
+        maxHeapSize:
+          type: integer
+          description: Maximum heap size allowed
+          format: int64
+        maxHostRamSize:
+          type: integer
+          description: Maximum host RAM size allowed
+          format: int64
+        maxNodes:
+          type: integer
+          description: Maximum number of nodes allowed
+          format: int32
+        maxOffHeapSize:
+          type: integer
+          description: Maximum off-heap size allowed
+          format: int64
+        startDate:
+          type: string
+          description: License start date
+        maxOnDiskDataSize:
+          type: integer
+          description: Maximum on-disk size allowed
+          format: int64
+      description: License limitations
+    LocalZonePartitionStateResponse:
+      required:
+      - estimatedRows
+      - nodeName
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        nodeName:
+          type: string
+        state:
+          type: string
+        estimatedRows:
+          type: integer
+          format: int64
+      description: Information about local zone partition state.
+    LocalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalZonePartitionStateResponse'
+      description: Information about local zone partition states.
+    LoginBody:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: DTO of login request body.
+    Metric:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric name.
+        desc:
+          type: string
+          description: Metric description.
+          nullable: true
+      description: Metric representation.
+    MetricSet:
+      required:
+      - metrics
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric set name.
+        metrics:
+          type: array
+          description: Metrics.
+          items:
+            $ref: '#/components/schemas/Metric'
+      description: Metrics set representation.
+    MetricSource:
+      required:
+      - enabled
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric source name.
+        enabled:
+          type: boolean
+          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
+      description: A list of metric sources provided by modules.
+    MigrateRequest:
+      type: object
+      properties:
+        cmgNodes:
+          type: array
+          description: Names of the CMG node names.
+          items:
+            type: string
+        metaStorageNodes:
+          type: array
+          description: Names of the Metastorage node names.
+          items:
+            type: string
+        version:
+          type: string
+          description: Ignite version.
+        clusterId:
+          type: string
+          description: ID of the cluster.
+          format: uuid
+        clusterName:
+          type: string
+          description: Name of the cluster.
+        formerClusterIds:
+          type: array
+          description: IDs the cluster had before. If CMG/Metastorage group were never repaired, this is null.
+          nullable: true
+          items:
+            type: string
+            format: uuid
+      description: Migrate nodes to new cluster.
+    NetworkAddress:
+      type: object
+      properties:
+        host:
+          type: string
+          description: Name of the host node runs on.
+        port:
+          type: integer
+          description: Port the node runs on.
+          format: int32
+      description: Node network address information.
+    NodeInfo:
+      required:
+      - jdbcPort
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        jdbcPort:
+          type: integer
+          description: Node JDBC port.
+          format: int32
+      description: Node info.
+    NodeMetadata:
+      type: object
+      properties:
+        restHost:
+          type: string
+          description: The host exposed to REST API.
+        httpPort:
+          type: integer
+          description: The HTTP port exposed to REST API.
+          format: int32
+        httpsPort:
+          type: integer
+          description: The HTTPS port exposed to REST API.
+          format: int32
+      description: Node metadata information.
+    NodeMetricSources:
+      required:
+      - node
+      - sources
+      type: object
+      properties:
+        node:
+          type: string
+          description: Consistent id of the node.
+        sources:
+          type: array
+          description: Metric sources.
+          items:
+            $ref: '#/components/schemas/MetricSource'
+      description: A list of metric sources for a node.
+    NodeState:
+      required:
+      - name
+      - state
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          - description: Node state.
+      description: Node state.
+    NodeVersion:
+      required:
+      - product
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Node version.
+        product:
+          type: string
+          description: Node product.
+      description: Node version.
+    PathType:
+      type: string
+      description: The path type used in the snapshot operation (LOCAL or REMOTE).
+      enum:
+      - LOCAL
+      - REMOTE
+    Privilege:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+        'on':
+          type: string
+          description: Selector
+      description: Privilege
+    PrivilegeAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        privileges:
+          type: array
+          description: Privileges
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: Privilege assignment
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    Replication:
+      required:
+      - executionNodes
+      - mode
+      - name
+      - sinkName
+      - sourceName
+      type: object
+      properties:
+        name:
+          type: string
+        sinkName:
+          type: string
+        sourceName:
+          type: string
+        mode:
+          $ref: '#/components/schemas/ReplicationMode'
+        executionNodes:
+          type: array
+          items:
+            type: string
+        status:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/CdcReplicationStatus'
+        errorContext:
+          type: string
+          nullable: true
+      description: Cdc replication model.
+    ReplicationError:
+      type: object
+      properties:
+        workerNode:
+          type: string
+          description: Name of worker node where the error occurred.
+        entryName:
+          type: string
+          description: Name of the entry where the error occurred.
+        errorMessage:
+          type: string
+          description: Detailed error message.
+      description: Represents an error encountered during replication.
+    ReplicationInfo:
+      required:
+      - name
+      - sourceClusterAddresses
+      - sourceClusterName
+      - status
+      - targetClusterName
+      - workerNodeName
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the replication.
+        sourceClusterAddresses:
+          type: array
+          description: List of URLs of the source cluster nodes.
+          items:
+            type: string
+        authConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/AuthConfig'
+          - description: Auth config of the connection to the source cluster.
+        sslConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SslConfig'
+          - description: SSL config of the connection to the source cluster.
+        sourceClusterName:
+          type: string
+          description: Name of the source cluster.
+        targetClusterName:
+          type: string
+          description: Name of the target cluster.
+        workerNodeName:
+          type: string
+          description: Name of the worker node on target cluster.
+        schemaName:
+          type: string
+          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates
+            all schemas); for explicit table lists, unqualified table names default to PUBLIC schema.'
+          nullable: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ReplicationStatus'
+          - description: Current status of the replication.
+        tableStatuses:
+          type: array
+          description: Status of the replication per table.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/TableStatus'
+        errors:
+          type: array
+          description: List of replication errors encountered.
+          items:
+            $ref: '#/components/schemas/ReplicationError'
+        fstProgress:
+          type: integer
+          description: Progress of full state transfer. Indicates how much percent of initial data were transferred.
+          format: int32
+      description: Contains detailed information about a specific replication process.
+    ReplicationMode:
+      type: string
+      description: 'CDC replication mode.
+
+
+        `ALL` - replicates all data from the source to the sink.
+
+
+        `NEW_DATA` - replicates only new data that appears in the source after the replication is started.
+
+        {@see org.gridgain.internal.cdc.api.replication.CdcReplicationMode}.'
+      enum:
+      - ALL
+      - NEW_DATA
+    ReplicationStatus:
+      type: string
+      description: Current status of the replication.
+      enum:
+      - REPLICATING
+      - STOPPED
+      - FAILED
+      - WORKER_NODE_OUT
+    ResetClusterRequest:
+      type: object
+      properties:
+        cmgNodeNames:
+          type: array
+          description: Names of the proposed CMG nodes. Optional if the MG group is being repaired. If not specified, the
+            current CMG nodes are used.
+          nullable: true
+          items:
+            type: string
+        metastorageReplicationFactor:
+          type: integer
+          description: Number of nodes in the voting member set of the Metastorage RAFT group.
+          format: int32
+          nullable: true
+      description: Reset cluster.
+    ResetDistributionRequest:
+      required:
+      - zoneNames
+      type: object
+      properties:
+        zoneNames:
+          type: array
+          description: List of zone names to reset distribution in.
+          items:
+            type: string
+      description: Reset partition distribution.
+    ResetZonePartitionsRequest:
+      type: object
+      properties:
+        zoneName:
+          type: string
+          description: Name of the zone to reset partitions of. Without quotes, case-sensitive.
+        partitionIds:
+          type: array
+          description: IDs of partitions to reset. All if empty.
+          items:
+            type: integer
+            format: int32
+      description: Reset zone partitions configuration.
+    RestartZonePartitionsRequest:
+      type: object
+      properties:
+        nodeNames:
+          type: array
+          description: Names specifying nodes to restart zone partitions. Case-sensitive. If empty/omitted, partitions on
+            all nodes are restarted.
+          items:
+            type: string
+        zoneName:
+          type: string
+          description: Name of the zone to restart partitions of. Without quotes, case-sensitive.
+        partitionIds:
+          type: array
+          description: IDs of partitions to restart. If empty/omitted, all partitions will be restarted.
+          items:
+            type: integer
+            format: int32
+      description: restart partitions configuration.
+    RestoreCommand:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+          description: ID of the snapshot to restore
+          format: uuid
+        tableNames:
+          type: array
+          description: Set of fully-qualified table names to restore. If both this and structureNames are empty, restores
+            all tables from the snapshot.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Set of fully-qualified structure names to restore. If both this and tableNames are empty, restores
+            all structures from the snapshot.
+          items:
+            type: string
+        source:
+          type: string
+          description: The name of the snapshot path to restore the snapshot from; null to use the default path.
+        decryptionProvider:
+          type: string
+          description: The decription provider name.
+        force:
+          type: boolean
+          description: If set to false, operation will fail if there are existing structures that would be overwritten by
+            the restore.
+      description: Snapshot restoration configuration.
+    Role:
+      type: object
+      properties:
+        roleName:
+          type: string
+          description: Role name
+      description: Role
+    RoleAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        usernames:
+          type: array
+          description: Usernames
+          items:
+            type: string
+      description: Role assignment
+    RolePrivileges:
+      required:
+      - privileges
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RolePrivileges
+    RoleView:
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RoleUsers
+    Signatures:
+      required:
+      - signature_1
+      type: object
+      properties:
+        signature_1:
+          type: string
+      description: DTO for license signatures.
+    Sink:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SinkType'
+          - description: Type
+        name:
+          type: string
+          description: Name
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Parameters
+        createTableIfNotExists:
+          type: boolean
+          description: Create table if not exists
+          default: true
+      description: Sink
+    SinkStatus:
+      type: object
+      properties:
+        sink:
+          allOf:
+          - $ref: '#/components/schemas/Sink'
+          - description: Sink
+        checks:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Sink status
+    SinkType:
+      type: string
+      description: Type
+      enum:
+      - ICEBERG
+      - GRIDGAIN_8
+    SnapshotListItem:
+      required:
+      - creationTime
+      - id
+      - type
+      - uriName
+      - uriType
+      type: object
+      properties:
+        id:
+          type: string
+          description: Snapshot ID.
+          format: uuid
+        parentId:
+          type: string
+          description: Parent snapshot ID.
+          format: uuid
+          nullable: true
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotType'
+          - description: Snapshot type.
+        creationTime:
+          type: integer
+          description: Point in time at which the snapshot was created in milliseconds.
+          format: int64
+        uriName:
+          type: string
+          description: Snapshot path name specified in the configuration.
+        uriType:
+          allOf:
+          - $ref: '#/components/schemas/PathType'
+          - description: Snapshot path type specified in the configuration.
+        uri:
+          type: string
+          description: Snapshot path URI specified in the configuration.
+          nullable: true
+        targetNodeSize:
+          type: integer
+          description: Number of nodes for which a snapshot was created.
+          format: int32
+          nullable: true
+        actualNodeSize:
+          type: integer
+          description: Number of nodes on which the snapshot is present.
+          format: int32
+          nullable: true
+        targetNodeNames:
+          type: array
+          description: Names of the nodes for which the snapshot was created.
+          nullable: true
+          items:
+            type: string
+        actualNodeNames:
+          type: array
+          description: Names of the nodes on which the snapshot is present.
+          nullable: true
+          items:
+            type: string
+        tableNumber:
+          type: integer
+          description: Number of tables that are present in the snapshot.
+          format: int32
+          nullable: true
+        tableNames:
+          type: array
+          description: Names of the tables that are present in the snapshot.
+          nullable: true
+          items:
+            type: string
+      description: Snapshot list command item.
+    SnapshotOperation:
+      required:
+      - operation
+      - operationId
+      - startTimeEpochMilli
+      - status
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ID of the operation.
+          format: uuid
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotStatus'
+          - description: Status of the operation.
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotOperationType'
+          - description: Type of the operation.
+        startTimeEpochMilli:
+          type: integer
+          description: Time at which operation started in milliseconds since Unix Epoch format.
+          format: int64
+        timestampEpochMilli:
+          type: integer
+          description: Point in time that corresponds to the system state the snapshot reflects, in milliseconds since Unix
+            Epoch
+          format: int64
+        targetSnapshotId:
+          type: string
+          description: Target snapshot ID, for restore operations
+          format: uuid
+          nullable: true
+        parentSnapshotId:
+          type: string
+          description: Parent Snapshot ID, for create operations
+          format: uuid
+          nullable: true
+        tableNames:
+          type: array
+          description: Target table names. If both this and structureNames are empty, it means that all tables were used.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Target structure names. If both this and tablesNames are empty, it means that all structures were used.
+          items:
+            type: string
+        description:
+          type: string
+          description: Description of the operation.
+          nullable: true
+        nodeName:
+          type: string
+          description: Name of the node.
+          nullable: true
+        rowsSaved:
+          type: integer
+          description: Number of rows saved.
+          format: int64
+          nullable: true
+        uri:
+          type: string
+          description: The base URI used in the snapshot operation.
+          format: uri
+        pathType:
+          allOf:
+          - $ref: '#/components/schemas/PathType'
+          - description: The path type used in the snapshot operation (LOCAL or REMOTE).
+        force:
+          type: boolean
+          description: If force flag was used.
+      description: Snapshot operation info.
+    SnapshotOperationType:
+      type: string
+      description: Type of the operation.
+      enum:
+      - CREATE
+      - RESTORE
+      - DELETE
+    SnapshotStatus:
+      type: string
+      description: Status of the operation.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - DELETED
+      - FAILED
+    SnapshotType:
+      type: string
+      description: Type of the snapshot, FULL or INCREMENTAL.
+      enum:
+      - NOT_SPECIFIED
+      - FULL
+      - INCREMENTAL
+    Source:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SourceType'
+          - description: Type
+        name:
+          type: string
+          description: Name
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Parameters
+        tables:
+          type: array
+          description: Tables
+          items:
+            $ref: '#/components/schemas/SourceTable'
+      description: Source
+    SourceStatus:
+      type: object
+      properties:
+        source:
+          allOf:
+          - $ref: '#/components/schemas/Source'
+          - description: Source
+        violations:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Source status
+    SourceTable:
+      type: object
+      properties:
+        schema:
+          type: string
+          description: Table schema
+        name:
+          type: string
+          description: Table name
+      description: Source Table
+    SourceType:
+      type: string
+      description: Type
+      enum:
+      - GRIDGAIN
+    SqlQuery:
+      required:
+      - id
+      - node
+      - phase
+      - schema
+      - sql
+      - startTime
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Sql query ID.
+          format: uuid
+        node:
+          type: string
+          description: Initiator node.
+        phase:
+          type: string
+          description: Phase.
+        type:
+          type: string
+          description: Type.
+        schema:
+          type: string
+          description: Schema.
+        sql:
+          type: string
+          description: SQL statement.
+        startTime:
+          type: string
+          description: Start time.
+          format: date-time
+      description: Rest representation of sql query.
+    SslConfig:
+      type: object
+      properties:
+        ciphers:
+          type: array
+          description: ciphers
+          nullable: true
+          items:
+            type: string
+        keyStorePath:
+          type: string
+          description: Key store path that will be used to setup SSL connection.
+          nullable: true
+        keyStorePassword:
+          type: string
+          description: Key store password.
+          nullable: true
+        trustStorePath:
+          type: string
+          description: Trust store path that will be used to setup SSL connection..
+          nullable: true
+        trustStorePassword:
+          type: string
+          description: Trust store password.
+          nullable: true
+      description: SSL config of the connection to the source cluster.
+    StartStopReplicationRequest:
+      type: object
+      properties:
+        schemaName:
+          type: string
+          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates
+            all schemas); for explicit table lists, unqualified table names default to PUBLIC schema. If specified, acts as
+            default schema for unqualified table names or as schema filter for allTables=true.'
+          nullable: true
+        allTables:
+          type: boolean
+          description: If true, all tables will be replicated.
+          nullable: true
+        tables:
+          type: array
+          description: List of table names to be replicated.
+          nullable: true
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    State:
+      type: string
+      description: Possible node states.
+      enum:
+      - STARTING
+      - STARTED
+      - STOPPING
+    TableRecoveryStatus:
+      type: string
+      description: Tables recovery status response.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - FAILED
+    TableStatus:
+      required:
+      - status
+      - table
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ReplicationStatus'
+          - description: Current status of the table replication.
+        table:
+          type: string
+          description: Table name
+      description: Contains detailed information about a specific table replication process.
+    TablesRecoveryRequest:
+      required:
+      - tables
+      - timestamp
+      type: object
+      properties:
+        tables:
+          type: array
+          description: List of fully-qualified names of the tables to recover. Without quotes, case-sensitive.
+          items:
+            type: string
+        timestamp:
+          type: string
+          description: Point-in-Time recovery timestamp.
+          format: date-time
+      description: Tables recovery request.
+    TablesRecoveryResponse:
+      required:
+      - operationId
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: Id of Point-in-Time recovery process to recover tables.
+          format: uuid
+      description: Tables recovery response.
+    TablesRecoveryStateResponse:
+      required:
+      - recoveryProgress
+      - recoveryStatus
+      type: object
+      properties:
+        recoveryProgress:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Progress of the recovery process to recover tables, for each table.
+        recoveryStatus:
+          allOf:
+          - $ref: '#/components/schemas/TableRecoveryStatus'
+          - description: Status of the recovery.
+      description: Tables recovery state response.
+    Transaction:
+      required:
+      - id
+      - node
+      - priority
+      - startTime
+      - state
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Transaction ID.
+          format: uuid
+        node:
+          type: string
+          description: Coordinator node.
+        state:
+          type: string
+          description: State.
+        type:
+          type: string
+          description: Type.
+        priority:
+          type: string
+          description: Priority.
+        startTime:
+          type: string
+          description: Start time.
+          format: date-time
+      description: Rest representation of transaction.
+    UnitEntry:
+      type: object
+      description: Unit content entry.
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/UnitFile'
+      - $ref: '#/components/schemas/UnitFolder'
+    UnitFile:
+      required:
+      - name
+      - size
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Entry type discriminator.
+          enum:
+          - file
+        name:
+          type: string
+          description: Unit content file name.
+        size:
+          type: integer
+          description: Unit content file size in bytes.
+          format: int64
+      description: Unit content file.
+    UnitFolder:
+      required:
+      - children
+      - name
+      - size
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Entry type discriminator.
+          enum:
+          - folder
+        name:
+          type: string
+          description: Unit content folder name.
+        children:
+          type: array
+          description: Unit content folder elements.
+          items:
+            $ref: '#/components/schemas/UnitEntry'
+        size:
+          type: integer
+          description: Total size of folder contents in bytes (computed as sum of all children).
+          format: int64
+          readOnly: true
+      description: Unit content folder.
+    UnitStatus:
+      required:
+      - id
+      - versionToStatus
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unit identifier.
+        versionToStatus:
+          type: array
+          description: Map from unit version to unit deployment status.
+          items:
+            $ref: '#/components/schemas/UnitVersionStatus'
+      description: Unit status.
+    UnitVersionStatus:
+      required:
+      - status
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Unit version.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/DeploymentStatus'
+          - description: Unit status.
+      description: Unit version and status.
+    UpdateJobPriorityBody:
+      required:
+      - priority
+      type: object
+      properties:
+        priority:
+          type: integer
+          description: Priority.
+          format: int32
+      description: DTO of update job priority request body.
+    UpgradeStateResponse:
+      required:
+      - currentVersion
+      - currentVersionNodes
+      - nextVersion
+      - nextVersionNodes
+      type: object
+      properties:
+        currentVersion:
+          type: string
+          description: Current cluster version.
+        nextVersion:
+          type: string
+          description: Next cluster version.
+        currentVersionNodes:
+          type: array
+          description: Current cluster version nodes.
+          items:
+            type: string
+        nextVersionNodes:
+          type: array
+          description: Next cluster version nodes.
+          items:
+            type: string
+      description: Cluster Upgrade State.
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    UserRoles:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+      description: UserRoles
+    deployMode:
+      type: string
+      description: Initial set of nodes to deploy.
+      enum:
+      - MAJORITY
+      - ALL
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

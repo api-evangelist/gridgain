@@ -1,0 +1,21 @@
+rules:
+  gridgain-info-version-required:
+    description: GridGain spec must declare a version.
+    given: $.info
+    severity: error
+    then:
+      field: version
+      function: truthy
+  gridgain-security-defined:
+    description: GridGain management API must declare security schemes (bearer/basic).
+    given: $.components.securitySchemes
+    severity: error
+    then:
+      function: truthy
+  gridgain-operation-tag-required:
+    description: Each GridGain operation must be tagged so it groups under a capability.
+    given: $.paths[*][get,post,put,delete,patch]
+    severity: warn
+    then:
+      field: tags
+      function: truthy

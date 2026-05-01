@@ -16,26 +16,51 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/gridgain/refs/heads/main/apis.yml
 created: '2025-08-19'
-modified: '2026-03-16'
+modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: gridgain:gridgain
+  - aid: gridgain:gridgain-rest-api
     name: GridGain REST API
     description: >-
-      GridGain provides a REST API for interacting with the in-memory data
-      grid, allowing remote execution of cache operations, queries, and
-      cluster management tasks over HTTP.
-    humanURL: https://www.gridgain.com/docs/latest/developers-guide/rest-api
-    baseURL: https://localhost:8080/ignite
+      Legacy GridGain 8 / Apache Ignite REST API for cache operations,
+      SQL and scan queries, cluster activation, and node management over HTTP.
+    humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+    baseURL: http://localhost:8080/ignite
     tags:
+      - Caching
       - Distributed Database
       - In-Memory Computing
       - REST
     properties:
       - type: Documentation
-        url: https://www.gridgain.com/docs/latest/developers-guide/rest-api
+        url: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
       - type: Getting Started
-        url: https://www.gridgain.com/docs/latest/getting-started/quick-start/java
+        url: https://www.gridgain.com/docs/gridgain8/latest/getting-started/quick-start/restapi
+  - aid: gridgain:gridgain-management-api
+    name: GridGain 9 Management API
+    description: >-
+      The GridGain 9 management API exposes cluster initialization, node and
+      cluster configuration, authentication and JWT, RBAC, snapshots, CDC,
+      compute jobs, recovery, deployment units, SQL monitoring, and license
+      management for production GridGain 9 clusters.
+    humanURL: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+    baseURL: http://localhost:10300/management/v1
+    tags:
+      - Cluster Management
+      - In-Memory Computing
+      - Management
+      - REST
+    properties:
+      - type: Documentation
+        url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+      - type: OpenAPI
+        url: openapi/gridgain-openapi.yml
+      - type: Capabilities
+        url: capabilities/gridgain-capabilities.yml
+      - type: Rules
+        url: rules/gridgain-rules.yml
+      - type: JSONSchema
+        url: json-schema/gridgain-schema-index.yml
 common:
   - type: Website
     url: https://www.gridgain.com/

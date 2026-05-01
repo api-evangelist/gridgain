@@ -1,0 +1,440 @@
+name: GridGain Capabilities
+description: Capabilities catalog for the GridGain in-memory data platform REST/management API.
+apiVersion: 9.1.22
+baseURL: http://localhost:10300/management/v1
+capabilities:
+- name: authentication
+  operationCount: 3
+  operations:
+  - method: DELETE
+    path: /management/v1/authentication/jwt
+    summary: Revoke all JWTs
+  - method: DELETE
+    path: /management/v1/authentication/jwt/{token}
+    summary: Revoke JWT
+  - method: POST
+    path: /management/v1/authentication/login
+    summary: Get JWT
+- name: cdcManagement
+  operationCount: 18
+  operations:
+  - method: GET
+    path: /management/v1/cdc/replications
+    summary: Get the list of CDC replications
+  - method: POST
+    path: /management/v1/cdc/replications
+    summary: Create CDC replication. CDC replication is identified by unique name. CDC replication has a type, parameters
+      and a list of tables that should be replicated.
+  - method: GET
+    path: /management/v1/cdc/replications/{name}
+    summary: Get CDC replication by name
+  - method: POST
+    path: /management/v1/cdc/replications/{name}
+    summary: Start CDC replication by name
+  - method: DELETE
+    path: /management/v1/cdc/replications/{name}
+    summary: Delete CDC replication by name
+  - method: POST
+    path: /management/v1/cdc/replications/{name}/stop
+    summary: Stop CDC replication by name
+  - method: GET
+    path: /management/v1/cdc/sinks
+    summary: Get the list of CDC sinks
+  - method: POST
+    path: /management/v1/cdc/sinks
+    summary: Create CDC sink. CDC sink is identified by unique name. CDC sink has a type, parameters and a list of tables
+      that should be replicated.
+  - method: GET
+    path: /management/v1/cdc/sinks/{name}
+    summary: Get CDC sink by name
+  - method: PUT
+    path: /management/v1/cdc/sinks/{name}
+    summary: Update CDC sink
+  - method: DELETE
+    path: /management/v1/cdc/sinks/{name}
+    summary: Delete CDC sink by name
+  - method: GET
+    path: /management/v1/cdc/sinks/{name}/status
+    summary: Get CDC sink status by name
+  - method: GET
+    path: /management/v1/cdc/sources
+    summary: Get the list of CDC sources
+  - method: POST
+    path: /management/v1/cdc/sources
+    summary: Create CDC source. CDC source is identified by unique name. CDC source has a type, parameters and a list of tables
+      that should be replicated.
+  - method: GET
+    path: /management/v1/cdc/sources/{name}
+    summary: Get CDC source by name
+  - method: PUT
+    path: /management/v1/cdc/sources/{name}
+    summary: Update CDC source
+  - method: DELETE
+    path: /management/v1/cdc/sources/{name}
+    summary: Delete CDC source by name
+  - method: GET
+    path: /management/v1/cdc/sources/{name}/status
+    summary: Get CDC source status by name
+- name: clusterConfiguration
+  operationCount: 3
+  operations:
+  - method: GET
+    path: /management/v1/configuration/cluster
+    summary: Get cluster configuration
+  - method: PATCH
+    path: /management/v1/configuration/cluster
+    summary: Update cluster configuration
+  - method: GET
+    path: /management/v1/configuration/cluster/{path}
+    summary: Get configuration represented by path
+- name: clusterManagement
+  operationCount: 3
+  operations:
+  - method: POST
+    path: /management/v1/cluster/init
+    summary: Initialize cluster
+  - method: POST
+    path: /management/v1/cluster/rename
+    summary: Rename cluster
+  - method: GET
+    path: /management/v1/cluster/state
+    summary: Get cluster state
+- name: clusterMetric
+  operationCount: 3
+  operations:
+  - method: POST
+    path: /management/v1/metric/cluster/disable
+    summary: Disable metric source
+  - method: POST
+    path: /management/v1/metric/cluster/enable
+    summary: Enable metric source
+  - method: GET
+    path: /management/v1/metric/cluster/source
+    summary: List metric sources
+- name: compute
+  operationCount: 4
+  operations:
+  - method: GET
+    path: /management/v1/compute/jobs
+    summary: Retrieve all job states
+  - method: GET
+    path: /management/v1/compute/jobs/{jobId}
+    summary: Retrieve job state
+  - method: DELETE
+    path: /management/v1/compute/jobs/{jobId}
+    summary: Cancel job
+  - method: PUT
+    path: /management/v1/compute/jobs/{jobId}/priority
+    summary: Update job priority
+- name: dataNodes
+  operationCount: 3
+  operations:
+  - method: POST
+    path: /management/v1/zones/datanodes/reset
+    summary: resetDataNodesForZones
+  - method: GET
+    path: /management/v1/zones/{zoneName}/datanodes
+    summary: getDataNodesForZone
+  - method: POST
+    path: /management/v1/zones/{zoneName}/datanodes/reset
+    summary: resetDataNodesForZone
+- name: dcr
+  operationCount: 7
+  operations:
+  - method: GET
+    path: /management/v1/dcr/replications
+    summary: Retrieve a list of replications for connected clusters
+  - method: POST
+    path: /management/v1/dcr/replications
+    summary: Create a new replication for a cluster
+  - method: GET
+    path: /management/v1/dcr/replications/{name}
+    summary: Get information about specific replication
+  - method: POST
+    path: /management/v1/dcr/replications/{name}/delete
+    summary: Delete replication
+  - method: POST
+    path: /management/v1/dcr/replications/{name}/flush
+    summary: Specifies timestamp for replication which will be used as flush point.
+  - method: POST
+    path: /management/v1/dcr/replications/{name}/start
+    summary: Start replication
+  - method: POST
+    path: /management/v1/dcr/replications/{name}/stop
+    summary: Stop replication
+- name: deployment
+  operationCount: 8
+  operations:
+  - method: GET
+    path: /management/v1/deployment/cluster/units
+    summary: Get cluster unit statuses
+  - method: GET
+    path: /management/v1/deployment/cluster/units/{unitId}
+    summary: Get specific cluster unit statuses
+  - method: GET
+    path: /management/v1/deployment/node/units
+    summary: Get node unit statuses
+  - method: GET
+    path: /management/v1/deployment/node/units/structure/{unitId}/{unitVersion}
+    summary: Get unit contents.
+  - method: GET
+    path: /management/v1/deployment/node/units/{unitId}
+    summary: Get specific node unit statuses
+  - method: POST
+    path: /management/v1/deployment/units/zip/{unitId}/{unitVersion}
+    summary: Deploy unit with folders structure in zip.
+  - method: POST
+    path: /management/v1/deployment/units/{unitId}/{unitVersion}
+    summary: Deploy unit
+  - method: DELETE
+    path: /management/v1/deployment/units/{unitId}/{unitVersion}
+    summary: Undeploy unit
+- name: distribution
+  operationCount: 1
+  operations:
+  - method: POST
+    path: /management/v1/distribution/reset
+    summary: Reset distribution
+- name: licenseManagement
+  operationCount: 7
+  operations:
+  - method: GET
+    path: /management/v1/license
+    summary: Get license
+  - method: POST
+    path: /management/v1/license
+    summary: Apply new License
+  - method: GET
+    path: /management/v1/license/features
+    summary: Get license features
+  - method: GET
+    path: /management/v1/license/id
+    summary: Get license id
+  - method: GET
+    path: /management/v1/license/infos
+    summary: Get license info
+  - method: GET
+    path: /management/v1/license/limits
+    summary: Get license limits
+  - method: POST
+    path: /management/v1/license/raw
+    summary: Apply new License
+- name: nodeConfiguration
+  operationCount: 3
+  operations:
+  - method: GET
+    path: /management/v1/configuration/node
+    summary: Get node configuration
+  - method: PATCH
+    path: /management/v1/configuration/node
+    summary: Update node configuration
+  - method: GET
+    path: /management/v1/configuration/node/{path}
+    summary: Get configuration represented by path
+- name: nodeManagement
+  operationCount: 3
+  operations:
+  - method: GET
+    path: /management/v1/node/info
+    summary: Get node information
+  - method: GET
+    path: /management/v1/node/state
+    summary: Get node state
+  - method: GET
+    path: /management/v1/node/version
+    summary: Get application version on node
+- name: nodeMetric
+  operationCount: 4
+  operations:
+  - method: POST
+    path: /management/v1/metric/node/disable
+    summary: Disable metric source
+  - method: POST
+    path: /management/v1/metric/node/enable
+    summary: Enable metric source
+  - method: GET
+    path: /management/v1/metric/node/set
+    summary: List metric sets
+  - method: GET
+    path: /management/v1/metric/node/source
+    summary: List metric sources
+- name: privilegesGrants
+  operationCount: 4
+  operations:
+  - method: POST
+    path: /management/v1/rbac/pg
+    summary: Grant privileges
+  - method: DELETE
+    path: /management/v1/rbac/pg
+    summary: Revoke privileges
+  - method: GET
+    path: /management/v1/rbac/pg/roles
+    summary: Get all roles with privilege
+  - method: GET
+    path: /management/v1/rbac/pg/{roleName}
+    summary: Get granted privileges
+- name: recovery
+  operationCount: 9
+  operations:
+  - method: POST
+    path: /management/v1/recovery/cluster/migrate
+    summary: migrate
+  - method: POST
+    path: /management/v1/recovery/cluster/reset
+    summary: resetCluster
+  - method: POST
+    path: /management/v1/recovery/tables
+    summary: recoverTables
+  - method: GET
+    path: /management/v1/recovery/tables/state/{operationId}
+    summary: getTablesRecoveryState
+  - method: POST
+    path: /management/v1/recovery/zone/partitions/reset
+    summary: resetZonePartitions
+  - method: POST
+    path: /management/v1/recovery/zone/partitions/restart
+    summary: restartZonePartitions
+  - method: POST
+    path: /management/v1/recovery/zone/partitions/restartWithCleanup
+    summary: restartZonePartitionsWithCleanup
+  - method: GET
+    path: /management/v1/recovery/zone/state/global
+    summary: getZoneGlobalPartitionStates
+  - method: GET
+    path: /management/v1/recovery/zone/state/local
+    summary: getZoneLocalPartitionStates
+- name: roleAssignments
+  operationCount: 6
+  operations:
+  - method: POST
+    path: /management/v1/rbac/ra
+    summary: Assign roles to users
+  - method: DELETE
+    path: /management/v1/rbac/ra
+    summary: Revoke roles from users
+  - method: GET
+    path: /management/v1/rbac/ra/roles
+    summary: Get roles with users and privileges
+  - method: GET
+    path: /management/v1/rbac/ra/roles/{username}
+    summary: Get user roles
+  - method: GET
+    path: /management/v1/rbac/ra/users
+    summary: Get users who have all specified roles
+  - method: GET
+    path: /management/v1/rbac/ra/users/{roleName}
+    summary: Get users who have role
+- name: roleManagement
+  operationCount: 4
+  operations:
+  - method: GET
+    path: /management/v1/rbac/roles
+    summary: Get the list of roles
+  - method: POST
+    path: /management/v1/rbac/roles
+    summary: Create role
+  - method: GET
+    path: /management/v1/rbac/roles/{roleName}
+    summary: Get role by name
+  - method: DELETE
+    path: /management/v1/rbac/roles/{roleName}
+    summary: Delete role by name
+- name: snapshotManagement
+  operationCount: 6
+  operations:
+  - method: POST
+    path: /management/v1/snapshot/create
+    summary: Create snapshot
+  - method: POST
+    path: /management/v1/snapshot/delete
+    summary: Delete snapshot
+  - method: GET
+    path: /management/v1/snapshot/list
+    summary: Returns a list of snapshots.
+  - method: GET
+    path: /management/v1/snapshot/operations
+    summary: Get all snapshot operations
+  - method: GET
+    path: /management/v1/snapshot/operations/{operationId}
+    summary: Get operation by ID
+  - method: POST
+    path: /management/v1/snapshot/restore
+    summary: Restore snapshot
+- name: sql
+  operationCount: 4
+  operations:
+  - method: GET
+    path: /management/v1/sql/plan/clear-cache
+    summary: Invalidates SQL planner cache.
+  - method: GET
+    path: /management/v1/sql/queries
+    summary: Retrieve all running sql queries.
+  - method: GET
+    path: /management/v1/sql/queries/{queryId}
+    summary: Retrieve sql query.
+  - method: DELETE
+    path: /management/v1/sql/queries/{queryId}
+    summary: Kill sql query.
+- name: system
+  operationCount: 2
+  operations:
+  - method: POST
+    path: /management/v1/recovery/cluster/migrate
+    summary: migrate
+  - method: POST
+    path: /management/v1/recovery/cluster/reset
+    summary: resetCluster
+- name: topology
+  operationCount: 2
+  operations:
+  - method: GET
+    path: /management/v1/cluster/topology/logical
+    summary: Get logical topology
+  - method: GET
+    path: /management/v1/cluster/topology/physical
+    summary: Get physical topology
+- name: transactions
+  operationCount: 3
+  operations:
+  - method: GET
+    path: /management/v1/transactions
+    summary: Retrieve all in progress transactions
+  - method: GET
+    path: /management/v1/transactions/{transactionId}
+    summary: Retrieve transaction state
+  - method: DELETE
+    path: /management/v1/transactions/{transactionId}
+    summary: Kill transaction.
+- name: upgrade
+  operationCount: 4
+  operations:
+  - method: POST
+    path: /management/v1/upgrade/cancel
+    summary: Cancel upgrade
+  - method: POST
+    path: /management/v1/upgrade/commit
+    summary: Commit upgrade
+  - method: POST
+    path: /management/v1/upgrade/start
+    summary: Start upgrade
+  - method: GET
+    path: /management/v1/upgrade/state
+    summary: Upgrade state
+- name: userManagement
+  operationCount: 5
+  operations:
+  - method: GET
+    path: /management/v1/rbac/users
+    summary: Get the list of users
+  - method: POST
+    path: /management/v1/rbac/users
+    summary: Create user
+  - method: GET
+    path: /management/v1/rbac/users/{username}
+    summary: Get user by username
+  - method: PUT
+    path: /management/v1/rbac/users/{username}
+    summary: Update user
+  - method: DELETE
+    path: /management/v1/rbac/users/{username}
+    summary: Delete user by username

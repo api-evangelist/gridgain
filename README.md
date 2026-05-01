@@ -5,35 +5,55 @@ GridGain is a unified real-time data platform that provides in-memory computing 
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Index
+- **Position:** Consuming
+- **Access:** 3rd-Party
 
 ## Tags:
 
- - In-Memory Computing, Distributed Database, Data Grid, Caching, Real-Time
+ - Caching, Data Grid, Distributed Database, In-Memory Computing, Real-Time
 
 ## Timestamps
 
-- **Created:** 2025-08-19 
-- **Modified:** 2026-03-16 
+- **Created:** 2025-08-19
+- **Modified:** 2026-04-28
 
 ## APIs
 
 ### GridGain REST API
-GridGain provides a REST API for interacting with the in-memory data grid, allowing remote execution of cache operations, queries, and cluster management tasks over HTTP.
+Legacy GridGain 8 / Apache Ignite REST API for cache operations, SQL and scan queries, cluster activation, and node management over HTTP.
 
-**Human URL:** [https://www.gridgain.com/docs/latest/developers-guide/rest-api](https://www.gridgain.com/docs/latest/developers-guide/rest-api)
+**Human URL:** [https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi](https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi)
 
+**Base URL:** `http://localhost:8080/ignite`
 
 #### Tags:
 
- - In-Memory Computing, Distributed Database, REST
+ - Caching, Distributed Database, In-Memory Computing, REST
 
 #### Properties
 
-- [Documentation](https://www.gridgain.com/docs/latest/developers-guide/rest-api)
-- [Getting Started](https://www.gridgain.com/docs/latest/getting-started/quick-start/java)
+- [Documentation](https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi)
+- [Getting Started](https://www.gridgain.com/docs/gridgain8/latest/getting-started/quick-start/restapi)
+
+### GridGain 9 Management API
+The GridGain 9 management API exposes cluster initialization, node and cluster configuration, authentication and JWT, RBAC, snapshots, CDC, compute jobs, recovery, deployment units, SQL monitoring, and license management for production GridGain 9 clusters.
+
+**Human URL:** [https://www.gridgain.com/sdk/gridgain9/latest/openapi.html](https://www.gridgain.com/sdk/gridgain9/latest/openapi.html)
+
+**Base URL:** `http://localhost:10300/management/v1`
+
+#### Tags:
+
+ - Cluster Management, In-Memory Computing, Management, REST
+
+#### Properties
+
+- [Documentation](https://www.gridgain.com/sdk/gridgain9/latest/openapi.html)
+- [OpenAPI](openapi/gridgain-openapi.yml)
+- [Capabilities](capabilities/gridgain-capabilities.yml)
+- [Rules](rules/gridgain-rules.yml)
+- [JSONSchema](json-schema/gridgain-schema-index.yml)
 
 ## Common Properties
 
