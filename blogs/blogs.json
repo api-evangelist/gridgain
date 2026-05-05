@@ -1,0 +1,13 @@
+{
+  "repo": "gridgain",
+  "feeds": [
+    {
+      "source": "https://www.gridgain.com/resources/blog",
+      "feed_url": "https://www.gridgain.com/resources/blog/feed",
+      "saved": 10,
+      "title": "GridGain Systems Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:29:10Z"
+}
