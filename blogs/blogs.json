@@ -3,11 +3,11 @@
   "feeds": [
     {
       "source": "https://www.gridgain.com/resources/blog",
-      "feed_url": "https://www.gridgain.com/resources/blog/feed",
-      "saved": 10,
-      "title": "GridGain Systems Blog"
+      "feed_url": "https://www.gridgain.com/resources/blog/feed/",
+      "title": "GridGain Systems Blog",
+      "saved": 0
     }
   ],
   "post_count": 10,
-  "fetched": "2026-05-03T23:29:10Z"
+  "fetched": "2026-05-09T20:17:51Z"
 }
