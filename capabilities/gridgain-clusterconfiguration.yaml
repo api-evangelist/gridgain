@@ -1,0 +1,147 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — clusterConfiguration
+  description: 'GridGain REST module — clusterConfiguration. 3 operations. Lead operation: Get cluster configuration. Self-contained
+    Naftiko capability covering one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - clusterConfiguration
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-clusterconfiguration
+    baseUri: http://localhost:10300
+    description: GridGain REST module — clusterConfiguration business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-configuration-cluster
+      path: /management/v1/configuration/cluster
+      operations:
+      - name: getclusterconfiguration
+        method: GET
+        description: Get cluster configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateclusterconfiguration
+        method: PATCH
+        description: Update cluster configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: management-v1-configuration-cluster-path
+      path: /management/v1/configuration/cluster/{path}
+      operations:
+      - name: getclusterconfigurationbypath
+        method: GET
+        description: Get configuration represented by path
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: path
+          in: path
+          type: string
+          description: 'Configuration tree address. For example: `element.subelement`.'
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-clusterconfiguration-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — clusterConfiguration. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/management/v1/configuration/cluster
+      name: management-v1-configuration-cluster
+      description: REST surface for management-v1-configuration-cluster.
+      operations:
+      - method: GET
+        name: getclusterconfiguration
+        description: Get cluster configuration
+        call: gridgain-clusterconfiguration.getclusterconfiguration
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateclusterconfiguration
+        description: Update cluster configuration
+        call: gridgain-clusterconfiguration.updateclusterconfiguration
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/configuration/cluster/{path}
+      name: management-v1-configuration-cluster-path
+      description: REST surface for management-v1-configuration-cluster-path.
+      operations:
+      - method: GET
+        name: getclusterconfigurationbypath
+        description: Get configuration represented by path
+        call: gridgain-clusterconfiguration.getclusterconfigurationbypath
+        with:
+          path: rest.path
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-clusterconfiguration-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — clusterConfiguration. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-cluster-configuration
+      description: Get cluster configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-clusterconfiguration.getclusterconfiguration
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-cluster-configuration
+      description: Update cluster configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: gridgain-clusterconfiguration.updateclusterconfiguration
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-configuration-represented-path
+      description: Get configuration represented by path
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-clusterconfiguration.getclusterconfigurationbypath
+      with:
+        path: tools.path
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,162 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — dataNodes
+  description: 'GridGain REST module — dataNodes. 3 operations. Lead operation: dataNodes. Self-contained Naftiko capability
+    covering one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - dataNodes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-datanodes
+    baseUri: http://localhost:10300
+    description: GridGain REST module — dataNodes business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-zones-datanodes-reset
+      path: /management/v1/zones/datanodes/reset
+      operations:
+      - name: resetdatanodesforzones
+        method: POST
+        description: Recalculates and resets data nodes for given zones.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: management-v1-zones-zoneName-datanodes
+      path: /management/v1/zones/{zoneName}/datanodes
+      operations:
+      - name: getdatanodesforzone
+        method: GET
+        description: Returns current data nodes for zone.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zoneName
+          in: path
+          type: string
+          required: true
+    - name: management-v1-zones-zoneName-datanodes-reset
+      path: /management/v1/zones/{zoneName}/datanodes/reset
+      operations:
+      - name: resetdatanodesforzone
+        method: POST
+        description: Recalculates and resets data nodes for zone.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zoneName
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-datanodes-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — dataNodes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/management/v1/zones/datanodes/reset
+      name: management-v1-zones-datanodes-reset
+      description: REST surface for management-v1-zones-datanodes-reset.
+      operations:
+      - method: POST
+        name: resetdatanodesforzones
+        description: Recalculates and resets data nodes for given zones.
+        call: gridgain-datanodes.resetdatanodesforzones
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/zones/{zonename}/datanodes
+      name: management-v1-zones-zonename-datanodes
+      description: REST surface for management-v1-zones-zoneName-datanodes.
+      operations:
+      - method: GET
+        name: getdatanodesforzone
+        description: Returns current data nodes for zone.
+        call: gridgain-datanodes.getdatanodesforzone
+        with:
+          zoneName: rest.zoneName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/zones/{zonename}/datanodes/reset
+      name: management-v1-zones-zonename-datanodes-reset
+      description: REST surface for management-v1-zones-zoneName-datanodes-reset.
+      operations:
+      - method: POST
+        name: resetdatanodesforzone
+        description: Recalculates and resets data nodes for zone.
+        call: gridgain-datanodes.resetdatanodesforzone
+        with:
+          zoneName: rest.zoneName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-datanodes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — dataNodes. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: recalculates-and-resets-data-nodes
+      description: Recalculates and resets data nodes for given zones.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-datanodes.resetdatanodesforzones
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-current-data-nodes-zone
+      description: Returns current data nodes for zone.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-datanodes.getdatanodesforzone
+      with:
+        zoneName: tools.zoneName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: recalculates-and-resets-data-nodes-2
+      description: Recalculates and resets data nodes for zone.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-datanodes.resetdatanodesforzone
+      with:
+        zoneName: tools.zoneName
+      outputParameters:
+      - type: object
+        mapping: $.

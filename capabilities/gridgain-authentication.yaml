@@ -1,0 +1,162 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — authentication
+  description: 'GridGain REST module — authentication. 3 operations. Lead operation: Revoke all JWTs. Self-contained Naftiko
+    capability covering one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - authentication
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-authentication
+    baseUri: http://localhost:10300
+    description: GridGain REST module — authentication business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-authentication-jwt
+      path: /management/v1/authentication/jwt
+      operations:
+      - name: revoketokensbyusername
+        method: DELETE
+        description: Revoke all JWTs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: username
+          in: query
+          type: string
+          required: true
+    - name: management-v1-authentication-jwt-token
+      path: /management/v1/authentication/jwt/{token}
+      operations:
+      - name: revoketoken
+        method: DELETE
+        description: Revoke JWT
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: token
+          in: path
+          type: string
+          required: true
+    - name: management-v1-authentication-login
+      path: /management/v1/authentication/login
+      operations:
+      - name: login
+        method: POST
+        description: Get JWT
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-authentication-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — authentication. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/management/v1/authentication/jwt
+      name: management-v1-authentication-jwt
+      description: REST surface for management-v1-authentication-jwt.
+      operations:
+      - method: DELETE
+        name: revoketokensbyusername
+        description: Revoke all JWTs
+        call: gridgain-authentication.revoketokensbyusername
+        with:
+          username: rest.username
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/authentication/jwt/{token}
+      name: management-v1-authentication-jwt-token
+      description: REST surface for management-v1-authentication-jwt-token.
+      operations:
+      - method: DELETE
+        name: revoketoken
+        description: Revoke JWT
+        call: gridgain-authentication.revoketoken
+        with:
+          token: rest.token
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/authentication/login
+      name: management-v1-authentication-login
+      description: REST surface for management-v1-authentication-login.
+      operations:
+      - method: POST
+        name: login
+        description: Get JWT
+        call: gridgain-authentication.login
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-authentication-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — authentication. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: revoke-all-jwts
+      description: Revoke all JWTs
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gridgain-authentication.revoketokensbyusername
+      with:
+        username: tools.username
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-jwt
+      description: Revoke JWT
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gridgain-authentication.revoketoken
+      with:
+        token: tools.token
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-jwt
+      description: Get JWT
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: gridgain-authentication.login
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — system
+  description: 'GridGain REST module — system. 2 operations. Lead operation: system. Self-contained Naftiko capability covering
+    one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - system
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-system
+    baseUri: http://localhost:10300
+    description: GridGain REST module — system business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-recovery-cluster-migrate
+      path: /management/v1/recovery/cluster/migrate
+      operations:
+      - name: migrate
+        method: POST
+        description: Migrates nodes from old cluster to new (repaired) cluster.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: management-v1-recovery-cluster-reset
+      path: /management/v1/recovery/cluster/reset
+      operations:
+      - name: resetcluster
+        method: POST
+        description: Initiates cluster reset to repair CMG/Metastorage group/both.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-system-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — system. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/management/v1/recovery/cluster/migrate
+      name: management-v1-recovery-cluster-migrate
+      description: REST surface for management-v1-recovery-cluster-migrate.
+      operations:
+      - method: POST
+        name: migrate
+        description: Migrates nodes from old cluster to new (repaired) cluster.
+        call: gridgain-system.migrate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/recovery/cluster/reset
+      name: management-v1-recovery-cluster-reset
+      description: REST surface for management-v1-recovery-cluster-reset.
+      operations:
+      - method: POST
+        name: resetcluster
+        description: Initiates cluster reset to repair CMG/Metastorage group/both.
+        call: gridgain-system.resetcluster
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-system-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — system. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: migrates-nodes-old-cluster-new
+      description: Migrates nodes from old cluster to new (repaired) cluster.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-system.migrate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: initiates-cluster-reset-repair-cmg
+      description: Initiates cluster reset to repair CMG/Metastorage group/both.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-system.resetcluster
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

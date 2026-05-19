@@ -1,0 +1,187 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — sql
+  description: 'GridGain REST module — sql. 4 operations. Lead operation: Invalidates SQL planner cache.. Self-contained Naftiko
+    capability covering one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - sql
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-sql
+    baseUri: http://localhost:10300
+    description: GridGain REST module — sql business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-sql-plan-clear-cache
+      path: /management/v1/sql/plan/clear-cache
+      operations:
+      - name: clearcache
+        method: GET
+        description: Invalidates SQL planner cache.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tableNames
+          in: query
+          type: array
+    - name: management-v1-sql-queries
+      path: /management/v1/sql/queries
+      operations:
+      - name: queries
+        method: GET
+        description: Retrieve all running sql queries.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: management-v1-sql-queries-queryId
+      path: /management/v1/sql/queries/{queryId}
+      operations:
+      - name: query
+        method: GET
+        description: Retrieve sql query.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: queryId
+          in: path
+          type: string
+          description: The unique identifier of the sql query.
+          required: true
+      - name: killquery
+        method: DELETE
+        description: Kill sql query.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: queryId
+          in: path
+          type: string
+          description: The unique identifier of the sql query.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-sql-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — sql. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/management/v1/sql/plan/clear-cache
+      name: management-v1-sql-plan-clear-cache
+      description: REST surface for management-v1-sql-plan-clear-cache.
+      operations:
+      - method: GET
+        name: clearcache
+        description: Invalidates SQL planner cache.
+        call: gridgain-sql.clearcache
+        with:
+          tableNames: rest.tableNames
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/sql/queries
+      name: management-v1-sql-queries
+      description: REST surface for management-v1-sql-queries.
+      operations:
+      - method: GET
+        name: queries
+        description: Retrieve all running sql queries.
+        call: gridgain-sql.queries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/sql/queries/{queryid}
+      name: management-v1-sql-queries-queryid
+      description: REST surface for management-v1-sql-queries-queryId.
+      operations:
+      - method: GET
+        name: query
+        description: Retrieve sql query.
+        call: gridgain-sql.query
+        with:
+          queryId: rest.queryId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: killquery
+        description: Kill sql query.
+        call: gridgain-sql.killquery
+        with:
+          queryId: rest.queryId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-sql-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — sql. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: invalidates-sql-planner-cache
+      description: Invalidates SQL planner cache.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-sql.clearcache
+      with:
+        tableNames: tools.tableNames
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-all-running-sql-queries
+      description: Retrieve all running sql queries.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-sql.queries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-sql-query
+      description: Retrieve sql query.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-sql.query
+      with:
+        queryId: tools.queryId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kill-sql-query
+      description: Kill sql query.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: gridgain-sql.killquery
+      with:
+        queryId: tools.queryId
+      outputParameters:
+      - type: object
+        mapping: $.

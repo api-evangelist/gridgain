@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — topology
+  description: 'GridGain REST module — topology. 2 operations. Lead operation: Get logical topology. Self-contained Naftiko
+    capability covering one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - topology
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-topology
+    baseUri: http://localhost:10300
+    description: GridGain REST module — topology business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-cluster-topology-logical
+      path: /management/v1/cluster/topology/logical
+      operations:
+      - name: logical
+        method: GET
+        description: Get logical topology
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: management-v1-cluster-topology-physical
+      path: /management/v1/cluster/topology/physical
+      operations:
+      - name: physical
+        method: GET
+        description: Get physical topology
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-topology-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — topology. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/management/v1/cluster/topology/logical
+      name: management-v1-cluster-topology-logical
+      description: REST surface for management-v1-cluster-topology-logical.
+      operations:
+      - method: GET
+        name: logical
+        description: Get logical topology
+        call: gridgain-topology.logical
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/cluster/topology/physical
+      name: management-v1-cluster-topology-physical
+      description: REST surface for management-v1-cluster-topology-physical.
+      operations:
+      - method: GET
+        name: physical
+        description: Get physical topology
+        call: gridgain-topology.physical
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-topology-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — topology. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-logical-topology
+      description: Get logical topology
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-topology.logical
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-physical-topology
+      description: Get physical topology
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-topology.physical
+      outputParameters:
+      - type: object
+        mapping: $.

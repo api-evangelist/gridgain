@@ -1,0 +1,176 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GridGain REST module — upgrade
+  description: 'GridGain REST module — upgrade. 4 operations. Lead operation: Cancel upgrade. Self-contained Naftiko capability
+    covering one Gridgain business surface.'
+  tags:
+  - Gridgain
+  - upgrade
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GRIDGAIN_API_KEY: GRIDGAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: gridgain-upgrade
+    baseUri: http://localhost:10300
+    description: GridGain REST module — upgrade business capability. Self-contained, no shared references.
+    resources:
+    - name: management-v1-upgrade-cancel
+      path: /management/v1/upgrade/cancel
+      operations:
+      - name: cancelupgrade
+        method: POST
+        description: Cancel upgrade
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: management-v1-upgrade-commit
+      path: /management/v1/upgrade/commit
+      operations:
+      - name: commitupgrade
+        method: POST
+        description: Commit upgrade
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: management-v1-upgrade-start
+      path: /management/v1/upgrade/start
+      operations:
+      - name: startupgrade
+        method: POST
+        description: Start upgrade
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: management-v1-upgrade-state
+      path: /management/v1/upgrade/state
+      operations:
+      - name: upgradestate
+        method: GET
+        description: Upgrade state
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.GRIDGAIN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: gridgain-upgrade-rest
+    port: 8080
+    description: REST adapter for GridGain REST module — upgrade. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/management/v1/upgrade/cancel
+      name: management-v1-upgrade-cancel
+      description: REST surface for management-v1-upgrade-cancel.
+      operations:
+      - method: POST
+        name: cancelupgrade
+        description: Cancel upgrade
+        call: gridgain-upgrade.cancelupgrade
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/upgrade/commit
+      name: management-v1-upgrade-commit
+      description: REST surface for management-v1-upgrade-commit.
+      operations:
+      - method: POST
+        name: commitupgrade
+        description: Commit upgrade
+        call: gridgain-upgrade.commitupgrade
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/upgrade/start
+      name: management-v1-upgrade-start
+      description: REST surface for management-v1-upgrade-start.
+      operations:
+      - method: POST
+        name: startupgrade
+        description: Start upgrade
+        call: gridgain-upgrade.startupgrade
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/management/v1/upgrade/state
+      name: management-v1-upgrade-state
+      description: REST surface for management-v1-upgrade-state.
+      operations:
+      - method: GET
+        name: upgradestate
+        description: Upgrade state
+        call: gridgain-upgrade.upgradestate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: gridgain-upgrade-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GridGain REST module — upgrade. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: cancel-upgrade
+      description: Cancel upgrade
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-upgrade.cancelupgrade
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commit-upgrade
+      description: Commit upgrade
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-upgrade.commitupgrade
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-upgrade
+      description: Start upgrade
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: gridgain-upgrade.startupgrade
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upgrade-state
+      description: Upgrade state
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: gridgain-upgrade.upgradestate
+      outputParameters:
+      - type: object
+        mapping: $.
