@@ -1,0 +1,2148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Revoke all JWTs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/authentication/jwt",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Revoke all issued JWTs."
+        },
+        {
+          "info": {
+            "name": "Revoke JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/authentication/jwt/:token",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revoke a specific JWT."
+        },
+        {
+          "info": {
+            "name": "Get JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/authentication/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get JWT for the user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "cdcManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of CDC replications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/replications"
+          },
+          "docs": "Returns the list of all CDC replications."
+        },
+        {
+          "info": {
+            "name": "Create CDC replication. CDC replication is identified by unique name. CDC replication has a type, parameters and a list of tables that should be replicated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/replications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a CDC replication."
+        },
+        {
+          "info": {
+            "name": "Get CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC replication."
+        },
+        {
+          "info": {
+            "name": "Start CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Replication name."
+              }
+            ]
+          },
+          "docs": "Start a CDC replication by name."
+        },
+        {
+          "info": {
+            "name": "Delete CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Replication name."
+              }
+            ]
+          },
+          "docs": "Deletes a CDC replication by name."
+        },
+        {
+          "info": {
+            "name": "Stop CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name/stop",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Replication name."
+              }
+            ]
+          },
+          "docs": "Stop a CDC replication by name."
+        },
+        {
+          "info": {
+            "name": "Get the list of CDC sinks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sinks"
+          },
+          "docs": "Returns the list of all CDC sinks."
+        },
+        {
+          "info": {
+            "name": "Create CDC sink. CDC sink is identified by unique name. CDC sink has a type, parameters and a list of tables that should be replicated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/sinks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a CDC sink."
+        },
+        {
+          "info": {
+            "name": "Get CDC sink by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC sink."
+        },
+        {
+          "info": {
+            "name": "Update CDC sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a CDC sink."
+        },
+        {
+          "info": {
+            "name": "Delete CDC sink by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Deletes a CDC sink by name."
+        },
+        {
+          "info": {
+            "name": "Get CDC sink status by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name/status",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC sink status."
+        },
+        {
+          "info": {
+            "name": "Get the list of CDC sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sources"
+          },
+          "docs": "Returns the list of all CDC sources."
+        },
+        {
+          "info": {
+            "name": "Create CDC source. CDC source is identified by unique name. CDC source has a type, parameters and a list of tables that should be replicated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a CDC source."
+        },
+        {
+          "info": {
+            "name": "Get CDC source by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC source."
+        },
+        {
+          "info": {
+            "name": "Update CDC source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a CDC source."
+        },
+        {
+          "info": {
+            "name": "Delete CDC source by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Deletes a CDC source by name."
+        },
+        {
+          "info": {
+            "name": "Get CDC source status by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name/status",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC source status."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "clusterManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initialize cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cluster/init",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initialize a new cluster."
+        },
+        {
+          "info": {
+            "name": "Rename cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cluster/rename"
+          },
+          "docs": "Assigns a new name to the cluster."
+        },
+        {
+          "info": {
+            "name": "Get cluster state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cluster/state"
+          },
+          "docs": "Returns current cluster status."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "topology",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get logical topology",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cluster/topology/logical"
+          },
+          "docs": "Gets information about logical cluster topology."
+        },
+        {
+          "info": {
+            "name": "Get physical topology",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cluster/topology/physical"
+          },
+          "docs": "Gets information about physical cluster topology."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "compute",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all job states",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/compute/jobs"
+          },
+          "docs": "Fetches the current states of all compute jobs."
+        },
+        {
+          "info": {
+            "name": "Retrieve job state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/compute/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the compute job."
+              }
+            ]
+          },
+          "docs": "Fetches the current state of a specific compute job identified by jobId."
+        },
+        {
+          "info": {
+            "name": "Cancel job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/compute/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the compute job."
+              }
+            ]
+          },
+          "docs": "Cancels a specific compute job identified by jobId."
+        },
+        {
+          "info": {
+            "name": "Update job priority",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/compute/jobs/:jobId/priority",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the compute job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the priority of a specific compute job identified by jobId."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "clusterConfiguration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cluster configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/cluster"
+          },
+          "docs": "Gets the current configuration of the cluster. The configuration is returned in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Update cluster configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:10300/management/v1/configuration/cluster"
+          },
+          "docs": "Updates cluster configuration. New configuration should be provided in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Get configuration represented by path",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/cluster/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Configuration tree address. For example: `element.subelement`."
+              }
+            ]
+          },
+          "docs": "Gets the configuration on the specific path. Configuration is in HOCON format"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "nodeConfiguration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get node configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/node"
+          },
+          "docs": "Gets node configuration in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Update node configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:10300/management/v1/configuration/node"
+          },
+          "docs": "Updates node configuration. New configuration should be provided in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Get configuration represented by path",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/node/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Configuration tree address. For example: `element.subelement`."
+              }
+            ]
+          },
+          "docs": "Gets a configuration of a specific node, in HOCON format."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "dcr",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of replications for connected clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/dcr/replications"
+          },
+          "docs": "Retrieves a list of replications for connected clusters."
+        },
+        {
+          "info": {
+            "name": "Create a new replication for a cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/dcr/replications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new replication for a cluster."
+        },
+        {
+          "info": {
+            "name": "Get information about specific replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/dcr/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the replication to show."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific replication."
+        },
+        {
+          "info": {
+            "name": "Delete replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/dcr/replications/:name/delete",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the replication to delete."
+              }
+            ]
+          },
+          "docs": "Deletes the specified replication."
+        },
+        {
+          "info": {
+            "name": "Specifies timestamp for replication which will be used as flush point.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/dcr/replications/:name/flush",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the replication to flush."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "."
+        },
+        {
+          "info": {
+            "name": "Start replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/dcr/replications/:name/start",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the replication to start."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts the specified replication."
+        },
+        {
+          "info": {
+            "name": "Stop replication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/dcr/replications/:name/stop",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The id of the replication to stop."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stops the specified replication."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "deployment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cluster unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/cluster/units",
+            "params": [
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cluster unit statuses."
+        },
+        {
+          "info": {
+            "name": "Get specific cluster unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/cluster/units/:unitId",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cluster unit statuses by unit."
+        },
+        {
+          "info": {
+            "name": "Get node unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/node/units",
+            "params": [
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of unit statuses per node."
+        },
+        {
+          "info": {
+            "name": "Get unit contents.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/node/units/structure/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a folder representation with unit content."
+        },
+        {
+          "info": {
+            "name": "Get specific node unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/node/units/:unitId",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of node unit statuses by unit."
+        },
+        {
+          "info": {
+            "name": "Deploy unit with folders structure in zip.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/deployment/units/zip/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deployMode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "initialNodes",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "unitContent",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deploys provided unit in zip file to the cluster with folders structure."
+        },
+        {
+          "info": {
+            "name": "Deploy unit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/deployment/units/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deployMode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "initialNodes",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "unitContent",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deploys provided unit to the cluster."
+        },
+        {
+          "info": {
+            "name": "Undeploy unit",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/deployment/units/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Undeploys the unit with provided unitId and unitVersion."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "distribution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reset distribution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/distribution/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Recalculates distribution for all tables in the provided zones."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "licenseManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get license",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license"
+          },
+          "docs": "Get current license."
+        },
+        {
+          "info": {
+            "name": "Apply new License",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/license",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies provided license."
+        },
+        {
+          "info": {
+            "name": "Get license features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/features"
+          },
+          "docs": "Get license features available to user."
+        },
+        {
+          "info": {
+            "name": "Get license id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/id"
+          },
+          "docs": "Get id of the current license."
+        },
+        {
+          "info": {
+            "name": "Get license info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/infos"
+          },
+          "docs": "Get info fields of the current license."
+        },
+        {
+          "info": {
+            "name": "Get license limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/limits"
+          },
+          "docs": "Get limits of the current license."
+        },
+        {
+          "info": {
+            "name": "Apply new License",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/license/raw"
+          },
+          "docs": "Applies provided license"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "clusterMetric",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Disable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/cluster/disable"
+          },
+          "docs": "Disables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "Enable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/cluster/enable"
+          },
+          "docs": "Enables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "List metric sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/metric/cluster/source"
+          },
+          "docs": "Gets a list of all available metric sources."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "nodeMetric",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Disable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/node/disable"
+          },
+          "docs": "Disables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "Enable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/node/enable"
+          },
+          "docs": "Enables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "List metric sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/metric/node/set"
+          },
+          "docs": "Gets a list of all enabled metric sets."
+        },
+        {
+          "info": {
+            "name": "List metric sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/metric/node/source"
+          },
+          "docs": "Gets a list of all available metric sources."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "nodeManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get node information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/node/info"
+          },
+          "docs": "Gets information about the node."
+        },
+        {
+          "info": {
+            "name": "Get node state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/node/state"
+          },
+          "docs": "Gets node state."
+        },
+        {
+          "info": {
+            "name": "Get application version on node",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/node/version"
+          },
+          "docs": "Gets the version of Apache Ignite the node uses."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "privilegesGrants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Grant privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/pg",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grants privileges to roles."
+        },
+        {
+          "info": {
+            "name": "Revoke privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/pg",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revokes privileges from roles."
+        },
+        {
+          "info": {
+            "name": "Get all roles with privilege",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/pg/roles"
+          },
+          "docs": "Returns the list of all roles with granted privileges."
+        },
+        {
+          "info": {
+            "name": "Get granted privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/pg/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              }
+            ]
+          },
+          "docs": "Returns the list of all granted privileges to role."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "roleAssignments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assign roles to users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/ra",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns roles to users."
+        },
+        {
+          "info": {
+            "name": "Revoke roles from users",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/ra",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revokes roles from users."
+        },
+        {
+          "info": {
+            "name": "Get roles with users and privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/roles"
+          },
+          "docs": "Returns the list of all roles with associated users and assigned privileges."
+        },
+        {
+          "info": {
+            "name": "Get user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/roles/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "Username."
+              }
+            ]
+          },
+          "docs": "Returns the list of all roles assigned to user."
+        },
+        {
+          "info": {
+            "name": "Get users who have all specified roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/users"
+          },
+          "docs": "Returns the list of all users with assigned roles."
+        },
+        {
+          "info": {
+            "name": "Get users who have role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/users/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              }
+            ]
+          },
+          "docs": "Returns the list of all users assigned to role."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "roleManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/roles"
+          },
+          "docs": "Returns the list of all roles."
+        },
+        {
+          "info": {
+            "name": "Create role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create role."
+        },
+        {
+          "info": {
+            "name": "Get role by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/roles/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              }
+            ]
+          },
+          "docs": "Returns a role."
+        },
+        {
+          "info": {
+            "name": "Delete role by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/roles/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              },
+              {
+                "name": "revoke",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a role."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "userManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/users"
+          },
+          "docs": "Returns the list of all users."
+        },
+        {
+          "info": {
+            "name": "Create user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a user."
+        },
+        {
+          "info": {
+            "name": "Get user by username",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/users/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "Username."
+              }
+            ]
+          },
+          "docs": "Returns a user."
+        },
+        {
+          "info": {
+            "name": "Update user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/rbac/users/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "Username."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a user."
+        },
+        {
+          "info": {
+            "name": "Delete user by username",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/users/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "Username."
+              }
+            ]
+          },
+          "docs": "Deletes a user by username."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "recovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/cluster/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrates nodes from old cluster to new (repaired) cluster."
+        },
+        {
+          "info": {
+            "name": "resetCluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/cluster/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates cluster reset to repair CMG/Metastorage group/both."
+        },
+        {
+          "info": {
+            "name": "recoverTables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/tables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a recovery process for tables."
+        },
+        {
+          "info": {
+            "name": "getTablesRecoveryState",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/recovery/tables/state/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "Operation ID."
+              }
+            ]
+          },
+          "docs": "Get a state of recovery process for tables."
+        },
+        {
+          "info": {
+            "name": "resetZonePartitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/zone/partitions/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates assignments of zone's partitions in a forced manner, allowing for the recovery of raft groups with lost majorities."
+        },
+        {
+          "info": {
+            "name": "restartZonePartitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/zone/partitions/restart",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restarts replica service and raft group of passed zone partitions."
+        },
+        {
+          "info": {
+            "name": "restartZonePartitionsWithCleanup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/zone/partitions/restartWithCleanup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restarts replica service and raft group of passed zone partitions with cleaning up of the storage."
+        },
+        {
+          "info": {
+            "name": "getZoneGlobalPartitionStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/recovery/zone/state/global",
+            "params": [
+              {
+                "name": "zoneNames",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "partitionIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns global zone partition states."
+        },
+        {
+          "info": {
+            "name": "getZoneLocalPartitionStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/recovery/zone/state/local",
+            "params": [
+              {
+                "name": "zoneNames",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "nodeNames",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "partitionIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns local zone partition states."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "snapshotManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/snapshot/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new snapshot."
+        },
+        {
+          "info": {
+            "name": "Delete snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/snapshot/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes a snapshot."
+        },
+        {
+          "info": {
+            "name": "Returns a list of snapshots.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/snapshot/list",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Snapshot path name specified in the configuration, `null` means use all paths from the configuration."
+              },
+              {
+                "name": "showNodeNames",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show node names or only their numbers in the response."
+              },
+              {
+                "name": "showTableNames",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show table or only their numbers names in the response."
+              },
+              {
+                "name": "showSourceUri",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show snapshot path URI in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of snapshots."
+        },
+        {
+          "info": {
+            "name": "Get all snapshot operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/snapshot/operations"
+          },
+          "docs": "Returns all snapshot operations."
+        },
+        {
+          "info": {
+            "name": "Get operation by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/snapshot/operations/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the operation."
+              },
+              {
+                "name": "allNodes",
+                "value": "",
+                "type": "query",
+                "description": "if operation status for every node should be retrieved."
+              }
+            ]
+          },
+          "docs": "Returns operation by its ID."
+        },
+        {
+          "info": {
+            "name": "Restore snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/snapshot/restore",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restores a snapshot."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "sql",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invalidates SQL planner cache.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/sql/plan/clear-cache",
+            "params": [
+              {
+                "name": "tableNames",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Invalidates SQL planner cache records on node that related to provided table names."
+        },
+        {
+          "info": {
+            "name": "Retrieve all running sql queries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/sql/queries"
+          },
+          "docs": "Fetches all running sql queries."
+        },
+        {
+          "info": {
+            "name": "Retrieve sql query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/sql/queries/:queryId",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the sql query."
+              }
+            ]
+          },
+          "docs": "Fetches the current state of a specific sql query."
+        },
+        {
+          "info": {
+            "name": "Kill sql query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/sql/queries/:queryId",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the sql query."
+              }
+            ]
+          },
+          "docs": "Kills a specific sql query identified by query id."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all in progress transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/transactions"
+          },
+          "docs": "Fetches all in progress transactions."
+        },
+        {
+          "info": {
+            "name": "Retrieve transaction state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the transaction."
+              }
+            ]
+          },
+          "docs": "Fetches the current state of a specific transaction identified by transactionId."
+        },
+        {
+          "info": {
+            "name": "Kill transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the transaction."
+              }
+            ]
+          },
+          "docs": "Kills a specific transaction identified by transactionId."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "upgrade",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cancel upgrade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/upgrade/cancel"
+          },
+          "docs": "Cancel the rolling upgrade"
+        },
+        {
+          "info": {
+            "name": "Commit upgrade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/upgrade/commit"
+          },
+          "docs": "Commit the rolling upgrade"
+        },
+        {
+          "info": {
+            "name": "Start upgrade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/upgrade/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts the rolling upgrade"
+        },
+        {
+          "info": {
+            "name": "Upgrade state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/upgrade/state"
+          },
+          "docs": "Current state of the rolling upgrade"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "dataNodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "resetDataNodesForZones",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/zones/datanodes/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Recalculates and resets data nodes for given zones."
+        },
+        {
+          "info": {
+            "name": "getDataNodesForZone",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/zones/:zoneName/datanodes",
+            "params": [
+              {
+                "name": "zoneName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns current data nodes for zone."
+        },
+        {
+          "info": {
+            "name": "resetDataNodesForZone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/zones/:zoneName/datanodes/reset",
+            "params": [
+              {
+                "name": "zoneName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Recalculates and resets data nodes for zone."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
