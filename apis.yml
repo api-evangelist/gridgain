@@ -59,6 +59,10 @@ apis:
       - type: JSONSchema
         url: json-schema/gridgain-schema-index.yml
 common:
+  - type: DomainSecurity
+    url: security/gridgain-domain-security.yml
+  - type: Authentication
+    url: authentication/gridgain-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/gridgain-systems
   - type: Website
