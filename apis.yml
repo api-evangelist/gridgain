@@ -59,6 +59,8 @@ apis:
       - type: JSONSchema
         url: json-schema/gridgain-schema-index.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/gridgain-agentic-access.yml
   - type: DomainSecurity
     url: security/gridgain-domain-security.yml
   - type: Authentication
