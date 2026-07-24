@@ -1,0 +1,560 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication snapshotManagement API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: snapshotManagement
+paths:
+  /management/v1/snapshot/create:
+    post:
+      tags:
+      - snapshotManagement
+      summary: Create snapshot
+      description: Creates a new snapshot.
+      operationId: create
+      requestBody:
+        description: configuration for the snapshot.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommand'
+        required: true
+      responses:
+        '200':
+          description: Snapshot has been started.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Tables were not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/delete:
+    post:
+      tags:
+      - snapshotManagement
+      summary: Delete snapshot
+      description: Deletes a snapshot.
+      operationId: delete
+      requestBody:
+        description: Delete command configuration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCommand'
+        required: true
+      responses:
+        '200':
+          description: Snapshot deletion has been started.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/list:
+    get:
+      tags:
+      - snapshotManagement
+      summary: Returns a list of snapshots.
+      description: Returns a list of snapshots.
+      operationId: getList
+      parameters:
+      - name: source
+        in: query
+        description: Snapshot path name specified in the configuration, `null` means use all paths from the configuration.
+        schema:
+          type: string
+          nullable: true
+      - name: showNodeNames
+        in: query
+        description: Whether to show node names or only their numbers in the response.
+        required: true
+        schema:
+          type: boolean
+      - name: showTableNames
+        in: query
+        description: Whether to show table or only their numbers names in the response.
+        required: true
+        schema:
+          type: boolean
+      - name: showSourceUri
+        in: query
+        description: Whether to show snapshot path URI in the response.
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of snapshots has been retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SnapshotListItem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot source was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/operations:
+    get:
+      tags:
+      - snapshotManagement
+      summary: Get all snapshot operations
+      description: Returns all snapshot operations.
+      operationId: getOperations
+      responses:
+        '200':
+          description: Operations retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SnapshotOperation'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/operations/{operationId}:
+    get:
+      tags:
+      - snapshotManagement
+      summary: Get operation by ID
+      description: Returns operation by its ID.
+      operationId: getOperationById
+      parameters:
+      - name: operationId
+        in: path
+        description: ID of the operation.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: allNodes
+        in: query
+        description: if operation status for every node should be retrieved.
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Operation retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SnapshotOperation'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot operation was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/snapshot/restore:
+    post:
+      tags:
+      - snapshotManagement
+      summary: Restore snapshot
+      description: Restores a snapshot.
+      operationId: restore
+      requestBody:
+        description: Restore command configuration.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreCommand'
+        required: true
+      responses:
+        '200':
+          description: Snapshot restoration has been started.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Snapshot meta file was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    SnapshotOperation:
+      required:
+      - operation
+      - operationId
+      - startTimeEpochMilli
+      - status
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: ID of the operation.
+          format: uuid
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotStatus'
+          - description: Status of the operation.
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotOperationType'
+          - description: Type of the operation.
+        startTimeEpochMilli:
+          type: integer
+          description: Time at which operation started in milliseconds since Unix Epoch format.
+          format: int64
+        timestampEpochMilli:
+          type: integer
+          description: Point in time that corresponds to the system state the snapshot reflects, in milliseconds since Unix Epoch
+          format: int64
+        targetSnapshotId:
+          type: string
+          description: Target snapshot ID, for restore operations
+          format: uuid
+          nullable: true
+        parentSnapshotId:
+          type: string
+          description: Parent Snapshot ID, for create operations
+          format: uuid
+          nullable: true
+        tableNames:
+          type: array
+          description: Target table names. If both this and structureNames are empty, it means that all tables were used.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Target structure names. If both this and tablesNames are empty, it means that all structures were used.
+          items:
+            type: string
+        description:
+          type: string
+          description: Description of the operation.
+          nullable: true
+        nodeName:
+          type: string
+          description: Name of the node.
+          nullable: true
+        rowsSaved:
+          type: integer
+          description: Number of rows saved.
+          format: int64
+          nullable: true
+        uri:
+          type: string
+          description: The base URI used in the snapshot operation.
+          format: uri
+        pathType:
+          allOf:
+          - $ref: '#/components/schemas/PathType'
+          - description: The path type used in the snapshot operation (LOCAL or REMOTE).
+        force:
+          type: boolean
+          description: If force flag was used.
+      description: Snapshot operation info.
+    SnapshotOperationType:
+      type: string
+      description: Type of the operation.
+      enum:
+      - CREATE
+      - RESTORE
+      - DELETE
+    DeleteCommand:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+          description: ID of the snapshot to delete
+          format: uuid
+      description: Snapshot restoration configuration.
+    SnapshotStatus:
+      type: string
+      description: Status of the operation.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - DELETED
+      - FAILED
+    CreateCommand:
+      type: object
+      properties:
+        snapshotType:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotType'
+          - description: Type of the snapshot, FULL or INCREMENTAL.
+        tableNames:
+          type: array
+          description: Set of fully-qualified table names that will be parts of the snapshot. If both this and structureNames are empty, all tables will be snapshotted.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Set of fully-qualified structure names that will be parts of the snapshot. If both this and tableNames are empty, all structures will be snapshotted.
+          items:
+            type: string
+        timestampEpochMilli:
+          type: integer
+          description: Time for which the Snapshot should be taken in milliseconds since Unix Epoch format. If null, current time will be used
+          format: int64
+        destination:
+          type: string
+          description: The name of the snapshot path to the snapshot; null to use the default path.
+        encryptionProvider:
+          type: string
+          description: The encryption provider name.
+      description: Snapshot creation configuration.
+    SnapshotType:
+      type: string
+      description: Type of the snapshot, FULL or INCREMENTAL.
+      enum:
+      - NOT_SPECIFIED
+      - FULL
+      - INCREMENTAL
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    SnapshotListItem:
+      required:
+      - creationTime
+      - id
+      - type
+      - uriName
+      - uriType
+      type: object
+      properties:
+        id:
+          type: string
+          description: Snapshot ID.
+          format: uuid
+        parentId:
+          type: string
+          description: Parent snapshot ID.
+          format: uuid
+          nullable: true
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotType'
+          - description: Snapshot type.
+        creationTime:
+          type: integer
+          description: Point in time at which the snapshot was created in milliseconds.
+          format: int64
+        uriName:
+          type: string
+          description: Snapshot path name specified in the configuration.
+        uriType:
+          allOf:
+          - $ref: '#/components/schemas/PathType'
+          - description: Snapshot path type specified in the configuration.
+        uri:
+          type: string
+          description: Snapshot path URI specified in the configuration.
+          nullable: true
+        targetNodeSize:
+          type: integer
+          description: Number of nodes for which a snapshot was created.
+          format: int32
+          nullable: true
+        actualNodeSize:
+          type: integer
+          description: Number of nodes on which the snapshot is present.
+          format: int32
+          nullable: true
+        targetNodeNames:
+          type: array
+          description: Names of the nodes for which the snapshot was created.
+          nullable: true
+          items:
+            type: string
+        actualNodeNames:
+          type: array
+          description: Names of the nodes on which the snapshot is present.
+          nullable: true
+          items:
+            type: string
+        tableNumber:
+          type: integer
+          description: Number of tables that are present in the snapshot.
+          format: int32
+          nullable: true
+        tableNames:
+          type: array
+          description: Names of the tables that are present in the snapshot.
+          nullable: true
+          items:
+            type: string
+      description: Snapshot list command item.
+    RestoreCommand:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+          description: ID of the snapshot to restore
+          format: uuid
+        tableNames:
+          type: array
+          description: Set of fully-qualified table names to restore. If both this and structureNames are empty, restores all tables from the snapshot.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Set of fully-qualified structure names to restore. If both this and tableNames are empty, restores all structures from the snapshot.
+          items:
+            type: string
+        source:
+          type: string
+          description: The name of the snapshot path to restore the snapshot from; null to use the default path.
+        decryptionProvider:
+          type: string
+          description: The decription provider name.
+        force:
+          type: boolean
+          description: If set to false, operation will fail if there are existing structures that would be overwritten by the restore.
+      description: Snapshot restoration configuration.
+    PathType:
+      type: string
+      description: The path type used in the snapshot operation (LOCAL or REMOTE).
+      enum:
+      - LOCAL
+      - REMOTE
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

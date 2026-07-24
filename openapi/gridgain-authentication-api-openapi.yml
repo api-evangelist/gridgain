@@ -1,0 +1,169 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: authentication
+paths:
+  /management/v1/authentication/jwt:
+    delete:
+      tags:
+      - authentication
+      summary: Revoke all JWTs
+      description: Revoke all issued JWTs.
+      operationId: revokeTokensByUsername
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Username to revoke all issued JWTs from.
+      responses:
+        '200':
+          description: All issued JWT were revoked.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/authentication/jwt/{token}:
+    delete:
+      tags:
+      - authentication
+      summary: Revoke JWT
+      description: Revoke a specific JWT.
+      operationId: revokeToken
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+          description: JWT to revoke.
+      responses:
+        '200':
+          description: JWT was revoked.
+        '400':
+          description: Token is invalid.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/authentication/login:
+    post:
+      tags:
+      - authentication
+      summary: Get JWT
+      description: Get JWT for the user.
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginBody'
+        required: true
+      responses:
+        '200':
+          description: JWT returned.
+          content:
+            application/jwt:
+              schema:
+                type: string
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    LoginBody:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: DTO of login request body.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

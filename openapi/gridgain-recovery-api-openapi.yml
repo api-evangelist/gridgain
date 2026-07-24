@@ -1,0 +1,549 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication recovery API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: recovery
+paths:
+  /management/v1/recovery/cluster/migrate:
+    post:
+      tags:
+      - recovery
+      description: Migrates nodes from old cluster to new (repaired) cluster.
+      operationId: migrate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateRequest'
+        required: true
+      responses:
+        '200':
+          description: Migration initiated.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/cluster/reset:
+    post:
+      tags:
+      - recovery
+      description: Initiates cluster reset to repair CMG/Metastorage group/both.
+      operationId: resetCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetClusterRequest'
+        required: true
+      responses:
+        '200':
+          description: Cluster reset initiated.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/tables:
+    post:
+      tags:
+      - recovery
+      description: Start a recovery process for tables.
+      operationId: recoverTables
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TablesRecoveryRequest'
+        required: true
+      responses:
+        '200':
+          description: Recovery state returned.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TablesRecoveryResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/tables/state/{operationId}:
+    get:
+      tags:
+      - recovery
+      description: Get a state of recovery process for tables.
+      operationId: getTablesRecoveryState
+      parameters:
+      - name: operationId
+        in: path
+        description: Operation ID.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Recovery process started.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TablesRecoveryStateResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/partitions/reset:
+    post:
+      tags:
+      - recovery
+      description: Updates assignments of zone's partitions in a forced manner, allowing for the recovery of raft groups with lost majorities.
+      operationId: resetZonePartitions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetZonePartitionsRequest'
+        required: true
+      responses:
+        '200':
+          description: Partition states reset.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/partitions/restart:
+    post:
+      tags:
+      - recovery
+      description: Restarts replica service and raft group of passed zone partitions.
+      operationId: restartZonePartitions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestartZonePartitionsRequest'
+        required: true
+      responses:
+        '200':
+          description: Zone partitions restarted.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/partitions/restartWithCleanup:
+    post:
+      tags:
+      - recovery
+      description: Restarts replica service and raft group of passed zone partitions with cleaning up of the storage.
+      operationId: restartZonePartitionsWithCleanup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestartZonePartitionsRequest'
+        required: true
+      responses:
+        '200':
+          description: Zone partitions restarted.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/state/global:
+    get:
+      tags:
+      - recovery
+      description: Returns global zone partition states.
+      operationId: getZoneGlobalPartitionStates
+      parameters:
+      - name: zoneNames
+        in: query
+        schema:
+          type: array
+          description: Names specifying zones to get partition states from. Case-sensitive, all zones if empty.
+          nullable: true
+          items:
+            type: string
+      - name: partitionIds
+        in: query
+        schema:
+          type: array
+          description: IDs of partitions to get states of. All partitions if empty.
+          nullable: true
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Zone partition states returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalZonePartitionStatesResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/recovery/zone/state/local:
+    get:
+      tags:
+      - recovery
+      description: Returns local zone partition states.
+      operationId: getZoneLocalPartitionStates
+      parameters:
+      - name: zoneNames
+        in: query
+        schema:
+          type: array
+          description: Names specifying zones to get partition states from. Case-sensitive, all zones if empty.
+          nullable: true
+          items:
+            type: string
+      - name: nodeNames
+        in: query
+        schema:
+          type: array
+          description: Names specifying nodes to get partition states from. Case-sensitive, all nodes if empty.
+          nullable: true
+          items:
+            type: string
+      - name: partitionIds
+        in: query
+        schema:
+          type: array
+          description: IDs of partitions to get states. All partitions if empty.
+          nullable: true
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Zone partition states returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalZonePartitionStatesResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    TablesRecoveryResponse:
+      required:
+      - operationId
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: Id of Point-in-Time recovery process to recover tables.
+          format: uuid
+      description: Tables recovery response.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    LocalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalZonePartitionStateResponse'
+      description: Information about local zone partition states.
+    TablesRecoveryStateResponse:
+      required:
+      - recoveryProgress
+      - recoveryStatus
+      type: object
+      properties:
+        recoveryProgress:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Progress of the recovery process to recover tables, for each table.
+        recoveryStatus:
+          allOf:
+          - $ref: '#/components/schemas/TableRecoveryStatus'
+          - description: Status of the recovery.
+      description: Tables recovery state response.
+    GlobalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalZonePartitionStateResponse'
+      description: Information about global zone partition states.
+    TablesRecoveryRequest:
+      required:
+      - tables
+      - timestamp
+      type: object
+      properties:
+        tables:
+          type: array
+          description: List of fully-qualified names of the tables to recover. Without quotes, case-sensitive.
+          items:
+            type: string
+        timestamp:
+          type: string
+          description: Point-in-Time recovery timestamp.
+          format: date-time
+      description: Tables recovery request.
+    RestartZonePartitionsRequest:
+      type: object
+      properties:
+        nodeNames:
+          type: array
+          description: Names specifying nodes to restart zone partitions. Case-sensitive. If empty/omitted, partitions on all nodes are restarted.
+          items:
+            type: string
+        zoneName:
+          type: string
+          description: Name of the zone to restart partitions of. Without quotes, case-sensitive.
+        partitionIds:
+          type: array
+          description: IDs of partitions to restart. If empty/omitted, all partitions will be restarted.
+          items:
+            type: integer
+            format: int32
+      description: restart partitions configuration.
+    TableRecoveryStatus:
+      type: string
+      description: Tables recovery status response.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - FAILED
+    LocalZonePartitionStateResponse:
+      required:
+      - estimatedRows
+      - nodeName
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        nodeName:
+          type: string
+        state:
+          type: string
+        estimatedRows:
+          type: integer
+          format: int64
+      description: Information about local zone partition state.
+    ResetClusterRequest:
+      type: object
+      properties:
+        cmgNodeNames:
+          type: array
+          description: Names of the proposed CMG nodes. Optional if the MG group is being repaired. If not specified, the current CMG nodes are used.
+          nullable: true
+          items:
+            type: string
+        metastorageReplicationFactor:
+          type: integer
+          description: Number of nodes in the voting member set of the Metastorage RAFT group.
+          format: int32
+          nullable: true
+      description: Reset cluster.
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    ResetZonePartitionsRequest:
+      type: object
+      properties:
+        zoneName:
+          type: string
+          description: Name of the zone to reset partitions of. Without quotes, case-sensitive.
+        partitionIds:
+          type: array
+          description: IDs of partitions to reset. All if empty.
+          items:
+            type: integer
+            format: int32
+      description: Reset zone partitions configuration.
+    GlobalZonePartitionStateResponse:
+      required:
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        state:
+          type: string
+      description: Information about global zone partition state.
+    MigrateRequest:
+      type: object
+      properties:
+        cmgNodes:
+          type: array
+          description: Names of the CMG node names.
+          items:
+            type: string
+        metaStorageNodes:
+          type: array
+          description: Names of the Metastorage node names.
+          items:
+            type: string
+        version:
+          type: string
+          description: Ignite version.
+        clusterId:
+          type: string
+          description: ID of the cluster.
+          format: uuid
+        clusterName:
+          type: string
+          description: Name of the cluster.
+        formerClusterIds:
+          type: array
+          description: IDs the cluster had before. If CMG/Metastorage group were never repaired, this is null.
+          nullable: true
+          items:
+            type: string
+            format: uuid
+      description: Migrate nodes to new cluster.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

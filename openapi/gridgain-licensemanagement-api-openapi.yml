@@ -1,0 +1,405 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication licenseManagement API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: licenseManagement
+paths:
+  /management/v1/license:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license
+      description: Get current license.
+      operationId: id
+      responses:
+        '200':
+          description: License.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/License'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - licenseManagement
+      summary: Apply new License
+      description: Applies provided license.
+      operationId: applyNewLicense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License'
+        required: true
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Invalid license provided.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/features:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license features
+      description: Get license features available to user.
+      operationId: features
+      responses:
+        '200':
+          description: License features set.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseFeatureSet'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/id:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license id
+      description: Get id of the current license.
+      operationId: id_1
+      responses:
+        '200':
+          description: License Id.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseId'
+        '401':
+          description: Invalid_1 credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/infos:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license info
+      description: Get info fields of the current license.
+      operationId: infos
+      responses:
+        '200':
+          description: License info fields.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseInfo'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/limits:
+    get:
+      tags:
+      - licenseManagement
+      summary: Get license limits
+      description: Get limits of the current license.
+      operationId: limits
+      responses:
+        '200':
+          description: License limits.
+          content:
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/LicenseLimits'
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/license/raw:
+    post:
+      tags:
+      - licenseManagement
+      summary: Apply new License
+      description: Applies provided license
+      operationId: applyNewLicenseRaw
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Invalid credentials.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Invalid license provided.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    LicenseFeature:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Feature identifier.
+        name:
+          type: string
+          description: Feature name.
+      description: License feature representation.
+    License:
+      type: object
+      properties:
+        edition:
+          type: string
+          description: Edition
+        features:
+          type: array
+          description: List of enabled features
+          items:
+            type: string
+        signatures:
+          allOf:
+          - $ref: '#/components/schemas/Signatures'
+          - description: Signatures
+        releaseType:
+          type: string
+          description: Release type
+        id:
+          type: string
+          description: Unique identifier of the license
+        infos:
+          allOf:
+          - $ref: '#/components/schemas/LicenseInfo'
+          - description: Company and contact information
+        limits:
+          allOf:
+          - $ref: '#/components/schemas/LicenseLimits'
+          - description: License limitations
+      description: License information
+    LicenseId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+      description: License Id
+    Signatures:
+      required:
+      - signature_1
+      type: object
+      properties:
+        signature_1:
+          type: string
+      description: DTO for license signatures.
+    LicenseFeatureSet:
+      required:
+      - features
+      type: object
+      properties:
+        features:
+          type: array
+          description: License features set.
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+      description: License features set representation.
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    LicenseInfo:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the company
+        companyWebsite:
+          type: string
+          description: Company's website URL
+        contactEmail:
+          type: string
+          description: Contact person's email address
+        contactName:
+          type: string
+          description: Contact person's name
+        contractEndDate:
+          type: string
+          description: Contract end date
+        contractStartDate:
+          type: string
+          description: Contract start date
+        licenseNote:
+          type: string
+          description: Additional notes about the license
+      description: License information fields
+    LicenseLimits:
+      type: object
+      properties:
+        expireDate:
+          type: string
+          description: License expiration date
+        maxComputers:
+          type: integer
+          description: Maximum number of computers allowed
+          format: int32
+        maxCores:
+          type: integer
+          description: Maximum number of cores allowed
+          format: int32
+        maxHeapSize:
+          type: integer
+          description: Maximum heap size allowed
+          format: int64
+        maxHostRamSize:
+          type: integer
+          description: Maximum host RAM size allowed
+          format: int64
+        maxNodes:
+          type: integer
+          description: Maximum number of nodes allowed
+          format: int32
+        maxOffHeapSize:
+          type: integer
+          description: Maximum off-heap size allowed
+          format: int64
+        startDate:
+          type: string
+          description: License start date
+        maxOnDiskDataSize:
+          type: integer
+          description: Maximum on-disk size allowed
+          format: int64
+      description: License limitations
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

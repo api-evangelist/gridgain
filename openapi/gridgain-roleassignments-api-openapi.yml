@@ -1,0 +1,360 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication roleAssignments API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: roleAssignments
+paths:
+  /management/v1/rbac/ra:
+    post:
+      tags:
+      - roleAssignments
+      summary: Assign roles to users
+      description: Assigns roles to users.
+      operationId: assignRoles
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleAssignment'
+        required: true
+      responses:
+        '200':
+          description: Roles assigned to users.
+        '404':
+          description: No assign endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - roleAssignments
+      summary: Revoke roles from users
+      description: Revokes roles from users.
+      operationId: revokeRoles
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleAssignment'
+        required: true
+      responses:
+        '200':
+          description: Roles revoked from users.
+        '404':
+          description: No revoke endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/roles:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get roles with users and privileges
+      description: Returns the list of all roles with associated users and assigned privileges.
+      operationId: getRoleViews
+      responses:
+        '200':
+          description: Returns the list of all roles with associated users and assigned privileges.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleView'
+        '404':
+          description: No role endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/roles/{username}:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get user roles
+      description: Returns the list of all roles assigned to user.
+      operationId: getRolesByUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all roles assigned to user.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '404':
+          description: No roles endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/users:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get users who have all specified roles
+      description: Returns the list of all users with assigned roles.
+      operationId: getUsersWithRoles
+      responses:
+        '200':
+          description: Returns the list of all users with assigned roles.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRoles'
+        '404':
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/users/{roleName}:
+    get:
+      tags:
+      - roleAssignments
+      summary: Get users who have role
+      description: Returns the list of all users assigned to role.
+      operationId: getUsersByRole
+      parameters:
+      - name: roleName
+        in: path
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all users assigned to role.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    Privilege:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+        'on':
+          type: string
+          description: Selector
+      description: Privilege
+    RoleView:
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RoleUsers
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    UserRoles:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+      description: UserRoles
+    RoleAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        usernames:
+          type: array
+          description: Usernames
+          items:
+            type: string
+      description: Role assignment
+    Role:
+      type: object
+      properties:
+        roleName:
+          type: string
+          description: Role name
+      description: Role
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

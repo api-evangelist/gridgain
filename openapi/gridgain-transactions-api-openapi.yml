@@ -1,0 +1,183 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication transactions API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: transactions
+paths:
+  /management/v1/transactions:
+    get:
+      tags:
+      - transactions
+      summary: Retrieve all in progress transactions
+      description: Fetches all in progress transactions.
+      operationId: transactions
+      responses:
+        '200':
+          description: Successfully retrieved in progress transactions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+  /management/v1/transactions/{transactionId}:
+    get:
+      tags:
+      - transactions
+      summary: Retrieve transaction state
+      description: Fetches the current state of a specific transaction identified by transactionId.
+      operationId: transaction
+      parameters:
+      - name: transactionId
+        in: path
+        description: The unique identifier of the transaction.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the transaction.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully retrieved the transaction state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Transaction not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - transactions
+      summary: Kill transaction.
+      description: Kills a specific transaction identified by transactionId.
+      operationId: killTransaction
+      parameters:
+      - name: transactionId
+        in: path
+        description: The unique identifier of the transaction.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the transaction.
+          format: uuid
+      responses:
+        '200':
+          description: Successfully killed the transaction.
+          content:
+            application/json: {}
+        '404':
+          description: Transaction not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Transaction is in an illegal state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    Transaction:
+      required:
+      - id
+      - node
+      - priority
+      - startTime
+      - state
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Transaction ID.
+          format: uuid
+        node:
+          type: string
+          description: Coordinator node.
+        state:
+          type: string
+          description: State.
+        type:
+          type: string
+          description: Type.
+        priority:
+          type: string
+          description: Priority.
+        startTime:
+          type: string
+          description: Start time.
+          format: date-time
+      description: Rest representation of transaction.
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

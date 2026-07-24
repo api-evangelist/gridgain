@@ -1,0 +1,523 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication dcr API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: dcr
+paths:
+  /management/v1/dcr/replications:
+    get:
+      tags:
+      - dcr
+      summary: Retrieve a list of replications for connected clusters
+      description: Retrieves a list of replications for connected clusters.
+      operationId: listReplications
+      responses:
+        '200':
+          description: Successful retrieval of all replication information.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReplicationInfo'
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - dcr
+      summary: Create a new replication for a cluster
+      description: Creates a new replication for a cluster.
+      operationId: createReplication
+      requestBody:
+        description: Details of the replication to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReplicationRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplicationInfo'
+        '400':
+          description: Replication already exists.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}:
+    get:
+      tags:
+      - dcr
+      summary: Get information about specific replication
+      description: Retrieves detailed information about a specific replication.
+      operationId: showReplication
+      parameters:
+      - name: name
+        in: path
+        description: The unique identifier of the replication to show.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the replication.
+      responses:
+        '200':
+          description: Successful retrieval of replication information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplicationInfo'
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/delete:
+    post:
+      tags:
+      - dcr
+      summary: Delete replication
+      description: Deletes the specified replication.
+      operationId: deleteReplication
+      parameters:
+      - name: name
+        in: path
+        description: The name of the replication to delete.
+        required: true
+        schema:
+          type: string
+          description: The name of the replication.
+      responses:
+        '200':
+          description: Replication successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/flush:
+    post:
+      tags:
+      - dcr
+      summary: Specifies timestamp for replication which will be used as flush point.
+      description: .
+      operationId: flushReplication
+      parameters:
+      - name: name
+        in: path
+        description: The name of the replication to flush.
+        required: true
+        schema:
+          type: string
+          description: The id of the replication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlushRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully flushed.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/start:
+    post:
+      tags:
+      - dcr
+      summary: Start replication
+      description: Starts the specified replication.
+      operationId: startReplication
+      parameters:
+      - name: name
+        in: path
+        description: The unique identifier of the replication to start.
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the replication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartStopReplicationRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully started.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/dcr/replications/{name}/stop:
+    post:
+      tags:
+      - dcr
+      summary: Stop replication
+      description: Stops the specified replication.
+      operationId: stopReplication
+      parameters:
+      - name: name
+        in: path
+        description: The id of the replication to stop.
+        required: true
+        schema:
+          type: string
+          description: The id of the replication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartStopReplicationRequest'
+        required: true
+      responses:
+        '200':
+          description: Replication successfully stopped.
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Replication not found.
+        '500':
+          description: Internal server error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    ReplicationInfo:
+      required:
+      - name
+      - sourceClusterAddresses
+      - sourceClusterName
+      - status
+      - targetClusterName
+      - workerNodeName
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the replication.
+        sourceClusterAddresses:
+          type: array
+          description: List of URLs of the source cluster nodes.
+          items:
+            type: string
+        authConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/AuthConfig'
+          - description: Auth config of the connection to the source cluster.
+        sslConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SslConfig'
+          - description: SSL config of the connection to the source cluster.
+        sourceClusterName:
+          type: string
+          description: Name of the source cluster.
+        targetClusterName:
+          type: string
+          description: Name of the target cluster.
+        workerNodeName:
+          type: string
+          description: Name of the worker node on target cluster.
+        schemaName:
+          type: string
+          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema.'
+          nullable: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ReplicationStatus'
+          - description: Current status of the replication.
+        tableStatuses:
+          type: array
+          description: Status of the replication per table.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/TableStatus'
+        errors:
+          type: array
+          description: List of replication errors encountered.
+          items:
+            $ref: '#/components/schemas/ReplicationError'
+        fstProgress:
+          type: integer
+          description: Progress of full state transfer. Indicates how much percent of initial data were transferred.
+          format: int32
+      description: Contains detailed information about a specific replication process.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    ReplicationStatus:
+      type: string
+      description: Current status of the replication.
+      enum:
+      - REPLICATING
+      - STOPPED
+      - FAILED
+      - WORKER_NODE_OUT
+    SslConfig:
+      type: object
+      properties:
+        ciphers:
+          type: array
+          description: ciphers
+          nullable: true
+          items:
+            type: string
+        keyStorePath:
+          type: string
+          description: Key store path that will be used to setup SSL connection.
+          nullable: true
+        keyStorePassword:
+          type: string
+          description: Key store password.
+          nullable: true
+        trustStorePath:
+          type: string
+          description: Trust store path that will be used to setup SSL connection..
+          nullable: true
+        trustStorePassword:
+          type: string
+          description: Trust store password.
+          nullable: true
+      description: SSL config of the connection to the source cluster.
+    ReplicationError:
+      type: object
+      properties:
+        workerNode:
+          type: string
+          description: Name of worker node where the error occurred.
+        entryName:
+          type: string
+          description: Name of the entry where the error occurred.
+        errorMessage:
+          type: string
+          description: Detailed error message.
+      description: Represents an error encountered during replication.
+    CreateReplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Replication name.
+        sourceClusterAddresses:
+          type: array
+          description: List of node addresses of the source cluster.
+          items:
+            type: string
+        authConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/AuthConfig'
+          - description: Auth config of the connection to the source cluster.
+        sslConfig:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SslConfig'
+          - description: SSL config of the connection to the source cluster.
+        replicationNodes:
+          type: array
+          description: List of replication nodes names on target cluster.
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    AuthConfig:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: Auth config of the connection to the source cluster.
+    StartStopReplicationRequest:
+      type: object
+      properties:
+        schemaName:
+          type: string
+          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema. If specified, acts as default schema for unqualified table names or as schema filter for allTables=true.'
+          nullable: true
+        allTables:
+          type: boolean
+          description: If true, all tables will be replicated.
+          nullable: true
+        tables:
+          type: array
+          description: List of table names to be replicated.
+          nullable: true
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    FlushRequest:
+      type: object
+      properties:
+        flushPoint:
+          type: string
+          description: Flush point timestamp.
+          format: date-time
+      description: DTO for flush request.
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    TableStatus:
+      required:
+      - status
+      - table
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ReplicationStatus'
+          - description: Current status of the table replication.
+        table:
+          type: string
+          description: Table name
+      description: Contains detailed information about a specific table replication process.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

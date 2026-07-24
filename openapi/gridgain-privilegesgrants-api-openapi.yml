@@ -1,0 +1,256 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication privilegesGrants API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: privilegesGrants
+paths:
+  /management/v1/rbac/pg:
+    post:
+      tags:
+      - privilegesGrants
+      summary: Grant privileges
+      description: Grants privileges to roles.
+      operationId: grantPrivileges
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivilegeAssignment'
+        required: true
+      responses:
+        '200':
+          description: Privileges granted to roles.
+        '404':
+          description: No grant privilege endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - privilegesGrants
+      summary: Revoke privileges
+      description: Revokes privileges from roles.
+      operationId: revokePrivileges
+      requestBody:
+        description: Role assignment.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivilegeAssignment'
+        required: true
+      responses:
+        '200':
+          description: Privileges revoked from roles.
+        '404':
+          description: No revoke endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/pg/roles:
+    get:
+      tags:
+      - privilegesGrants
+      summary: Get all roles with privilege
+      description: Returns the list of all roles with granted privileges.
+      operationId: getRolesWithPrivileges
+      responses:
+        '200':
+          description: Returns the list of all roles with granted privileges.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RolePrivileges'
+        '404':
+          description: No privileges endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/pg/{roleName}:
+    get:
+      tags:
+      - privilegesGrants
+      summary: Get granted privileges
+      description: Returns the list of all granted privileges to role.
+      operationId: getPrivileges
+      parameters:
+      - name: roleName
+        in: path
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all granted privileges to role.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Privilege'
+        '404':
+          description: No privileges endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    Privilege:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+        'on':
+          type: string
+          description: Selector
+      description: Privilege
+    PrivilegeAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        privileges:
+          type: array
+          description: Privileges
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: Privilege assignment
+    RolePrivileges:
+      required:
+      - privileges
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RolePrivileges
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer

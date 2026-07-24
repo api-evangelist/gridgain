@@ -1,0 +1,935 @@
+openapi: 3.0.1
+info:
+  x-logo:
+    url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
+    backgroundColor: '#FFFFFF'
+    altText: Example logo
+  title: GridGain REST module authentication cdcManagement API
+  contact:
+    email: user@ignite.apache.org
+  license:
+    name: Apache 2.0
+    url: https://ignite.apache.org
+  version: 9.1.22
+servers:
+- url: http://localhost:10300
+  description: Default GridGain 9 management API
+- url: http://localhost:8080/ignite
+  description: GridGain 8 / Ignite REST API
+security:
+- bearerToken: []
+- basicAuth: []
+tags:
+- name: cdcManagement
+paths:
+  /management/v1/cdc/replications:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get the list of CDC replications
+      description: Returns the list of all CDC replications.
+      operationId: getCdcReplications
+      responses:
+        '200':
+          description: Returns the list of all replications.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Replication'
+        '404':
+          description: No replications endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Create CDC replication. CDC replication is identified by unique name. CDC replication has a type, parameters and a list of tables that should be replicated.
+      description: Creates a CDC replication.
+      operationId: createCdcReplication
+      requestBody:
+        description: Replication body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Replication'
+        required: true
+      responses:
+        '200':
+          description: Replication is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect replication.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The replication already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/replications/{name}:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC replication by name
+      description: Returns a CDC replication.
+      operationId: getCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a replication.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Replication'
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Start CDC replication by name
+      description: Start a CDC replication by name.
+      operationId: startCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Replication name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Replication is started.
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - cdcManagement
+      summary: Delete CDC replication by name
+      description: Deletes a CDC replication by name.
+      operationId: deleteCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Replication name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Replication is deleted.
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/replications/{name}/stop:
+    post:
+      tags:
+      - cdcManagement
+      summary: Stop CDC replication by name
+      description: Stop a CDC replication by name.
+      operationId: stopCdcReplication
+      parameters:
+      - name: name
+        in: path
+        description: Replication name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Replication is started.
+        '404':
+          description: No such replication or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sinks:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get the list of CDC sinks
+      description: Returns the list of all CDC sinks.
+      operationId: getSinks
+      responses:
+        '200':
+          description: Returns the list of all sinks.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sink'
+        '404':
+          description: No sources endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Create CDC sink. CDC sink is identified by unique name. CDC sink has a type, parameters and a list of tables that should be replicated.
+      description: Creates a CDC sink.
+      operationId: createSink
+      requestBody:
+        description: Sink body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sink'
+        required: true
+      responses:
+        '200':
+          description: Sink is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect sink.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The sink already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sinks/{name}:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC sink by name
+      description: Returns a CDC sink.
+      operationId: getSink
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a sink.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Sink'
+        '404':
+          description: No such sink or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    put:
+      tags:
+      - cdcManagement
+      summary: Update CDC sink
+      description: Updates a CDC sink.
+      operationId: updateSink
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Sink body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sink'
+        required: true
+      responses:
+        '200':
+          description: CDC sink is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect sink.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The sink is already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - cdcManagement
+      summary: Delete CDC sink by name
+      description: Deletes a CDC sink by name.
+      operationId: deleteSink
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sink is deleted.
+        '404':
+          description: No such sink or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sinks/{name}/status:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC sink status by name
+      description: Returns a CDC sink status.
+      operationId: getSinkStatus
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a sink status.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SinkStatus'
+        '404':
+          description: No such sink or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sources:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get the list of CDC sources
+      description: Returns the list of all CDC sources.
+      operationId: getSources
+      responses:
+        '200':
+          description: Returns the list of all sources.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Source'
+        '404':
+          description: No sources endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    post:
+      tags:
+      - cdcManagement
+      summary: Create CDC source. CDC source is identified by unique name. CDC source has a type, parameters and a list of tables that should be replicated.
+      description: Creates a CDC source.
+      operationId: createSource
+      requestBody:
+        description: Source body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Source'
+        required: true
+      responses:
+        '200':
+          description: Source is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect source.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The source already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sources/{name}:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC source by name
+      description: Returns a CDC source.
+      operationId: getSource
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a source.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Source'
+        '404':
+          description: No such source or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    put:
+      tags:
+      - cdcManagement
+      summary: Update CDC source
+      description: Updates a CDC source.
+      operationId: updateSource
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Source body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Source'
+        required: true
+      responses:
+        '200':
+          description: CDC source is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect source.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The source is already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
+      tags:
+      - cdcManagement
+      summary: Delete CDC source by name
+      description: Deletes a CDC source by name.
+      operationId: deleteSource
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Source is deleted.
+        '404':
+          description: No such source or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/cdc/sources/{name}/status:
+    get:
+      tags:
+      - cdcManagement
+      summary: Get CDC source status by name
+      description: Returns a CDC source status.
+      operationId: getSourceStatus
+      parameters:
+      - name: name
+        in: path
+        description: Name.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a source status.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SourceStatus'
+        '404':
+          description: No such source or the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    SourceTable:
+      type: object
+      properties:
+        schema:
+          type: string
+          description: Table schema
+        name:
+          type: string
+          description: Table name
+      description: Source Table
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    CdcReplicationStatus:
+      type: string
+      description: CDC replication status. {@see org.gridgain.internal.cdc.api.replication.CdcReplicationStatus}
+      enum:
+      - CREATED
+      - RUNNING
+      - STOPPED
+      - FAILED
+    ReplicationMode:
+      type: string
+      description: 'CDC replication mode.
+
+
+        `ALL` - replicates all data from the source to the sink.
+
+
+        `NEW_DATA` - replicates only new data that appears in the source after the replication is started.
+
+        {@see org.gridgain.internal.cdc.api.replication.CdcReplicationMode}.'
+      enum:
+      - ALL
+      - NEW_DATA
+    Source:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SourceType'
+          - description: Type
+        name:
+          type: string
+          description: Name
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Parameters
+        tables:
+          type: array
+          description: Tables
+          items:
+            $ref: '#/components/schemas/SourceTable'
+      description: Source
+    SinkStatus:
+      type: object
+      properties:
+        sink:
+          allOf:
+          - $ref: '#/components/schemas/Sink'
+          - description: Sink
+        checks:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Sink status
+    Replication:
+      required:
+      - executionNodes
+      - mode
+      - name
+      - sinkName
+      - sourceName
+      type: object
+      properties:
+        name:
+          type: string
+        sinkName:
+          type: string
+        sourceName:
+          type: string
+        mode:
+          $ref: '#/components/schemas/ReplicationMode'
+        executionNodes:
+          type: array
+          items:
+            type: string
+        status:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/CdcReplicationStatus'
+        errorContext:
+          type: string
+          nullable: true
+      description: Cdc replication model.
+    SinkType:
+      type: string
+      description: Type
+      enum:
+      - ICEBERG
+      - GRIDGAIN_8
+    CheckResult:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Violation name
+        errorDetails:
+          type: string
+          description: Error details
+          nullable: true
+      description: Cdc sink/source check result
+    SourceType:
+      type: string
+      description: Type
+      enum:
+      - GRIDGAIN
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    Sink:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SinkType'
+          - description: Type
+        name:
+          type: string
+          description: Name
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Parameters
+        createTableIfNotExists:
+          type: boolean
+          description: Create table if not exists
+          default: true
+      description: Sink
+    SourceStatus:
+      type: object
+      properties:
+        source:
+          allOf:
+          - $ref: '#/components/schemas/Source'
+          - description: Source
+        violations:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Source status
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerToken:
+      type: http
+      scheme: bearer
