@@ -5,7 +5,20 @@ description: >-
   workloads. Built on top of Apache Ignite, it offers distributed database, caching, and computing capabilities for
   high-performance data-intensive applications.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gridgain.png
 tags:
   - Caching
   - Data Grid
@@ -17,47 +30,473 @@ created: '2025-08-19'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: gridgain:gridgain-rest-api
-    name: GridGain REST API
-    description: >-
-      Legacy GridGain 8 / Apache Ignite REST API for cache operations, SQL and scan queries, cluster activation, and
-      node management over HTTP.
-    humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
-    baseURL: http://localhost:8080/ignite
-    tags:
-      - Caching
-      - Distributed Database
-      - In-Memory Computing
-      - REST
-    properties:
-      - type: Documentation
-        url: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
-      - type: GettingStarted
-        url: https://www.gridgain.com/docs/gridgain8/latest/getting-started/quick-start/restapi
-  - aid: gridgain:gridgain-management-api
-    name: GridGain 9 Management API
-    description: >-
-      The GridGain 9 management API exposes cluster initialization, node and cluster configuration, authentication and
-      JWT, RBAC, snapshots, CDC, compute jobs, recovery, deployment units, SQL monitoring, and license management for
-      production GridGain 9 clusters.
-    humanURL: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-    baseURL: http://localhost:10300/management/v1
-    tags:
-      - Cluster Management
-      - In-Memory Computing
-      - Management
-      - REST
-    properties:
-      - type: Documentation
-        url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-      - type: OpenAPI
-        url: openapi/gridgain-openapi.yml
-      - type: Capabilities
-        url: capabilities/gridgain-capabilities.yml
-      - type: Rules
-        url: rules/gridgain-rules.yml
-      - type: JSONSchema
-        url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-rest-api
+  name: GridGain REST API
+  description: >-
+    Legacy GridGain 8 / Apache Ignite REST API for cache operations, SQL and scan queries, cluster activation,
+    and node management over HTTP.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - Caching
+  - Distributed Database
+  - In-Memory Computing
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  - type: GettingStarted
+    url: https://www.gridgain.com/docs/gridgain8/latest/getting-started/quick-start/restapi
+- aid: gridgain:gridgain-authentication-api
+  name: GridGain authentication API
+  description: The authentication API from GridGain — 3 operation(s) for authentication.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-cdcmanagement-api
+  name: GridGain cdcManagement API
+  description: The cdcManagement API from GridGain — 9 operation(s) for cdcmanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - cdcManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-cdcmanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-clusterconfiguration-api
+  name: GridGain clusterConfiguration API
+  description: The clusterConfiguration API from GridGain — 2 operation(s) for clusterconfiguration.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - clusterConfiguration
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-clusterconfiguration-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-clustermanagement-api
+  name: GridGain clusterManagement API
+  description: The clusterManagement API from GridGain — 3 operation(s) for clustermanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - clusterManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-clustermanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-clustermetric-api
+  name: GridGain clusterMetric API
+  description: The clusterMetric API from GridGain — 3 operation(s) for clustermetric.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - clusterMetric
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-clustermetric-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-compute-api
+  name: GridGain compute API
+  description: The compute API from GridGain — 3 operation(s) for compute.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - compute
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-compute-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-datanodes-api
+  name: GridGain dataNodes API
+  description: The dataNodes API from GridGain — 3 operation(s) for datanodes.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - dataNodes
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-datanodes-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-dcr-api
+  name: GridGain dcr API
+  description: The dcr API from GridGain — 6 operation(s) for dcr.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - dcr
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-dcr-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-deployment-api
+  name: GridGain deployment API
+  description: The deployment API from GridGain — 7 operation(s) for deployment.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - deployment
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-deployment-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-distribution-api
+  name: GridGain distribution API
+  description: The distribution API from GridGain — 1 operation(s) for distribution.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - distribution
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-distribution-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-licensemanagement-api
+  name: GridGain licenseManagement API
+  description: The licenseManagement API from GridGain — 6 operation(s) for licensemanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - licenseManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-licensemanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-nodeconfiguration-api
+  name: GridGain nodeConfiguration API
+  description: The nodeConfiguration API from GridGain — 2 operation(s) for nodeconfiguration.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - nodeConfiguration
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-nodeconfiguration-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-nodemanagement-api
+  name: GridGain nodeManagement API
+  description: The nodeManagement API from GridGain — 3 operation(s) for nodemanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - nodeManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-nodemanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-nodemetric-api
+  name: GridGain nodeMetric API
+  description: The nodeMetric API from GridGain — 4 operation(s) for nodemetric.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - nodeMetric
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-nodemetric-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-privilegesgrants-api
+  name: GridGain privilegesGrants API
+  description: The privilegesGrants API from GridGain — 3 operation(s) for privilegesgrants.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - privilegesGrants
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-privilegesgrants-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-recovery-api
+  name: GridGain recovery API
+  description: The recovery API from GridGain — 9 operation(s) for recovery.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - recovery
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-recovery-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-roleassignments-api
+  name: GridGain roleAssignments API
+  description: The roleAssignments API from GridGain — 5 operation(s) for roleassignments.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - roleAssignments
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-roleassignments-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-rolemanagement-api
+  name: GridGain roleManagement API
+  description: The roleManagement API from GridGain — 2 operation(s) for rolemanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - roleManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-rolemanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-snapshotmanagement-api
+  name: GridGain snapshotManagement API
+  description: The snapshotManagement API from GridGain — 6 operation(s) for snapshotmanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - snapshotManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-snapshotmanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-sql-api
+  name: GridGain sql API
+  description: The sql API from GridGain — 3 operation(s) for sql.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - sql
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-sql-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-system-api
+  name: GridGain system API
+  description: The system API from GridGain — 2 operation(s) for system.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - system
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-system-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-topology-api
+  name: GridGain topology API
+  description: The topology API from GridGain — 2 operation(s) for topology.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - topology
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-topology-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-transactions-api
+  name: GridGain transactions API
+  description: The transactions API from GridGain — 2 operation(s) for transactions.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-upgrade-api
+  name: GridGain upgrade API
+  description: The upgrade API from GridGain — 4 operation(s) for upgrade.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - upgrade
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-upgrade-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
+- aid: gridgain:gridgain-usermanagement-api
+  name: GridGain userManagement API
+  description: The userManagement API from GridGain — 2 operation(s) for usermanagement.
+  humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
+  baseURL: http://localhost:8080/ignite
+  tags:
+  - userManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/gridgain-usermanagement-api-openapi.yml
+  - type: Documentation
+    url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
+  - type: Capabilities
+    url: capabilities/gridgain-capabilities.yml
+  - type: Rules
+    url: rules/gridgain-rules.yml
+  - type: JSONSchema
+    url: json-schema/gridgain-schema-index.yml
 common:
   - type: AgenticAccess
     url: agentic-access/gridgain-agentic-access.yml
