@@ -59,8 +59,6 @@ apis:
     url: openapi/gridgain-authentication-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -77,8 +75,6 @@ apis:
     url: openapi/gridgain-cdcmanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -95,8 +91,6 @@ apis:
     url: openapi/gridgain-clusterconfiguration-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -113,8 +107,6 @@ apis:
     url: openapi/gridgain-clustermanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -131,8 +123,6 @@ apis:
     url: openapi/gridgain-clustermetric-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -149,8 +139,6 @@ apis:
     url: openapi/gridgain-compute-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -167,8 +155,6 @@ apis:
     url: openapi/gridgain-datanodes-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -185,8 +171,6 @@ apis:
     url: openapi/gridgain-dcr-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -203,8 +187,6 @@ apis:
     url: openapi/gridgain-deployment-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -221,8 +203,6 @@ apis:
     url: openapi/gridgain-distribution-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -239,8 +219,6 @@ apis:
     url: openapi/gridgain-licensemanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -257,8 +235,6 @@ apis:
     url: openapi/gridgain-nodeconfiguration-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -275,8 +251,6 @@ apis:
     url: openapi/gridgain-nodemanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -293,8 +267,6 @@ apis:
     url: openapi/gridgain-nodemetric-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -311,8 +283,6 @@ apis:
     url: openapi/gridgain-privilegesgrants-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -329,8 +299,6 @@ apis:
     url: openapi/gridgain-recovery-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -347,8 +315,6 @@ apis:
     url: openapi/gridgain-roleassignments-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -365,8 +331,6 @@ apis:
     url: openapi/gridgain-rolemanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -383,8 +347,6 @@ apis:
     url: openapi/gridgain-snapshotmanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -401,8 +363,6 @@ apis:
     url: openapi/gridgain-sql-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -419,8 +379,6 @@ apis:
     url: openapi/gridgain-system-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -437,8 +395,6 @@ apis:
     url: openapi/gridgain-topology-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -455,8 +411,6 @@ apis:
     url: openapi/gridgain-transactions-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -473,8 +427,6 @@ apis:
     url: openapi/gridgain-upgrade-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
@@ -491,8 +443,6 @@ apis:
     url: openapi/gridgain-usermanagement-api-openapi.yml
   - type: Documentation
     url: https://www.gridgain.com/sdk/gridgain9/latest/openapi.html
-  - type: Capabilities
-    url: capabilities/gridgain-capabilities.yml
   - type: Rules
     url: rules/gridgain-rules.yml
   - type: JSONSchema
