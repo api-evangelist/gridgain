@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication clusterMetric API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "clusterMetric",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Disable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/cluster/disable"
+          },
+          "docs": "Disables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "Enable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/cluster/enable"
+          },
+          "docs": "Enables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "List metric sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/metric/cluster/source"
+          },
+          "docs": "Gets a list of all available metric sources."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

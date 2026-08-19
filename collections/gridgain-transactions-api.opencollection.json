@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication transactions API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all in progress transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/transactions"
+          },
+          "docs": "Fetches all in progress transactions."
+        },
+        {
+          "info": {
+            "name": "Retrieve transaction state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the transaction."
+              }
+            ]
+          },
+          "docs": "Fetches the current state of a specific transaction identified by transactionId."
+        },
+        {
+          "info": {
+            "name": "Kill transaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the transaction."
+              }
+            ]
+          },
+          "docs": "Kills a specific transaction identified by transactionId."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

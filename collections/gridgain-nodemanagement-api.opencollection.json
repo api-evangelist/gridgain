@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication nodeManagement API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "nodeManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get node information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/node/info"
+          },
+          "docs": "Gets information about the node."
+        },
+        {
+          "info": {
+            "name": "Get node state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/node/state"
+          },
+          "docs": "Gets node state."
+        },
+        {
+          "info": {
+            "name": "Get application version on node",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/node/version"
+          },
+          "docs": "Gets the version of Apache Ignite the node uses."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

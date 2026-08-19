@@ -1,0 +1,1581 @@
+{
+  "item": [
+    {
+      "id": "0389bf1c-f77a-45c9-87d9-cfa0fd282ab2",
+      "name": "snapshotManagement",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "10154bb8-0a2e-4ae2-8010-c56dfa27884d",
+          "name": "Create snapshot",
+          "request": {
+            "name": "Create snapshot",
+            "description": {
+              "content": "Creates a new snapshot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "snapshot",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"snapshotType\": \"<string>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestampEpochMilli\": \"<long>\",\n  \"destination\": \"<string>\",\n  \"encryptionProvider\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "51ffbc99-8da5-49ae-8893-58cd2a0dc2ad",
+              "name": "Snapshot has been started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotType\": \"<string>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestampEpochMilli\": \"<long>\",\n  \"destination\": \"<string>\",\n  \"encryptionProvider\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"74679f33-8e0e-ed8a-f17f-20d9698ae475\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "820e2a88-7e0c-4bdb-8cce-f1a0926a2b12",
+              "name": "Incorrect configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotType\": \"<string>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestampEpochMilli\": \"<long>\",\n  \"destination\": \"<string>\",\n  \"encryptionProvider\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1436,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"31ea852e-5aad-12a0-aa1b-8c27339ad674\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "360a0a88-28d2-40a2-a0e2-b720333ee0f0",
+              "name": "Tables were not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotType\": \"<string>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestampEpochMilli\": \"<long>\",\n  \"destination\": \"<string>\",\n  \"encryptionProvider\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79834694-b475-486e-8c3c-5609d68ccd67",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotType\": \"<string>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestampEpochMilli\": \"<long>\",\n  \"destination\": \"<string>\",\n  \"encryptionProvider\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb6b0901-776f-4f1b-a0cd-b4f8b5ac4ea7",
+          "name": "Delete snapshot",
+          "request": {
+            "name": "Delete snapshot",
+            "description": {
+              "content": "Deletes a snapshot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "snapshot",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"snapshotId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2e1c1803-828f-406a-94c1-7d51f0f7cf7c",
+              "name": "Snapshot deletion has been started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"74679f33-8e0e-ed8a-f17f-20d9698ae475\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b1b4ac6-8d7b-48e9-bb90-b537ac2e7dd0",
+              "name": "Incorrect configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51576205-c5cf-427a-839f-ee97a1e4e637",
+              "name": "Snapshot was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b231225a-a8d1-4f29-87a5-5fa01c47a133",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55301ba5-7e59-4398-b93c-b2f471da8ebb",
+          "name": "Returns a list of snapshots.",
+          "request": {
+            "name": "Returns a list of snapshots.",
+            "description": {
+              "content": "Returns a list of snapshots.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "snapshot",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Snapshot path name specified in the configuration, `null` means use all paths from the configuration."
+                },
+                {
+                  "disabled": false,
+                  "key": "showNodeNames",
+                  "value": "<boolean>",
+                  "description": "(Required) Whether to show node names or only their numbers in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "showTableNames",
+                  "value": "<boolean>",
+                  "description": "(Required) Whether to show table or only their numbers names in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "showSourceUri",
+                  "value": "<boolean>",
+                  "description": "(Required) Whether to show snapshot path URI in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "640c3715-a036-4d2a-bf66-04b73bbe7e9f",
+              "name": "List of snapshots has been retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showNodeNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showTableNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showSourceUri",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"creationTime\": 50,\n    \"id\": \"682acb5c-cd48-25f5-1d30-e096d4d91dea\",\n    \"type\": \"<string>\",\n    \"uriName\": \"string\",\n    \"uriType\": \"LOCAL\",\n    \"parentId\": \"a8d7c9a1-24d3-0d55-8267-f5619a1a16c9\",\n    \"uri\": \"string\",\n    \"targetNodeSize\": 8312,\n    \"actualNodeSize\": 1099,\n    \"targetNodeNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"actualNodeNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tableNumber\": 1686,\n    \"tableNames\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"creationTime\": 3650,\n    \"id\": \"ed94716e-a8c9-a290-56be-3e386f9dd0f8\",\n    \"type\": \"<string>\",\n    \"uriName\": \"string\",\n    \"uriType\": \"LOCAL\",\n    \"parentId\": \"a4c759c3-6a61-1012-0060-dfc83570f5d2\",\n    \"uri\": \"string\",\n    \"targetNodeSize\": 7824,\n    \"actualNodeSize\": 235,\n    \"targetNodeNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"actualNodeNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tableNumber\": 6520,\n    \"tableNames\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17b1f49b-e0f5-4abf-adad-72f59e7ce273",
+              "name": "Incorrect configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showNodeNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showTableNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showSourceUri",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfef042a-7761-4121-b25d-5204c72cf225",
+              "name": "Snapshot source was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showNodeNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showTableNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showSourceUri",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "512c61ef-9938-42d5-8126-dcd008d59634",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showNodeNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showTableNames",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "showSourceUri",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fda9e862-8398-443d-b162-b4fca397180d",
+          "name": "Get all snapshot operations",
+          "request": {
+            "name": "Get all snapshot operations",
+            "description": {
+              "content": "Returns all snapshot operations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "snapshot",
+                "operations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa5bf3ea-27c9-4fdf-8dc1-487d5e249b09",
+              "name": "Operations retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "operations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"operation\": \"RESTORE\",\n    \"operationId\": \"2893a68e-eef8-972b-7269-a1d55070f5b7\",\n    \"startTimeEpochMilli\": 6563,\n    \"status\": \"COMPLETED\",\n    \"timestampEpochMilli\": 1220,\n    \"targetSnapshotId\": \"ed6d6247-dce4-ea64-18b9-a62bec243120\",\n    \"parentSnapshotId\": \"521a45a4-0fa8-d56c-2bff-a1f3b1caf5b0\",\n    \"tableNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"structureNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"nodeName\": \"string\",\n    \"rowsSaved\": 121,\n    \"uri\": \"https://GOvkpCGXydDPJcColGYHcrWx.lfcV6ePwIsS9wm8q-\",\n    \"pathType\": \"REMOTE\",\n    \"force\": true\n  },\n  {\n    \"operation\": \"RESTORE\",\n    \"operationId\": \"7d8b3d98-ac57-332c-b0fc-07c9576aed4b\",\n    \"startTimeEpochMilli\": 4981,\n    \"status\": \"FAILED\",\n    \"timestampEpochMilli\": 4045,\n    \"targetSnapshotId\": \"252913e3-029e-f803-8a41-622ffebc2b02\",\n    \"parentSnapshotId\": \"d7578d5f-d789-6241-cd12-bfe87f60aad6\",\n    \"tableNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"structureNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"nodeName\": \"string\",\n    \"rowsSaved\": 2646,\n    \"uri\": \"https://OBX.odujGYNUPLb7IvJi1jRNppdlSBo5t,qKb5eYp9nqFkui4gKR7n9QbNfnhLOOu\",\n    \"pathType\": \"LOCAL\",\n    \"force\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61d7e227-b934-4f10-9906-7fdbdc1427ef",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "operations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90080298-b348-42f3-88c5-b8ecbbe19b88",
+          "name": "Get operation by ID",
+          "request": {
+            "name": "Get operation by ID",
+            "description": {
+              "content": "Returns operation by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "snapshot",
+                "operations",
+                ":operationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "allNodes",
+                  "value": "<boolean>",
+                  "description": "(Required) if operation status for every node should be retrieved."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "operationId",
+                  "description": "(Required) ID of the operation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7d38b4e-d331-4cf0-b30e-903e26838ac1",
+              "name": "Operation retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "operations",
+                    ":operationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allNodes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "operationId",
+                      "description": "(Required) ID of the operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"operation\": \"CREATE\",\n    \"operationId\": \"86acaf0d-d42d-9cc7-5dfb-c68cee5af934\",\n    \"startTimeEpochMilli\": 3934,\n    \"status\": \"DELETED\",\n    \"timestampEpochMilli\": 1941,\n    \"targetSnapshotId\": \"a87f7ee7-0130-b9d5-a73b-56a1546bf260\",\n    \"parentSnapshotId\": \"32918671-5140-89a4-6573-0a3c4336f434\",\n    \"tableNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"structureNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"nodeName\": \"string\",\n    \"rowsSaved\": 2525,\n    \"uri\": \"https://jLfiyzYhDGqpAdg.tvoin3nHCGZEsAYtsm71kjcjzUWidTXWNzqFqi.YVx2G-n\",\n    \"pathType\": \"REMOTE\",\n    \"force\": false\n  },\n  {\n    \"operation\": \"CREATE\",\n    \"operationId\": \"603e6477-2e9d-1472-9773-f66fd4895a83\",\n    \"startTimeEpochMilli\": 719,\n    \"status\": \"PREPARED\",\n    \"timestampEpochMilli\": 3245,\n    \"targetSnapshotId\": \"63ae98b7-4d07-dbfd-c1dc-062a5307e8e9\",\n    \"parentSnapshotId\": \"a85df8a7-55ea-4794-dda4-c0a53757f721\",\n    \"tableNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"structureNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"nodeName\": \"string\",\n    \"rowsSaved\": 5574,\n    \"uri\": \"https://lbnPgqiQb.llmjUrosV0mj9eby7GNJPtDa-CnbxxpoxKveFb4+\",\n    \"pathType\": \"REMOTE\",\n    \"force\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4c7598b-faf4-442a-bee7-4731ee9eaace",
+              "name": "Incorrect configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "operations",
+                    ":operationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allNodes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "operationId",
+                      "description": "(Required) ID of the operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d263765c-9a01-4e45-a05c-9b7d944af9e8",
+              "name": "Snapshot operation was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "operations",
+                    ":operationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allNodes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "operationId",
+                      "description": "(Required) ID of the operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88bf1654-0f16-4cc9-84d6-cd9969b75e0d",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "operations",
+                    ":operationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "allNodes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "operationId",
+                      "description": "(Required) ID of the operation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55bc4a61-cf3b-4512-81b7-e64bcd74567c",
+          "name": "Restore snapshot",
+          "request": {
+            "name": "Restore snapshot",
+            "description": {
+              "content": "Restores a snapshot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "snapshot",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"snapshotId\": \"<uuid>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"decryptionProvider\": \"<string>\",\n  \"force\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07d7131d-22fa-4038-80b2-75baf8dd101f",
+              "name": "Snapshot restoration has been started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"decryptionProvider\": \"<string>\",\n  \"force\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"74679f33-8e0e-ed8a-f17f-20d9698ae475\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfae70f0-5f03-4925-8011-1cf79e294973",
+              "name": "Incorrect configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"decryptionProvider\": \"<string>\",\n  \"force\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d7beb11-98d1-4a5c-9cea-d5b3e399429b",
+              "name": "Snapshot meta file was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"decryptionProvider\": \"<string>\",\n  \"force\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b245133-5ecb-400c-b647-ea4c60059d01",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "snapshot",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"snapshotId\": \"<uuid>\",\n  \"tableNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"structureNames\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"decryptionProvider\": \"<string>\",\n  \"force\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 3658,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"0a1c0f8d-6148-5ac0-4f82-cb45242b7c63\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:10300",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cfc4dbe0-40cd-4fad-a359-7934dd853752",
+    "name": "GridGain REST module authentication snapshotManagement API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: user@ignite.apache.org",
+      "type": "text/plain"
+    }
+  }
+}

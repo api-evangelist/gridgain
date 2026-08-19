@@ -1,0 +1,2000 @@
+{
+  "item": [
+    {
+      "id": "aead73f4-c418-4018-b0d0-da006026d100",
+      "name": "deployment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6d604c6-b624-4584-8ba5-40447ef22f53",
+          "name": "Get cluster unit statuses",
+          "request": {
+            "name": "Get cluster unit statuses",
+            "description": {
+              "content": "Cluster unit statuses.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "cluster",
+                "units"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a3eca47-117e-4d2d-a8c5-66d85aef9fcc",
+              "name": "All statuses returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "cluster",
+                    "units"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47b3fd37-c93f-4de2-934d-b920f2bf93ae",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "cluster",
+                    "units"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 9457,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"14ca8b03-812e-1294-be89-2b219ac509cf\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f1ba0cce-a9e8-4df8-9c73-729bea31d7d5",
+          "name": "Get specific cluster unit statuses",
+          "request": {
+            "name": "Get specific cluster unit statuses",
+            "description": {
+              "content": "Cluster unit statuses by unit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "cluster",
+                "units",
+                ":unitId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9578ee12-aa1e-463c-8f7a-496d1e837f5c",
+              "name": "All statuses returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "cluster",
+                    "units",
+                    ":unitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5260ab21-e89e-4053-a0cf-46fbb380febf",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "cluster",
+                    "units",
+                    ":unitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0efbdaea-14bf-44c5-b110-4ba407c02f41",
+          "name": "Get node unit statuses",
+          "request": {
+            "name": "Get node unit statuses",
+            "description": {
+              "content": "Returns a list of unit statuses per node.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "node",
+                "units"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0805067-eed4-4ceb-b6bd-2fdc1b3c443f",
+              "name": "All statuses were returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "node",
+                    "units"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6f80410-a174-40e3-acf4-cd9a96da424c",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "node",
+                    "units"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f775b925-63a4-4c6d-8332-420f019f541d",
+          "name": "Get unit contents.",
+          "request": {
+            "name": "Get unit contents.",
+            "description": {
+              "content": "Returns a folder representation with unit content.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "node",
+                "units",
+                "structure",
+                ":unitId",
+                ":unitVersion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitVersion",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b675ba41-4553-4a0c-81fc-d76a049840db",
+              "name": "Unit content returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "node",
+                    "units",
+                    "structure",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"children\": [\n    {\n      \"name\": \"string\",\n      \"size\": 3767,\n      \"type\": \"file\"\n    },\n    {\n      \"name\": \"string\",\n      \"size\": 1337,\n      \"type\": \"file\"\n    }\n  ],\n  \"name\": \"string\",\n  \"size\": 9163,\n  \"type\": \"folder\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cdd5702-65c1-4f93-b89b-6716f53e5f66",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "node",
+                    "units",
+                    "structure",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd0bd8f3-87c9-459f-bc49-6a2f7c729fda",
+          "name": "Get specific node unit statuses",
+          "request": {
+            "name": "Get specific node unit statuses",
+            "description": {
+              "content": "Returns a list of node unit statuses by unit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "node",
+                "units",
+                ":unitId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e3b69ae9-c5b0-40f8-be3a-e2710fcc0803",
+              "name": "All statuses returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "node",
+                    "units",
+                    ":unitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"versionToStatus\": [\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"version\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21cb878b-4b4a-4eee-a587-500b17f79707",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "node",
+                    "units",
+                    ":unitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1493dec9-6156-46f3-93f4-d2afe281b02d",
+          "name": "Deploy unit with folders structure in zip.",
+          "request": {
+            "name": "Deploy unit with folders structure in zip.",
+            "description": {
+              "content": "Deploys provided unit in zip file to the cluster with folders structure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "units",
+                "zip",
+                ":unitId",
+                ":unitVersion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "deployMode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "initialNodes",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "initialNodes",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitVersion",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "unitContent",
+                  "value": "[\"<binary>\",\"<binary>\"]",
+                  "type": "text",
+                  "description": "(Required) The zip file with unit content to deploy."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bef8141a-c64c-4d63-8be6-70e28722930a",
+              "name": "Unit deployed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    "zip",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The zip file with unit content to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "true",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83501cb1-7e5a-4a1f-ae84-5b279ae5d791",
+              "name": "Deployment unit with unzip supports only single zip file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    "zip",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The zip file with unit content to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d49e4b3-c174-4c69-8681-bd5360f46d53",
+              "name": "Unit with same identifier and version is already deployed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    "zip",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The zip file with unit content to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7be16bea-e017-4c9a-965c-ee6f8b1b43c6",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    "zip",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The zip file with unit content to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0442aff4-ee35-48de-bb9f-aa70792af516",
+          "name": "Deploy unit",
+          "request": {
+            "name": "Deploy unit",
+            "description": {
+              "content": "Deploys provided unit to the cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "units",
+                ":unitId",
+                ":unitVersion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "deployMode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "initialNodes",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "initialNodes",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitVersion",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "unitContent",
+                  "value": "[\"<binary>\",\"<binary>\"]",
+                  "type": "text",
+                  "description": "(Required) The code to deploy."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8ececbc6-eb19-4277-ae02-62f41def654b",
+              "name": "Unit deployed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The code to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "true",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "262decf4-ce0b-4fdb-b30b-fb9dcd8c79ac",
+              "name": "Unit with same identifier and version is already deployed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The code to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ecb8658-9297-4627-86fa-67d638e53362",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "deployMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "initialNodes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The code to deploy.",
+                        "type": "text/plain"
+                      },
+                      "key": "unitContent",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9642f03e-58f0-4a1d-a746-31ab4afa6435",
+          "name": "Undeploy unit",
+          "request": {
+            "name": "Undeploy unit",
+            "description": {
+              "content": "Undeploys the unit with provided unitId and unitVersion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "management",
+                "v1",
+                "deployment",
+                "units",
+                ":unitId",
+                ":unitVersion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "unitVersion",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8860bb64-9a33-4878-be7e-c04807ca1b09",
+              "name": "Unit undeployed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "true",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26bc6f2e-4aa6-4e67-a44e-d02219df7e5c",
+              "name": "Unit with provided identifier and version does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52164ff4-5fef-4a23-a8b2-b3e623951d0c",
+              "name": "Internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "management",
+                    "v1",
+                    "deployment",
+                    "units",
+                    ":unitId",
+                    ":unitVersion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "unitVersion",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"string\",\n  \"status\": 1256,\n  \"code\": \"string\",\n  \"type\": \"string\",\n  \"detail\": \"string\",\n  \"node\": \"string\",\n  \"traceId\": \"d0ee92ab-3934-7b91-a3f0-fa0e3cdc8954\",\n  \"invalidParams\": [\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:10300",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4fdd2c6b-0b1c-4691-a9ab-b29dbd9ea5f5",
+    "name": "GridGain REST module authentication deployment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: user@ignite.apache.org",
+      "type": "text/plain"
+    }
+  }
+}

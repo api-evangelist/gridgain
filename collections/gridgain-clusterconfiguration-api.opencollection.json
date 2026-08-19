@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication clusterConfiguration API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "clusterConfiguration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cluster configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/cluster"
+          },
+          "docs": "Gets the current configuration of the cluster. The configuration is returned in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Update cluster configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:10300/management/v1/configuration/cluster"
+          },
+          "docs": "Updates cluster configuration. New configuration should be provided in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Get configuration represented by path",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/cluster/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Configuration tree address. For example: `element.subelement`."
+              }
+            ]
+          },
+          "docs": "Gets the configuration on the specific path. Configuration is in HOCON format"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

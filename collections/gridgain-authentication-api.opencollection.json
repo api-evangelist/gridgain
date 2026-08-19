@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Revoke all JWTs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/authentication/jwt",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Revoke all issued JWTs."
+        },
+        {
+          "info": {
+            "name": "Revoke JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/authentication/jwt/:token",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revoke a specific JWT."
+        },
+        {
+          "info": {
+            "name": "Get JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/authentication/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get JWT for the user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

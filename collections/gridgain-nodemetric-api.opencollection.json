@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication nodeMetric API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "nodeMetric",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Disable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/node/disable"
+          },
+          "docs": "Disables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "Enable metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/metric/node/enable"
+          },
+          "docs": "Enables the specified metric source."
+        },
+        {
+          "info": {
+            "name": "List metric sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/metric/node/set"
+          },
+          "docs": "Gets a list of all enabled metric sets."
+        },
+        {
+          "info": {
+            "name": "List metric sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/metric/node/source"
+          },
+          "docs": "Gets a list of all available metric sources."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

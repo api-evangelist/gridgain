@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication distribution API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "distribution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reset distribution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/distribution/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Recalculates distribution for all tables in the provided zones."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

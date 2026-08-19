@@ -1,0 +1,248 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication deployment API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deployment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cluster unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/cluster/units",
+            "params": [
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cluster unit statuses."
+        },
+        {
+          "info": {
+            "name": "Get specific cluster unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/cluster/units/:unitId",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Cluster unit statuses by unit."
+        },
+        {
+          "info": {
+            "name": "Get node unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/node/units",
+            "params": [
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of unit statuses per node."
+        },
+        {
+          "info": {
+            "name": "Get unit contents.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/node/units/structure/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a folder representation with unit content."
+        },
+        {
+          "info": {
+            "name": "Get specific node unit statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/deployment/node/units/:unitId",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of node unit statuses by unit."
+        },
+        {
+          "info": {
+            "name": "Deploy unit with folders structure in zip.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/deployment/units/zip/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deployMode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "initialNodes",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "unitContent",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deploys provided unit in zip file to the cluster with folders structure."
+        },
+        {
+          "info": {
+            "name": "Deploy unit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/deployment/units/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deployMode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "initialNodes",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "unitContent",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Deploys provided unit to the cluster."
+        },
+        {
+          "info": {
+            "name": "Undeploy unit",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/deployment/units/:unitId/:unitVersion",
+            "params": [
+              {
+                "name": "unitId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "unitVersion",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Undeploys the unit with provided unitId and unitVersion."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

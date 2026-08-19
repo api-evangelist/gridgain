@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication licenseManagement API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "licenseManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get license",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license"
+          },
+          "docs": "Get current license."
+        },
+        {
+          "info": {
+            "name": "Apply new License",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/license",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies provided license."
+        },
+        {
+          "info": {
+            "name": "Get license features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/features"
+          },
+          "docs": "Get license features available to user."
+        },
+        {
+          "info": {
+            "name": "Get license id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/id"
+          },
+          "docs": "Get id of the current license."
+        },
+        {
+          "info": {
+            "name": "Get license info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/infos"
+          },
+          "docs": "Get info fields of the current license."
+        },
+        {
+          "info": {
+            "name": "Get license limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/license/limits"
+          },
+          "docs": "Get limits of the current license."
+        },
+        {
+          "info": {
+            "name": "Apply new License",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/license/raw"
+          },
+          "docs": "Applies provided license"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

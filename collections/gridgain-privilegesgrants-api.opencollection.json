@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication privilegesGrants API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "privilegesGrants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Grant privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/pg",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grants privileges to roles."
+        },
+        {
+          "info": {
+            "name": "Revoke privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/pg",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revokes privileges from roles."
+        },
+        {
+          "info": {
+            "name": "Get all roles with privilege",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/pg/roles"
+          },
+          "docs": "Returns the list of all roles with granted privileges."
+        },
+        {
+          "info": {
+            "name": "Get granted privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/pg/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              }
+            ]
+          },
+          "docs": "Returns the list of all granted privileges to role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

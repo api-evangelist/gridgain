@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication snapshotManagement API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "snapshotManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/snapshot/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new snapshot."
+        },
+        {
+          "info": {
+            "name": "Delete snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/snapshot/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes a snapshot."
+        },
+        {
+          "info": {
+            "name": "Returns a list of snapshots.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/snapshot/list",
+            "params": [
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Snapshot path name specified in the configuration, `null` means use all paths from the configuration."
+              },
+              {
+                "name": "showNodeNames",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show node names or only their numbers in the response."
+              },
+              {
+                "name": "showTableNames",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show table or only their numbers names in the response."
+              },
+              {
+                "name": "showSourceUri",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show snapshot path URI in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of snapshots."
+        },
+        {
+          "info": {
+            "name": "Get all snapshot operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/snapshot/operations"
+          },
+          "docs": "Returns all snapshot operations."
+        },
+        {
+          "info": {
+            "name": "Get operation by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/snapshot/operations/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the operation."
+              },
+              {
+                "name": "allNodes",
+                "value": "",
+                "type": "query",
+                "description": "if operation status for every node should be retrieved."
+              }
+            ]
+          },
+          "docs": "Returns operation by its ID."
+        },
+        {
+          "info": {
+            "name": "Restore snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/snapshot/restore",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restores a snapshot."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

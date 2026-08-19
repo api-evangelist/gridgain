@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication compute API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "compute",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all job states",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/compute/jobs"
+          },
+          "docs": "Fetches the current states of all compute jobs."
+        },
+        {
+          "info": {
+            "name": "Retrieve job state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/compute/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the compute job."
+              }
+            ]
+          },
+          "docs": "Fetches the current state of a specific compute job identified by jobId."
+        },
+        {
+          "info": {
+            "name": "Cancel job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/compute/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the compute job."
+              }
+            ]
+          },
+          "docs": "Cancels a specific compute job identified by jobId."
+        },
+        {
+          "info": {
+            "name": "Update job priority",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/compute/jobs/:jobId/priority",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the compute job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the priority of a specific compute job identified by jobId."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

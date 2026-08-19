@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication nodeConfiguration API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "nodeConfiguration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get node configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/node"
+          },
+          "docs": "Gets node configuration in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Update node configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:10300/management/v1/configuration/node"
+          },
+          "docs": "Updates node configuration. New configuration should be provided in HOCON format."
+        },
+        {
+          "info": {
+            "name": "Get configuration represented by path",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/configuration/node/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Configuration tree address. For example: `element.subelement`."
+              }
+            ]
+          },
+          "docs": "Gets a configuration of a specific node, in HOCON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

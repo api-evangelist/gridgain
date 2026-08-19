@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication sql API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sql",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invalidates SQL planner cache.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/sql/plan/clear-cache",
+            "params": [
+              {
+                "name": "tableNames",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Invalidates SQL planner cache records on node that related to provided table names."
+        },
+        {
+          "info": {
+            "name": "Retrieve all running sql queries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/sql/queries"
+          },
+          "docs": "Fetches all running sql queries."
+        },
+        {
+          "info": {
+            "name": "Retrieve sql query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/sql/queries/:queryId",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the sql query."
+              }
+            ]
+          },
+          "docs": "Fetches the current state of a specific sql query."
+        },
+        {
+          "info": {
+            "name": "Kill sql query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/sql/queries/:queryId",
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the sql query."
+              }
+            ]
+          },
+          "docs": "Kills a specific sql query identified by query id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

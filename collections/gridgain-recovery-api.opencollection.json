@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication recovery API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "recovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/cluster/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrates nodes from old cluster to new (repaired) cluster."
+        },
+        {
+          "info": {
+            "name": "resetCluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/cluster/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates cluster reset to repair CMG/Metastorage group/both."
+        },
+        {
+          "info": {
+            "name": "recoverTables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/tables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a recovery process for tables."
+        },
+        {
+          "info": {
+            "name": "getTablesRecoveryState",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/recovery/tables/state/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path",
+                "description": "Operation ID."
+              }
+            ]
+          },
+          "docs": "Get a state of recovery process for tables."
+        },
+        {
+          "info": {
+            "name": "resetZonePartitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/zone/partitions/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates assignments of zone's partitions in a forced manner, allowing for the recovery of raft groups with lost majorities."
+        },
+        {
+          "info": {
+            "name": "restartZonePartitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/zone/partitions/restart",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restarts replica service and raft group of passed zone partitions."
+        },
+        {
+          "info": {
+            "name": "restartZonePartitionsWithCleanup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/recovery/zone/partitions/restartWithCleanup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restarts replica service and raft group of passed zone partitions with cleaning up of the storage."
+        },
+        {
+          "info": {
+            "name": "getZoneGlobalPartitionStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/recovery/zone/state/global",
+            "params": [
+              {
+                "name": "zoneNames",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "partitionIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns global zone partition states."
+        },
+        {
+          "info": {
+            "name": "getZoneLocalPartitionStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/recovery/zone/state/local",
+            "params": [
+              {
+                "name": "zoneNames",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "nodeNames",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "partitionIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns local zone partition states."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

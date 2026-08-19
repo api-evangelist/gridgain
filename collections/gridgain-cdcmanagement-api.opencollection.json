@@ -1,0 +1,338 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication cdcManagement API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cdcManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of CDC replications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/replications"
+          },
+          "docs": "Returns the list of all CDC replications."
+        },
+        {
+          "info": {
+            "name": "Create CDC replication. CDC replication is identified by unique name. CDC replication has a type, parameters and a list of tables that should be replicated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/replications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a CDC replication."
+        },
+        {
+          "info": {
+            "name": "Get CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC replication."
+        },
+        {
+          "info": {
+            "name": "Start CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Replication name."
+              }
+            ]
+          },
+          "docs": "Start a CDC replication by name."
+        },
+        {
+          "info": {
+            "name": "Delete CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Replication name."
+              }
+            ]
+          },
+          "docs": "Deletes a CDC replication by name."
+        },
+        {
+          "info": {
+            "name": "Stop CDC replication by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/replications/:name/stop",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Replication name."
+              }
+            ]
+          },
+          "docs": "Stop a CDC replication by name."
+        },
+        {
+          "info": {
+            "name": "Get the list of CDC sinks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sinks"
+          },
+          "docs": "Returns the list of all CDC sinks."
+        },
+        {
+          "info": {
+            "name": "Create CDC sink. CDC sink is identified by unique name. CDC sink has a type, parameters and a list of tables that should be replicated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/sinks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a CDC sink."
+        },
+        {
+          "info": {
+            "name": "Get CDC sink by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC sink."
+        },
+        {
+          "info": {
+            "name": "Update CDC sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a CDC sink."
+        },
+        {
+          "info": {
+            "name": "Delete CDC sink by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Deletes a CDC sink by name."
+        },
+        {
+          "info": {
+            "name": "Get CDC sink status by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sinks/:name/status",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC sink status."
+        },
+        {
+          "info": {
+            "name": "Get the list of CDC sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sources"
+          },
+          "docs": "Returns the list of all CDC sources."
+        },
+        {
+          "info": {
+            "name": "Create CDC source. CDC source is identified by unique name. CDC source has a type, parameters and a list of tables that should be replicated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/cdc/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a CDC source."
+        },
+        {
+          "info": {
+            "name": "Get CDC source by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC source."
+        },
+        {
+          "info": {
+            "name": "Update CDC source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a CDC source."
+        },
+        {
+          "info": {
+            "name": "Delete CDC source by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Deletes a CDC source by name."
+        },
+        {
+          "info": {
+            "name": "Get CDC source status by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/cdc/sources/:name/status",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name."
+              }
+            ]
+          },
+          "docs": "Returns a CDC source status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

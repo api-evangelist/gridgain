@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication roleAssignments API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "roleAssignments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assign roles to users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/ra",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns roles to users."
+        },
+        {
+          "info": {
+            "name": "Revoke roles from users",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/ra",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revokes roles from users."
+        },
+        {
+          "info": {
+            "name": "Get roles with users and privileges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/roles"
+          },
+          "docs": "Returns the list of all roles with associated users and assigned privileges."
+        },
+        {
+          "info": {
+            "name": "Get user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/roles/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "Username."
+              }
+            ]
+          },
+          "docs": "Returns the list of all roles assigned to user."
+        },
+        {
+          "info": {
+            "name": "Get users who have all specified roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/users"
+          },
+          "docs": "Returns the list of all users with assigned roles."
+        },
+        {
+          "info": {
+            "name": "Get users who have role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/ra/users/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              }
+            ]
+          },
+          "docs": "Returns the list of all users assigned to role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

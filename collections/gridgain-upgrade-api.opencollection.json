@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication upgrade API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "upgrade",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cancel upgrade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/upgrade/cancel"
+          },
+          "docs": "Cancel the rolling upgrade"
+        },
+        {
+          "info": {
+            "name": "Commit upgrade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/upgrade/commit"
+          },
+          "docs": "Commit the rolling upgrade"
+        },
+        {
+          "info": {
+            "name": "Start upgrade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/upgrade/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts the rolling upgrade"
+        },
+        {
+          "info": {
+            "name": "Upgrade state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/upgrade/state"
+          },
+          "docs": "Current state of the rolling upgrade"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication roleManagement API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "roleManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/roles"
+          },
+          "docs": "Returns the list of all roles."
+        },
+        {
+          "info": {
+            "name": "Create role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/rbac/roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create role."
+        },
+        {
+          "info": {
+            "name": "Get role by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/rbac/roles/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              }
+            ]
+          },
+          "docs": "Returns a role."
+        },
+        {
+          "info": {
+            "name": "Delete role by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:10300/management/v1/rbac/roles/:roleName",
+            "params": [
+              {
+                "name": "roleName",
+                "value": "",
+                "type": "path",
+                "description": "Role name."
+              },
+              {
+                "name": "revoke",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

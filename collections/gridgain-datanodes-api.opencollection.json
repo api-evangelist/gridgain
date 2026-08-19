@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GridGain REST module authentication dataNodes API",
+    "version": "9.1.22"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "dataNodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "resetDataNodesForZones",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/zones/datanodes/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Recalculates and resets data nodes for given zones."
+        },
+        {
+          "info": {
+            "name": "getDataNodesForZone",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:10300/management/v1/zones/:zoneName/datanodes",
+            "params": [
+              {
+                "name": "zoneName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns current data nodes for zone."
+        },
+        {
+          "info": {
+            "name": "resetDataNodesForZone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:10300/management/v1/zones/:zoneName/datanodes/reset",
+            "params": [
+              {
+                "name": "zoneName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Recalculates and resets data nodes for zone."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
