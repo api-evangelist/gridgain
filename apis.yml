@@ -53,6 +53,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Authentication
+  tags_raw:
   - authentication
   properties:
   - type: OpenAPI
@@ -68,7 +70,8 @@ apis:
   description: The cdcManagement API from GridGain — 9 operation(s) for cdcmanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - cdcManagement
   properties:
   - type: OpenAPI
@@ -84,7 +87,8 @@ apis:
   description: The clusterConfiguration API from GridGain — 2 operation(s) for clusterconfiguration.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - clusterConfiguration
   properties:
   - type: OpenAPI
@@ -101,6 +105,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Cluster Management
+  tags_raw:
   - clusterManagement
   properties:
   - type: OpenAPI
@@ -116,7 +122,8 @@ apis:
   description: The clusterMetric API from GridGain — 3 operation(s) for clustermetric.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - clusterMetric
   properties:
   - type: OpenAPI
@@ -133,6 +140,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Compute
+  tags_raw:
   - compute
   properties:
   - type: OpenAPI
@@ -149,6 +158,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - DataNodes
+  tags_raw:
   - dataNodes
   properties:
   - type: OpenAPI
@@ -165,6 +176,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - DCR
+  tags_raw:
   - dcr
   properties:
   - type: OpenAPI
@@ -181,6 +194,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Deployment
+  tags_raw:
   - deployment
   properties:
   - type: OpenAPI
@@ -197,6 +212,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Distribution
+  tags_raw:
   - distribution
   properties:
   - type: OpenAPI
@@ -213,6 +230,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - License Management
+  tags_raw:
   - licenseManagement
   properties:
   - type: OpenAPI
@@ -228,7 +247,8 @@ apis:
   description: The nodeConfiguration API from GridGain — 2 operation(s) for nodeconfiguration.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - nodeConfiguration
   properties:
   - type: OpenAPI
@@ -244,7 +264,8 @@ apis:
   description: The nodeManagement API from GridGain — 3 operation(s) for nodemanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - nodeManagement
   properties:
   - type: OpenAPI
@@ -260,7 +281,8 @@ apis:
   description: The nodeMetric API from GridGain — 4 operation(s) for nodemetric.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - nodeMetric
   properties:
   - type: OpenAPI
@@ -276,7 +298,8 @@ apis:
   description: The privilegesGrants API from GridGain — 3 operation(s) for privilegesgrants.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - privilegesGrants
   properties:
   - type: OpenAPI
@@ -293,6 +316,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Recovery
+  tags_raw:
   - recovery
   properties:
   - type: OpenAPI
@@ -309,6 +334,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Role Assignments
+  tags_raw:
   - roleAssignments
   properties:
   - type: OpenAPI
@@ -325,6 +352,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Role Management
+  tags_raw:
   - roleManagement
   properties:
   - type: OpenAPI
@@ -340,7 +369,8 @@ apis:
   description: The snapshotManagement API from GridGain — 6 operation(s) for snapshotmanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
+  tags: []
+  tags_raw:
   - snapshotManagement
   properties:
   - type: OpenAPI
@@ -357,6 +387,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - SQL
+  tags_raw:
   - sql
   properties:
   - type: OpenAPI
@@ -373,6 +405,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - System
+  tags_raw:
   - system
   properties:
   - type: OpenAPI
@@ -389,6 +423,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Topology
+  tags_raw:
   - topology
   properties:
   - type: OpenAPI
@@ -405,6 +441,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Transaction
+  tags_raw:
   - transactions
   properties:
   - type: OpenAPI
@@ -421,6 +459,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - Upgrade
+  tags_raw:
   - upgrade
   properties:
   - type: OpenAPI
@@ -437,6 +477,8 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
+  - User Management
+  tags_raw:
   - userManagement
   properties:
   - type: OpenAPI
