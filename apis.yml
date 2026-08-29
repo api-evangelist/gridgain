@@ -5,6 +5,17 @@ description: >-
   workloads. Built on top of Apache Ignite, it offers distributed database, caching, and computing capabilities for
   high-performance data-intensive applications.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
