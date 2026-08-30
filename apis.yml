@@ -117,8 +117,7 @@ apis:
   description: The clusterManagement API from GridGain — 3 operation(s) for clustermanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
-  - Cluster Management
+  tags: []
   tags_raw:
   - clusterManagement
   properties:
@@ -170,8 +169,7 @@ apis:
   description: The dataNodes API from GridGain — 3 operation(s) for datanodes.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
-  - DataNodes
+  tags: []
   tags_raw:
   - dataNodes
   properties:
@@ -189,7 +187,7 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
-  - DCR
+  - dcr
   tags_raw:
   - dcr
   properties:
@@ -242,8 +240,7 @@ apis:
   description: The licenseManagement API from GridGain — 6 operation(s) for licensemanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
-  - License Management
+  tags: []
   tags_raw:
   - licenseManagement
   properties:
@@ -346,8 +343,7 @@ apis:
   description: The roleAssignments API from GridGain — 5 operation(s) for roleassignments.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
-  - Role Assignments
+  tags: []
   tags_raw:
   - roleAssignments
   properties:
@@ -364,8 +360,7 @@ apis:
   description: The roleManagement API from GridGain — 2 operation(s) for rolemanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
-  - Role Management
+  tags: []
   tags_raw:
   - roleManagement
   properties:
@@ -436,7 +431,7 @@ apis:
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
   tags:
-  - Topology
+  - topology
   tags_raw:
   - topology
   properties:
@@ -489,8 +484,7 @@ apis:
   description: The userManagement API from GridGain — 2 operation(s) for usermanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
-  tags:
-  - User Management
+  tags: []
   tags_raw:
   - userManagement
   properties:
