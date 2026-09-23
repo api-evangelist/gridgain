@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication licenseManagement API
+  title: GridGain REST module License Management API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: licenseManagement
+- name: License Management
 paths:
   /management/v1/license:
     get:
       tags:
-      - licenseManagement
+      - License Management
       summary: Get license
       description: Get current license.
       operationId: id
@@ -50,7 +50,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
     post:
       tags:
-      - licenseManagement
+      - License Management
       summary: Apply new License
       description: Applies provided license.
       operationId: applyNewLicense
@@ -84,7 +84,7 @@ paths:
   /management/v1/license/features:
     get:
       tags:
-      - licenseManagement
+      - License Management
       summary: Get license features
       description: Get license features available to user.
       operationId: features
@@ -110,7 +110,7 @@ paths:
   /management/v1/license/id:
     get:
       tags:
-      - licenseManagement
+      - License Management
       summary: Get license id
       description: Get id of the current license.
       operationId: id_1
@@ -136,7 +136,7 @@ paths:
   /management/v1/license/infos:
     get:
       tags:
-      - licenseManagement
+      - License Management
       summary: Get license info
       description: Get info fields of the current license.
       operationId: infos
@@ -162,7 +162,7 @@ paths:
   /management/v1/license/limits:
     get:
       tags:
-      - licenseManagement
+      - License Management
       summary: Get license limits
       description: Get limits of the current license.
       operationId: limits
@@ -188,7 +188,7 @@ paths:
   /management/v1/license/raw:
     post:
       tags:
-      - licenseManagement
+      - License Management
       summary: Apply new License
       description: Applies provided license
       operationId: applyNewLicenseRaw
@@ -221,29 +221,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    LicenseFeature:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: Feature identifier.
-        name:
-          type: string
-          description: Feature name.
-      description: License feature representation.
     License:
       type: object
       properties:
@@ -274,33 +251,16 @@ components:
           - $ref: '#/components/schemas/LicenseLimits'
           - description: License limitations
       description: License information
-    LicenseId:
-      required:
-      - id
+    InvalidParam:
       type: object
       properties:
-        id:
+        name:
           type: string
-      description: License Id
-    Signatures:
-      required:
-      - signature_1
-      type: object
-      properties:
-        signature_1:
+          description: Parameter name.
+        reason:
           type: string
-      description: DTO for license signatures.
-    LicenseFeatureSet:
-      required:
-      - features
-      type: object
-      properties:
-        features:
-          type: array
-          description: License features set.
-          items:
-            $ref: '#/components/schemas/LicenseFeature'
-      description: License features set representation.
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -333,31 +293,25 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    LicenseInfo:
+    LicenseId:
+      required:
+      - id
       type: object
       properties:
-        companyName:
+        id:
           type: string
-          description: Name of the company
-        companyWebsite:
-          type: string
-          description: Company's website URL
-        contactEmail:
-          type: string
-          description: Contact person's email address
-        contactName:
-          type: string
-          description: Contact person's name
-        contractEndDate:
-          type: string
-          description: Contract end date
-        contractStartDate:
-          type: string
-          description: Contract start date
-        licenseNote:
-          type: string
-          description: Additional notes about the license
-      description: License information fields
+      description: License Id
+    LicenseFeatureSet:
+      required:
+      - features
+      type: object
+      properties:
+        features:
+          type: array
+          description: License features set.
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+      description: License features set representation.
     LicenseLimits:
       type: object
       properties:
@@ -396,6 +350,52 @@ components:
           description: Maximum on-disk size allowed
           format: int64
       description: License limitations
+    LicenseInfo:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the company
+        companyWebsite:
+          type: string
+          description: Company's website URL
+        contactEmail:
+          type: string
+          description: Contact person's email address
+        contactName:
+          type: string
+          description: Contact person's name
+        contractEndDate:
+          type: string
+          description: Contract end date
+        contractStartDate:
+          type: string
+          description: Contract start date
+        licenseNote:
+          type: string
+          description: Additional notes about the license
+      description: License information fields
+    LicenseFeature:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Feature identifier.
+        name:
+          type: string
+          description: Feature name.
+      description: License feature representation.
+    Signatures:
+      required:
+      - signature_1
+      type: object
+      properties:
+        signature_1:
+          type: string
+      description: DTO for license signatures.
   securitySchemes:
     basicAuth:
       type: http

@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication clusterMetric API
+  title: GridGain REST module Cluster Metric API
   contact:
     email: user@ignite.apache.org
   license:
@@ -102,6 +102,29 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    MetricSource:
+      required:
+      - enabled
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric source name.
+        enabled:
+          type: boolean
+          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
+      description: A list of metric sources provided by modules.
     Problem:
       type: object
       properties:
@@ -149,29 +172,6 @@ components:
           items:
             $ref: '#/components/schemas/MetricSource'
       description: A list of metric sources for a node.
-    MetricSource:
-      required:
-      - enabled
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Metric source name.
-        enabled:
-          type: boolean
-          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
-      description: A list of metric sources provided by modules.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

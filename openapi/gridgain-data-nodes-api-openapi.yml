@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication nodeConfiguration API
+  title: GridGain REST module Data Nodes API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,109 +20,126 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: nodeConfiguration
+- name: Data Nodes
 paths:
-  /management/v1/configuration/node:
-    get:
+  /management/v1/zones/datanodes/reset:
+    post:
       tags:
-      - nodeConfiguration
-      summary: Get node configuration
-      description: Gets node configuration in HOCON format.
-      operationId: getNodeConfiguration
-      responses:
-        '200':
-          description: Full node configuration.
-          content:
-            text/plain:
-              schema:
-                type: string
-        '500':
-          description: Internal error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '400':
-          description: Incorrect configuration.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-    patch:
-      tags:
-      - nodeConfiguration
-      summary: Update node configuration
-      description: Updates node configuration. New configuration should be provided in HOCON format.
-      operationId: updateNodeConfiguration
+      - Data Nodes
+      description: Recalculates and resets data nodes for given zones.
+      operationId: resetDataNodesForZones
       requestBody:
-        description: The node configuration to update.
         content:
-          text/plain:
+          application/json:
             schema:
-              type: string
-        required: true
+              type:
+              - array
+              - 'null'
+              description: Names specifying zones to recalculate data nodes for. Case-sensitive, if empty then all zones' data nodes will be recalculated.
+              items:
+                type: string
       responses:
         '200':
-          description: Configuration successfully updated.
+          description: Data nodes are recalculated and reset.
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         '500':
           description: Internal error.
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-        '400':
-          description: Incorrect configuration.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '405':
-          description: Configuration is read-only.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '422':
-          description: Configuration parse/apply error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-  /management/v1/configuration/node/{path}:
+      summary: Reset data nodes for zones
+      x-summary-source: derived
+  /management/v1/zones/{zoneName}/datanodes:
     get:
       tags:
-      - nodeConfiguration
-      summary: Get configuration represented by path
-      description: Gets a configuration of a specific node, in HOCON format.
-      operationId: getNodeConfigurationByPath
+      - Data Nodes
+      description: Returns current data nodes for zone.
+      operationId: getDataNodesForZone
       parameters:
-      - name: path
+      - name: zoneName
         in: path
-        description: 'Configuration tree address. For example: `element.subelement`.'
         required: true
         schema:
           type: string
+          description: Case-sensitive zone name to return data nodes for.
       responses:
         '200':
-          description: Returned node configuration.
+          description: Data nodes are returned.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+            application/problem+json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         '500':
           description: Internal error.
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
+      summary: Get data nodes for zone
+      x-summary-source: derived
+  /management/v1/zones/{zoneName}/datanodes/reset:
+    post:
+      tags:
+      - Data Nodes
+      description: Recalculates and resets data nodes for zone.
+      operationId: resetDataNodesForZone
+      parameters:
+      - name: zoneName
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Case-sensitive zone name to recalculate data nodes for.
+      responses:
+        '200':
+          description: Data nodes are recalculated and reset.
         '400':
-          description: Incorrect configuration.
+          description: Bad request.
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      summary: Reset data nodes for zone
+      x-summary-source: derived
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -155,16 +172,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication topology API
+  title: GridGain REST module Topology API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: topology
+- name: Topology
 paths:
   /management/v1/cluster/topology/logical:
     get:
       tags:
-      - topology
+      - Topology
       summary: Get logical topology
       description: Gets information about logical cluster topology.
       operationId: logical
@@ -53,7 +53,7 @@ paths:
   /management/v1/cluster/topology/physical:
     get:
       tags:
-      - topology
+      - Topology
       summary: Get physical topology
       description: Gets information about physical cluster topology.
       operationId: physical
@@ -84,36 +84,6 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    ClusterNode:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Node ID.
-          format: uuid
-        name:
-          type: string
-          description: Unique cluster name.
-        address:
-          allOf:
-          - $ref: '#/components/schemas/NetworkAddress'
-          - description: Cluster network address information.
-        metadata:
-          allOf:
-          - $ref: '#/components/schemas/NodeMetadata'
-          - description: Node metadata information.
-      description: Information about the cluster node.
-    NetworkAddress:
-      type: object
-      properties:
-        host:
-          type: string
-          description: Name of the host node runs on.
-        port:
-          type: integer
-          description: Port the node runs on.
-          format: int32
-      description: Node network address information.
     Problem:
       type: object
       properties:
@@ -161,6 +131,36 @@ components:
           description: The HTTPS port exposed to REST API.
           format: int32
       description: Node metadata information.
+    NetworkAddress:
+      type: object
+      properties:
+        host:
+          type: string
+          description: Name of the host node runs on.
+        port:
+          type: integer
+          description: Port the node runs on.
+          format: int32
+      description: Node network address information.
+    ClusterNode:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Node ID.
+          format: uuid
+        name:
+          type: string
+          description: Unique cluster name.
+        address:
+          allOf:
+          - $ref: '#/components/schemas/NetworkAddress'
+          - description: Cluster network address information.
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/NodeMetadata'
+          - description: Node metadata information.
+      description: Information about the cluster node.
   securitySchemes:
     basicAuth:
       type: http

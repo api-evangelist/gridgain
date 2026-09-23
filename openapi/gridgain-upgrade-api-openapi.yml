@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication upgrade API
+  title: GridGain REST module Upgrade API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: upgrade
+- name: Upgrade
 paths:
   /management/v1/upgrade/cancel:
     post:
       tags:
-      - upgrade
+      - Upgrade
       summary: Cancel upgrade
       description: Cancel the rolling upgrade
       operationId: cancelUpgrade
@@ -51,7 +51,7 @@ paths:
   /management/v1/upgrade/commit:
     post:
       tags:
-      - upgrade
+      - Upgrade
       summary: Commit upgrade
       description: Commit the rolling upgrade
       operationId: commitUpgrade
@@ -77,7 +77,7 @@ paths:
   /management/v1/upgrade/start:
     post:
       tags:
-      - upgrade
+      - Upgrade
       summary: Start upgrade
       description: Starts the rolling upgrade
       operationId: startUpgrade
@@ -115,7 +115,7 @@ paths:
   /management/v1/upgrade/state:
     get:
       tags:
-      - upgrade
+      - Upgrade
       summary: Upgrade state
       description: Current state of the rolling upgrade
       operationId: upgradeState
@@ -140,6 +140,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -172,16 +182,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     UpgradeStateResponse:
       required:
       - currentVersion

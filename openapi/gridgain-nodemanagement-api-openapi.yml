@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication nodeManagement API
+  title: GridGain REST module Node Management API
   contact:
     email: user@ignite.apache.org
   license:
@@ -84,13 +84,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    State:
-      type: string
-      description: Possible node states.
-      enum:
-      - STARTING
-      - STARTED
-      - STOPPING
     InvalidParam:
       type: object
       properties:
@@ -101,47 +94,6 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    NodeInfo:
-      required:
-      - jdbcPort
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique node name.
-        jdbcPort:
-          type: integer
-          description: Node JDBC port.
-          format: int32
-      description: Node info.
-    NodeVersion:
-      required:
-      - product
-      - version
-      type: object
-      properties:
-        version:
-          type: string
-          description: Node version.
-        product:
-          type: string
-          description: Node product.
-      description: Node version.
-    NodeState:
-      required:
-      - name
-      - state
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique node name.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/State'
-          - description: Node state.
-      description: Node state.
     Problem:
       type: object
       properties:
@@ -174,6 +126,54 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    NodeState:
+      required:
+      - name
+      - state
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          - description: Node state.
+      description: Node state.
+    State:
+      type: string
+      description: Possible node states.
+      enum:
+      - STARTING
+      - STARTED
+      - STOPPING
+    NodeInfo:
+      required:
+      - jdbcPort
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        jdbcPort:
+          type: integer
+          description: Node JDBC port.
+          format: int32
+      description: Node info.
+    NodeVersion:
+      required:
+      - product
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Node version.
+        product:
+          type: string
+          description: Node product.
+      description: Node version.
   securitySchemes:
     basicAuth:
       type: http

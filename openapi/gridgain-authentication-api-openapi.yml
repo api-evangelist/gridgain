@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication API
+  title: GridGain REST module Authentication API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: authentication
+- name: Authentication
 paths:
   /management/v1/authentication/jwt:
     delete:
       tags:
-      - authentication
+      - Authentication
       summary: Revoke all JWTs
       description: Revoke all issued JWTs.
       operationId: revokeTokensByUsername
@@ -48,7 +48,7 @@ paths:
   /management/v1/authentication/jwt/{token}:
     delete:
       tags:
-      - authentication
+      - Authentication
       summary: Revoke JWT
       description: Revoke a specific JWT.
       operationId: revokeToken
@@ -77,7 +77,7 @@ paths:
   /management/v1/authentication/login:
     post:
       tags:
-      - authentication
+      - Authentication
       summary: Get JWT
       description: Get JWT for the user.
       operationId: login
@@ -108,6 +108,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -150,16 +160,6 @@ components:
           type: string
           description: Password
       description: DTO of login request body.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

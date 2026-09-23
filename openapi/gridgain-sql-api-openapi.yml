@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication sql API
+  title: GridGain REST module Sql API
   contact:
     email: user@ignite.apache.org
   license:
@@ -26,16 +26,17 @@ paths:
     get:
       tags:
       - sql
-      summary: Invalidates SQL planner cache.
+      summary: Invalidates SQL planner cache
       description: Invalidates SQL planner cache records on node that related to provided table names.
       operationId: clearCache
       parameters:
       - name: tableNames
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: SQL query plans, which are related to given tables, will be evicted from cache. Case-sensitive, cache will be reset if empty.
-          nullable: true
           items:
             type: string
       responses:
@@ -45,7 +46,7 @@ paths:
     get:
       tags:
       - sql
-      summary: Retrieve all running sql queries.
+      summary: Retrieve all running sql queries
       description: Fetches all running sql queries.
       operationId: queries
       responses:
@@ -61,7 +62,7 @@ paths:
     get:
       tags:
       - sql
-      summary: Retrieve sql query.
+      summary: Retrieve sql query
       description: Fetches the current state of a specific sql query.
       operationId: query
       parameters:
@@ -89,7 +90,7 @@ paths:
     delete:
       tags:
       - sql
-      summary: Kill sql query.
+      summary: Kill sql query
       description: Kills a specific sql query identified by query id.
       operationId: killQuery
       parameters:
@@ -120,6 +121,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -187,16 +198,6 @@ components:
           description: Start time.
           format: date-time
       description: Rest representation of sql query.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

@@ -4,7 +4,7 @@ info:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module Privileges Grants API
+  title: GridGain REST module Role Assignments API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,27 +20,27 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: privilegesGrants
+- name: Role Assignments
 paths:
-  /management/v1/rbac/pg:
+  /management/v1/rbac/ra:
     post:
       tags:
-      - privilegesGrants
-      summary: Grant privileges
-      description: Grants privileges to roles.
-      operationId: grantPrivileges
+      - Role Assignments
+      summary: Assign roles to users
+      description: Assigns roles to users.
+      operationId: assignRoles
       requestBody:
         description: Role assignment.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PrivilegeAssignment'
+              $ref: '#/components/schemas/RoleAssignment'
         required: true
       responses:
         '200':
-          description: Privileges granted to roles.
+          description: Roles assigned to users.
         '404':
-          description: No grant privilege endpoint enabled. Most likely, the cluster is not initialized.
+          description: No assign endpoint enabled. Most likely, the cluster is not initialized.
           content:
             application/problem+json:
               schema:
@@ -59,20 +59,20 @@ paths:
                 $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - privilegesGrants
-      summary: Revoke privileges
-      description: Revokes privileges from roles.
-      operationId: revokePrivileges
+      - Role Assignments
+      summary: Revoke roles from users
+      description: Revokes roles from users.
+      operationId: revokeRoles
       requestBody:
         description: Role assignment.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PrivilegeAssignment'
+              $ref: '#/components/schemas/RoleAssignment'
         required: true
       responses:
         '200':
-          description: Privileges revoked from roles.
+          description: Roles revoked from users.
         '404':
           description: No revoke endpoint enabled. Most likely, the cluster is not initialized.
           content:
@@ -91,24 +91,24 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-  /management/v1/rbac/pg/roles:
+  /management/v1/rbac/ra/roles:
     get:
       tags:
-      - privilegesGrants
-      summary: Get all roles with privilege
-      description: Returns the list of all roles with granted privileges.
-      operationId: getRolesWithPrivileges
+      - Role Assignments
+      summary: Get roles with users and privileges
+      description: Returns the list of all roles with associated users and assigned privileges.
+      operationId: getRoleViews
       responses:
         '200':
-          description: Returns the list of all roles with granted privileges.
+          description: Returns the list of all roles with associated users and assigned privileges.
           content:
             application/problem+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RolePrivileges'
+                  $ref: '#/components/schemas/RoleView'
         '404':
-          description: No privileges endpoint enabled. Most likely, the cluster is not initialized.
+          description: No role endpoint enabled. Most likely, the cluster is not initialized.
           content:
             application/problem+json:
               schema:
@@ -125,13 +125,88 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-  /management/v1/rbac/pg/{roleName}:
+  /management/v1/rbac/ra/roles/{username}:
     get:
       tags:
-      - privilegesGrants
-      summary: Get granted privileges
-      description: Returns the list of all granted privileges to role.
-      operationId: getPrivileges
+      - Role Assignments
+      summary: Get user roles
+      description: Returns the list of all roles assigned to user.
+      operationId: getRolesByUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the list of all roles assigned to user.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '404':
+          description: No roles endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/users:
+    get:
+      tags:
+      - Role Assignments
+      summary: Get users who have all specified roles
+      description: Returns the list of all users with assigned roles.
+      operationId: getUsersWithRoles
+      responses:
+        '200':
+          description: Returns the list of all users with assigned roles.
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRoles'
+        '404':
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/ra/users/{roleName}:
+    get:
+      tags:
+      - Role Assignments
+      summary: Get users who have role
+      description: Returns the list of all users assigned to role.
+      operationId: getUsersByRole
       parameters:
       - name: roleName
         in: path
@@ -141,15 +216,15 @@ paths:
           type: string
       responses:
         '200':
-          description: Returns the list of all granted privileges to role.
+          description: Returns the list of all users assigned to role.
           content:
             application/problem+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Privilege'
+                  $ref: '#/components/schemas/User'
         '404':
-          description: No privileges endpoint enabled. Most likely, the cluster is not initialized.
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
           content:
             application/problem+json:
               schema:
@@ -178,6 +253,17 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
+    UserRoles:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+      description: UserRoles
     Problem:
       type: object
       properties:
@@ -210,33 +296,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    RolePrivileges:
-      required:
-      - privileges
-      type: object
-      properties:
-        role:
-          type: string
-          description: Role
-        privileges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Privilege'
-      description: RolePrivileges
-    PrivilegeAssignment:
-      type: object
-      properties:
-        roleNames:
-          type: array
-          description: Role names
-          items:
-            type: string
-        privileges:
-          type: array
-          description: Privileges
-          items:
-            $ref: '#/components/schemas/Privilege'
-      description: Privilege assignment
     Privilege:
       type: object
       properties:
@@ -247,6 +306,51 @@ components:
           type: string
           description: Selector
       description: Privilege
+    RoleAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        usernames:
+          type: array
+          description: Usernames
+          items:
+            type: string
+      description: Role assignment
+    Role:
+      type: object
+      properties:
+        roleName:
+          type: string
+          description: Role name
+      description: Role
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    RoleView:
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RoleUsers
   securitySchemes:
     basicAuth:
       type: http

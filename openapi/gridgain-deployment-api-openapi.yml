@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication deployment API
+  title: GridGain REST module Deployment API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: deployment
+- name: Deployment
 paths:
   /management/v1/deployment/cluster/units:
     get:
       tags:
-      - deployment
+      - Deployment
       summary: Get cluster unit statuses
       description: Cluster unit statuses.
       operationId: listClusterStatuses
@@ -33,9 +33,10 @@ paths:
       - name: statuses
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: Deployment status filter.
-          nullable: true
           items:
             $ref: '#/components/schemas/DeploymentStatus'
       responses:
@@ -56,7 +57,7 @@ paths:
   /management/v1/deployment/cluster/units/{unitId}:
     get:
       tags:
-      - deployment
+      - Deployment
       summary: Get specific cluster unit statuses
       description: Cluster unit statuses by unit.
       operationId: listClusterStatusesByUnit
@@ -70,15 +71,17 @@ paths:
       - name: version
         in: query
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Unit version filter.
-          nullable: true
       - name: statuses
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: Deployment status filter.
-          nullable: true
           items:
             $ref: '#/components/schemas/DeploymentStatus'
       responses:
@@ -99,7 +102,7 @@ paths:
   /management/v1/deployment/node/units:
     get:
       tags:
-      - deployment
+      - Deployment
       summary: Get node unit statuses
       description: Returns a list of unit statuses per node.
       operationId: listNodeStatuses
@@ -107,9 +110,10 @@ paths:
       - name: statuses
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: Deployment status filter.
-          nullable: true
           items:
             $ref: '#/components/schemas/DeploymentStatus'
       responses:
@@ -130,8 +134,8 @@ paths:
   /management/v1/deployment/node/units/structure/{unitId}/{unitVersion}:
     get:
       tags:
-      - deployment
-      summary: Get unit contents.
+      - Deployment
+      summary: Get unit contents
       description: Returns a folder representation with unit content.
       operationId: unitContent
       parameters:
@@ -163,7 +167,7 @@ paths:
   /management/v1/deployment/node/units/{unitId}:
     get:
       tags:
-      - deployment
+      - Deployment
       summary: Get specific node unit statuses
       description: Returns a list of node unit statuses by unit.
       operationId: listNodeStatusesByUnit
@@ -177,15 +181,17 @@ paths:
       - name: version
         in: query
         schema:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Unit version filter.
-          nullable: true
       - name: statuses
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: Deployment status filter.
-          nullable: true
           items:
             $ref: '#/components/schemas/DeploymentStatus'
       responses:
@@ -206,8 +212,8 @@ paths:
   /management/v1/deployment/units/zip/{unitId}/{unitVersion}:
     post:
       tags:
-      - deployment
-      summary: Deploy unit with folders structure in zip.
+      - Deployment
+      summary: Deploy unit with folders structure in zip
       description: Deploys provided unit in zip file to the cluster with folders structure.
       operationId: deployZipUnit
       parameters:
@@ -226,16 +232,16 @@ paths:
       - name: deployMode
         in: query
         schema:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/deployMode'
           - description: ALL or MAJORITY.
       - name: initialNodes
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: List of node identifiers to deploy to.
-          nullable: true
           items:
             type: string
       requestBody:
@@ -282,7 +288,7 @@ paths:
   /management/v1/deployment/units/{unitId}/{unitVersion}:
     post:
       tags:
-      - deployment
+      - Deployment
       summary: Deploy unit
       description: Deploys provided unit to the cluster.
       operationId: deployUnit
@@ -302,16 +308,16 @@ paths:
       - name: deployMode
         in: query
         schema:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/deployMode'
           - description: ALL or MAJORITY.
       - name: initialNodes
         in: query
         schema:
-          type: array
+          type:
+          - array
+          - 'null'
           description: List of node identifiers to deploy to.
-          nullable: true
           items:
             type: string
       requestBody:
@@ -351,7 +357,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - deployment
+      - Deployment
       summary: Undeploy unit
       description: Undeploys the unit with provided unitId and unitVersion.
       operationId: undeployUnit
@@ -389,6 +395,20 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    UnitVersionStatus:
+      required:
+      - status
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Unit version.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/DeploymentStatus'
+          - description: Unit status.
+      description: Unit version and status.
     InvalidParam:
       type: object
       properties:
@@ -399,84 +419,6 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    UnitEntry:
-      type: object
-      description: Unit content entry.
-      discriminator:
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/UnitFile'
-      - $ref: '#/components/schemas/UnitFolder'
-    UnitStatus:
-      required:
-      - id
-      - versionToStatus
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unit identifier.
-        versionToStatus:
-          type: array
-          description: Map from unit version to unit deployment status.
-          items:
-            $ref: '#/components/schemas/UnitVersionStatus'
-      description: Unit status.
-    DeploymentStatus:
-      type: string
-      description: Status of deployment process.
-      enum:
-      - UPLOADING
-      - DEPLOYED
-      - OBSOLETE
-      - REMOVING
-    UnitFile:
-      required:
-      - name
-      - size
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Entry type discriminator.
-          enum:
-          - file
-        name:
-          type: string
-          description: Unit content file name.
-        size:
-          type: integer
-          description: Unit content file size in bytes.
-          format: int64
-      description: Unit content file.
-    UnitFolder:
-      required:
-      - children
-      - name
-      - size
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Entry type discriminator.
-          enum:
-          - folder
-        name:
-          type: string
-          description: Unit content folder name.
-        children:
-          type: array
-          description: Unit content folder elements.
-          items:
-            $ref: '#/components/schemas/UnitEntry'
-        size:
-          type: integer
-          description: Total size of folder contents in bytes (computed as sum of all children).
-          format: int64
-          readOnly: true
-      description: Unit content folder.
     Problem:
       type: object
       properties:
@@ -509,26 +451,90 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    UnitVersionStatus:
-      required:
-      - status
-      - version
-      type: object
-      properties:
-        version:
-          type: string
-          description: Unit version.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/DeploymentStatus'
-          - description: Unit status.
-      description: Unit version and status.
+    DeploymentStatus:
+      type: string
+      description: Status of deployment process.
+      enum:
+      - UPLOADING
+      - DEPLOYED
+      - OBSOLETE
+      - REMOVING
     deployMode:
       type: string
       description: Initial set of nodes to deploy.
       enum:
       - MAJORITY
       - ALL
+    UnitFolder:
+      required:
+      - children
+      - name
+      - size
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Entry type discriminator.
+          enum:
+          - folder
+        name:
+          type: string
+          description: Unit content folder name.
+        children:
+          type: array
+          description: Unit content folder elements.
+          items:
+            $ref: '#/components/schemas/UnitEntry'
+        size:
+          type: integer
+          description: Total size of folder contents in bytes (computed as sum of all children).
+          format: int64
+          readOnly: true
+      description: Unit content folder.
+    UnitFile:
+      required:
+      - name
+      - size
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Entry type discriminator.
+          enum:
+          - file
+        name:
+          type: string
+          description: Unit content file name.
+        size:
+          type: integer
+          description: Unit content file size in bytes.
+          format: int64
+      description: Unit content file.
+    UnitStatus:
+      required:
+      - id
+      - versionToStatus
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unit identifier.
+        versionToStatus:
+          type: array
+          description: Map from unit version to unit deployment status.
+          items:
+            $ref: '#/components/schemas/UnitVersionStatus'
+      description: Unit status.
+    UnitEntry:
+      type: object
+      description: Unit content entry.
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/UnitFile'
+      - $ref: '#/components/schemas/UnitFolder'
   securitySchemes:
     basicAuth:
       type: http

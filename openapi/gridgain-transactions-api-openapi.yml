@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication transactions API
+  title: GridGain REST module Transactions API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: transactions
+- name: Transactions
 paths:
   /management/v1/transactions:
     get:
       tags:
-      - transactions
+      - Transactions
       summary: Retrieve all in progress transactions
       description: Fetches all in progress transactions.
       operationId: transactions
@@ -41,7 +41,7 @@ paths:
   /management/v1/transactions/{transactionId}:
     get:
       tags:
-      - transactions
+      - Transactions
       summary: Retrieve transaction state
       description: Fetches the current state of a specific transaction identified by transactionId.
       operationId: transaction
@@ -69,8 +69,8 @@ paths:
                 $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - transactions
-      summary: Kill transaction.
+      - Transactions
+      summary: Kill transaction
       description: Kills a specific transaction identified by transactionId.
       operationId: killTransaction
       parameters:
@@ -101,37 +101,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    Transaction:
-      required:
-      - id
-      - node
-      - priority
-      - startTime
-      - state
-      - type
+    InvalidParam:
       type: object
       properties:
-        id:
+        name:
           type: string
-          description: Transaction ID.
-          format: uuid
-        node:
+          description: Parameter name.
+        reason:
           type: string
-          description: Coordinator node.
-        state:
-          type: string
-          description: State.
-        type:
-          type: string
-          description: Type.
-        priority:
-          type: string
-          description: Priority.
-        startTime:
-          type: string
-          description: Start time.
-          format: date-time
-      description: Rest representation of transaction.
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -164,16 +143,37 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    InvalidParam:
+    Transaction:
+      required:
+      - id
+      - node
+      - priority
+      - startTime
+      - state
+      - type
       type: object
       properties:
-        name:
+        id:
           type: string
-          description: Parameter name.
-        reason:
+          description: Transaction ID.
+          format: uuid
+        node:
           type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
+          description: Coordinator node.
+        state:
+          type: string
+          description: State.
+        type:
+          type: string
+          description: Type.
+        priority:
+          type: string
+          description: Priority.
+        startTime:
+          type: string
+          description: Start time.
+          format: date-time
+      description: Rest representation of transaction.
   securitySchemes:
     basicAuth:
       type: http

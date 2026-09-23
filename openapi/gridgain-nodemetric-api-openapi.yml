@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication nodeMetric API
+  title: GridGain REST module Node Metric API
   contact:
     email: user@ignite.apache.org
   license:
@@ -124,17 +124,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    Metric:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Metric name.
-        desc:
-          type: string
-          description: Metric description.
-          nullable: true
-      description: Metric representation.
     InvalidParam:
       type: object
       properties:
@@ -177,19 +166,18 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    MetricSource:
-      required:
-      - enabled
-      - name
+    Metric:
       type: object
       properties:
         name:
           type: string
-          description: Metric source name.
-        enabled:
-          type: boolean
-          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
-      description: A list of metric sources provided by modules.
+          description: Metric name.
+        desc:
+          type:
+          - string
+          - 'null'
+          description: Metric description.
+      description: Metric representation.
     MetricSet:
       required:
       - metrics
@@ -205,6 +193,19 @@ components:
           items:
             $ref: '#/components/schemas/Metric'
       description: Metrics set representation.
+    MetricSource:
+      required:
+      - enabled
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric source name.
+        enabled:
+          type: boolean
+          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
+      description: A list of metric sources provided by modules.
   securitySchemes:
     basicAuth:
       type: http

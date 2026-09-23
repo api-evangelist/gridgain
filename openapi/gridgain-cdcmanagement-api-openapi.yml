@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication cdcManagement API
+  title: GridGain REST module Cdc Management API
   contact:
     email: user@ignite.apache.org
   license:
@@ -59,7 +59,7 @@ paths:
     post:
       tags:
       - cdcManagement
-      summary: Create CDC replication. CDC replication is identified by unique name. CDC replication has a type, parameters and a list of tables that should be replicated.
+      summary: Create CDC replication.
       description: Creates a CDC replication.
       operationId: createCdcReplication
       requestBody:
@@ -281,7 +281,7 @@ paths:
     post:
       tags:
       - cdcManagement
-      summary: Create CDC sink. CDC sink is identified by unique name. CDC sink has a type, parameters and a list of tables that should be replicated.
+      summary: Create CDC sink.
       description: Creates a CDC sink.
       operationId: createSink
       requestBody:
@@ -526,7 +526,7 @@ paths:
     post:
       tags:
       - cdcManagement
-      summary: Create CDC source. CDC source is identified by unique name. CDC source has a type, parameters and a list of tables that should be replicated.
+      summary: Create CDC source.
       description: Creates a CDC source.
       operationId: createSource
       requestBody:
@@ -736,16 +736,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    SourceTable:
-      type: object
-      properties:
-        schema:
-          type: string
-          description: Table schema
-        name:
-          type: string
-          description: Table name
-      description: Source Table
     InvalidParam:
       type: object
       properties:
@@ -756,96 +746,6 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    CdcReplicationStatus:
-      type: string
-      description: CDC replication status. {@see org.gridgain.internal.cdc.api.replication.CdcReplicationStatus}
-      enum:
-      - CREATED
-      - RUNNING
-      - STOPPED
-      - FAILED
-    ReplicationMode:
-      type: string
-      description: 'CDC replication mode.
-
-
-        `ALL` - replicates all data from the source to the sink.
-
-
-        `NEW_DATA` - replicates only new data that appears in the source after the replication is started.
-
-        {@see org.gridgain.internal.cdc.api.replication.CdcReplicationMode}.'
-      enum:
-      - ALL
-      - NEW_DATA
-    Source:
-      type: object
-      properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/SourceType'
-          - description: Type
-        name:
-          type: string
-          description: Name
-        parameters:
-          type: object
-          additionalProperties: true
-          description: Parameters
-        tables:
-          type: array
-          description: Tables
-          items:
-            $ref: '#/components/schemas/SourceTable'
-      description: Source
-    SinkStatus:
-      type: object
-      properties:
-        sink:
-          allOf:
-          - $ref: '#/components/schemas/Sink'
-          - description: Sink
-        checks:
-          type: array
-          description: Checks
-          items:
-            $ref: '#/components/schemas/CheckResult'
-      description: Sink status
-    Replication:
-      required:
-      - executionNodes
-      - mode
-      - name
-      - sinkName
-      - sourceName
-      type: object
-      properties:
-        name:
-          type: string
-        sinkName:
-          type: string
-        sourceName:
-          type: string
-        mode:
-          $ref: '#/components/schemas/ReplicationMode'
-        executionNodes:
-          type: array
-          items:
-            type: string
-        status:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/CdcReplicationStatus'
-        errorContext:
-          type: string
-          nullable: true
-      description: Cdc replication model.
-    SinkType:
-      type: string
-      description: Type
-      enum:
-      - ICEBERG
-      - GRIDGAIN_8
     CheckResult:
       type: object
       properties:
@@ -853,15 +753,11 @@ components:
           type: string
           description: Violation name
         errorDetails:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Error details
-          nullable: true
       description: Cdc sink/source check result
-    SourceType:
-      type: string
-      description: Type
-      enum:
-      - GRIDGAIN
     Problem:
       type: object
       properties:
@@ -894,6 +790,124 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    SinkStatus:
+      type: object
+      properties:
+        sink:
+          allOf:
+          - $ref: '#/components/schemas/Sink'
+          - description: Sink
+        checks:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Sink status
+    SourceStatus:
+      type: object
+      properties:
+        source:
+          allOf:
+          - $ref: '#/components/schemas/Source'
+          - description: Source
+        violations:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Source status
+    ReplicationMode:
+      type: string
+      description: 'CDC replication mode.
+
+
+        `ALL` - replicates all data from the source to the sink.
+
+
+        `NEW_DATA` - replicates only new data that appears in the source after the replication is started.
+
+        {@see org.gridgain.internal.cdc.api.replication.CdcReplicationMode}.'
+      enum:
+      - ALL
+      - NEW_DATA
+    CdcReplicationStatus:
+      type: string
+      description: CDC replication status. {@see org.gridgain.internal.cdc.api.replication.CdcReplicationStatus}
+      enum:
+      - CREATED
+      - RUNNING
+      - STOPPED
+      - FAILED
+    SinkType:
+      type: string
+      description: Type
+      enum:
+      - ICEBERG
+      - GRIDGAIN_8
+    Replication:
+      required:
+      - executionNodes
+      - mode
+      - name
+      - sinkName
+      - sourceName
+      type: object
+      properties:
+        name:
+          type: string
+        sinkName:
+          type: string
+        sourceName:
+          type: string
+        mode:
+          $ref: '#/components/schemas/ReplicationMode'
+        executionNodes:
+          type: array
+          items:
+            type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/CdcReplicationStatus'
+        errorContext:
+          type:
+          - string
+          - 'null'
+      description: Cdc replication model.
+    Source:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SourceType'
+          - description: Type
+        name:
+          type: string
+          description: Name
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Parameters
+        tables:
+          type: array
+          description: Tables
+          items:
+            $ref: '#/components/schemas/SourceTable'
+      description: Source
+    SourceTable:
+      type: object
+      properties:
+        schema:
+          type: string
+          description: Table schema
+        name:
+          type: string
+          description: Table name
+      description: Source Table
+    SourceType:
+      type: string
+      description: Type
+      enum:
+      - GRIDGAIN
     Sink:
       type: object
       properties:
@@ -913,19 +927,6 @@ components:
           description: Create table if not exists
           default: true
       description: Sink
-    SourceStatus:
-      type: object
-      properties:
-        source:
-          allOf:
-          - $ref: '#/components/schemas/Source'
-          - description: Source
-        violations:
-          type: array
-          description: Checks
-          items:
-            $ref: '#/components/schemas/CheckResult'
-      description: Source status
   securitySchemes:
     basicAuth:
       type: http

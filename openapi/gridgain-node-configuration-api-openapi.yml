@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication dataNodes API
+  title: GridGain REST module Node Configuration API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,109 +20,119 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: dataNodes
+- name: Node Configuration
 paths:
-  /management/v1/zones/datanodes/reset:
-    post:
-      tags:
-      - dataNodes
-      description: Recalculates and resets data nodes for given zones.
-      operationId: resetDataNodesForZones
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              description: Names specifying zones to recalculate data nodes for. Case-sensitive, if empty then all zones' data nodes will be recalculated.
-              nullable: true
-              items:
-                type: string
-      responses:
-        '200':
-          description: Data nodes are recalculated and reset.
-        '400':
-          description: Bad request.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '500':
-          description: Internal error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-  /management/v1/zones/{zoneName}/datanodes:
+  /management/v1/configuration/node:
     get:
       tags:
-      - dataNodes
-      description: Returns current data nodes for zone.
-      operationId: getDataNodesForZone
-      parameters:
-      - name: zoneName
-        in: path
-        required: true
-        schema:
-          type: string
-          description: Case-sensitive zone name to return data nodes for.
+      - Node Configuration
+      summary: Get node configuration
+      description: Gets node configuration in HOCON format.
+      operationId: getNodeConfiguration
       responses:
         '200':
-          description: Data nodes are returned.
+          description: Full node configuration.
           content:
-            application/json:
+            text/plain:
               schema:
-                uniqueItems: true
-                type: array
-                items:
-                  type: string
-            application/problem+json:
-              schema:
-                uniqueItems: true
-                type: array
-                items:
-                  type: string
-        '400':
-          description: Bad request.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
+                type: string
         '500':
           description: Internal error.
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-  /management/v1/zones/{zoneName}/datanodes/reset:
-    post:
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    patch:
       tags:
-      - dataNodes
-      description: Recalculates and resets data nodes for zone.
-      operationId: resetDataNodesForZone
-      parameters:
-      - name: zoneName
-        in: path
+      - Node Configuration
+      summary: Update node configuration
+      description: Updates node configuration. New configuration should be provided in HOCON format.
+      operationId: updateNodeConfiguration
+      requestBody:
+        description: The node configuration to update.
+        content:
+          text/plain:
+            schema:
+              type: string
         required: true
-        schema:
-          type: string
-          description: Case-sensitive zone name to recalculate data nodes for.
       responses:
         '200':
-          description: Data nodes are recalculated and reset.
-        '400':
-          description: Bad request.
+          description: Configuration successfully updated.
+        '500':
+          description: Internal error.
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '405':
+          description: Configuration is read-only.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '422':
+          description: Configuration parse/apply error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/configuration/node/{path}:
+    get:
+      tags:
+      - Node Configuration
+      summary: Get configuration represented by path
+      description: Gets a configuration of a specific node, in HOCON format.
+      operationId: getNodeConfigurationByPath
+      parameters:
+      - name: path
+        in: path
+        description: 'Configuration tree address. For example: `element.subelement`.'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returned node configuration.
+          content:
+            text/plain:
+              schema:
+                type: string
         '500':
           description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect configuration.
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -155,16 +165,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

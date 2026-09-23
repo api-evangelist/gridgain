@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication compute API
+  title: GridGain REST module Compute API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,12 +20,12 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: compute
+- name: Compute
 paths:
   /management/v1/compute/jobs:
     get:
       tags:
-      - compute
+      - Compute
       summary: Retrieve all job states
       description: Fetches the current states of all compute jobs.
       operationId: jobStates
@@ -47,7 +47,7 @@ paths:
   /management/v1/compute/jobs/{jobId}:
     get:
       tags:
-      - compute
+      - Compute
       summary: Retrieve job state
       description: Fetches the current state of a specific compute job identified by jobId.
       operationId: jobState
@@ -81,7 +81,7 @@ paths:
                 $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - compute
+      - Compute
       summary: Cancel job
       description: Cancels a specific compute job identified by jobId.
       operationId: cancelJob
@@ -120,7 +120,7 @@ paths:
   /management/v1/compute/jobs/{jobId}/priority:
     put:
       tags:
-      - compute
+      - Compute
       summary: Update job priority
       description: Updates the priority of a specific compute job identified by jobId.
       operationId: updatePriority
@@ -165,6 +165,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    UpdateJobPriorityBody:
+      required:
+      - priority
+      type: object
+      properties:
+        priority:
+          type: integer
+          description: Priority.
+          format: int32
+      description: DTO of update job priority request body.
     InvalidParam:
       type: object
       properties:
@@ -207,16 +217,16 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    UpdateJobPriorityBody:
-      required:
-      - priority
-      type: object
-      properties:
-        priority:
-          type: integer
-          description: Priority.
-          format: int32
-      description: DTO of update job priority request body.
+    JobStatus:
+      type: string
+      description: Job status.
+      enum:
+      - QUEUED
+      - EXECUTING
+      - FAILED
+      - COMPLETED
+      - CANCELING
+      - CANCELED
     JobState:
       required:
       - createTime
@@ -238,26 +248,18 @@ components:
           description: Job create time.
           format: date-time
         startTime:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Job start time.
           format: date-time
-          nullable: true
         finishTime:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Job finish time.
           format: date-time
-          nullable: true
       description: Rest representation of org.apache.ignite.compute.JobState.
-    JobStatus:
-      type: string
-      description: Job status.
-      enum:
-      - QUEUED
-      - EXECUTING
-      - FAILED
-      - COMPLETED
-      - CANCELING
-      - CANCELED
   securitySchemes:
     basicAuth:
       type: http

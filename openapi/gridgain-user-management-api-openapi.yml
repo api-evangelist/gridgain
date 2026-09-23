@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication roleAssignments API
+  title: GridGain REST module User Management API
   contact:
     email: user@ignite.apache.org
   license:
@@ -20,95 +20,26 @@ security:
 - bearerToken: []
 - basicAuth: []
 tags:
-- name: roleAssignments
+- name: User Management
 paths:
-  /management/v1/rbac/ra:
-    post:
-      tags:
-      - roleAssignments
-      summary: Assign roles to users
-      description: Assigns roles to users.
-      operationId: assignRoles
-      requestBody:
-        description: Role assignment.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RoleAssignment'
-        required: true
-      responses:
-        '200':
-          description: Roles assigned to users.
-        '404':
-          description: No assign endpoint enabled. Most likely, the cluster is not initialized.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '500':
-          description: Internal error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '503':
-          description: Missing license error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-    delete:
-      tags:
-      - roleAssignments
-      summary: Revoke roles from users
-      description: Revokes roles from users.
-      operationId: revokeRoles
-      requestBody:
-        description: Role assignment.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RoleAssignment'
-        required: true
-      responses:
-        '200':
-          description: Roles revoked from users.
-        '404':
-          description: No revoke endpoint enabled. Most likely, the cluster is not initialized.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '500':
-          description: Internal error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        '503':
-          description: Missing license error.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-  /management/v1/rbac/ra/roles:
+  /management/v1/rbac/users:
     get:
       tags:
-      - roleAssignments
-      summary: Get roles with users and privileges
-      description: Returns the list of all roles with associated users and assigned privileges.
-      operationId: getRoleViews
+      - User Management
+      summary: Get the list of users
+      description: Returns the list of all users.
+      operationId: getUsers
       responses:
         '200':
-          description: Returns the list of all roles with associated users and assigned privileges.
+          description: Returns the list of all users.
           content:
             application/problem+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RoleView'
+                  $ref: '#/components/schemas/User'
         '404':
-          description: No role endpoint enabled. Most likely, the cluster is not initialized.
+          description: No users endpoint enabled. Most likely, the cluster is not initialized.
           content:
             application/problem+json:
               schema:
@@ -125,13 +56,59 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-  /management/v1/rbac/ra/roles/{username}:
+    post:
+      tags:
+      - User Management
+      summary: Create user
+      description: Creates a user.
+      operationId: createUser
+      requestBody:
+        description: User body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: User is created.
+        '500':
+          description: Internal error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Missing license error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '400':
+          description: Incorrect user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The user already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /management/v1/rbac/users/{username}:
     get:
       tags:
-      - roleAssignments
-      summary: Get user roles
-      description: Returns the list of all roles assigned to user.
-      operationId: getRolesByUser
+      - User Management
+      summary: Get user by username
+      description: Returns a user.
+      operationId: getUser
       parameters:
       - name: username
         in: path
@@ -141,15 +118,13 @@ paths:
           type: string
       responses:
         '200':
-          description: Returns the list of all roles assigned to user.
+          description: Returns a user.
           content:
             application/problem+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Role'
+                $ref: '#/components/schemas/User'
         '404':
-          description: No roles endpoint enabled. Most likely, the cluster is not initialized.
+          description: No such user or the cluster is not initialized.
           content:
             application/problem+json:
               schema:
@@ -166,28 +141,29 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-  /management/v1/rbac/ra/users:
-    get:
+    put:
       tags:
-      - roleAssignments
-      summary: Get users who have all specified roles
-      description: Returns the list of all users with assigned roles.
-      operationId: getUsersWithRoles
+      - User Management
+      summary: Update user
+      description: Updates a user.
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: Username.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: User body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
       responses:
         '200':
-          description: Returns the list of all users with assigned roles.
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserRoles'
-        '404':
-          description: No users endpoint enabled. Most likely, the cluster is not initialized.
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
+          description: User is created.
         '500':
           description: Internal error.
           content:
@@ -200,31 +176,42 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-  /management/v1/rbac/ra/users/{roleName}:
-    get:
+        '400':
+          description: Incorrect user.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Endpoint not found. Most likely, the cluster is not initialized.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: The user is already exists
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+    delete:
       tags:
-      - roleAssignments
-      summary: Get users who have role
-      description: Returns the list of all users assigned to role.
-      operationId: getUsersByRole
+      - User Management
+      summary: Delete user by username
+      description: Deletes a user by username.
+      operationId: deleteUser
       parameters:
-      - name: roleName
+      - name: username
         in: path
-        description: Role name.
+        description: Username.
         required: true
         schema:
           type: string
       responses:
         '200':
-          description: Returns the list of all users assigned to role.
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
+          description: User is deleted.
         '404':
-          description: No users endpoint enabled. Most likely, the cluster is not initialized.
+          description: No such user or the cluster is not initialized.
           content:
             application/problem+json:
               schema:
@@ -253,40 +240,6 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    Privilege:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action
-        'on':
-          type: string
-          description: Selector
-      description: Privilege
-    RoleView:
-      required:
-      - role
-      type: object
-      properties:
-        role:
-          type: string
-          description: Role
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        privileges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Privilege'
-      description: RoleUsers
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-      description: User
     Problem:
       type: object
       properties:
@@ -319,38 +272,23 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    UserRoles:
+    User:
       type: object
       properties:
         username:
           type: string
           description: Username
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
-      description: UserRoles
-    RoleAssignment:
+      description: User
+    CreateUserRequest:
       type: object
       properties:
-        roleNames:
-          type: array
-          description: Role names
-          items:
-            type: string
-        usernames:
-          type: array
-          description: Usernames
-          items:
-            type: string
-      description: Role assignment
-    Role:
-      type: object
-      properties:
-        roleName:
+        username:
           type: string
-          description: Role name
-      description: Role
+          description: Username
+        plainPassword:
+          type: string
+          description: Plain password
+      description: Create user request
   securitySchemes:
     basicAuth:
       type: http

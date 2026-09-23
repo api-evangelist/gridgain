@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   x-logo:
     url: https://www.gridgain.com/assets/web/images/gridgain-logo-2021.svg
     backgroundColor: '#FFFFFF'
     altText: Example logo
-  title: GridGain REST module authentication dcr API
+  title: GridGain REST module Dcr API
   contact:
     email: user@ignite.apache.org
   license:
@@ -160,7 +160,7 @@ paths:
     post:
       tags:
       - dcr
-      summary: Specifies timestamp for replication which will be used as flush point.
+      summary: Specifies timestamp for replication which will be used as flush point
       description: .
       operationId: flushReplication
       parameters:
@@ -284,6 +284,29 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    ReplicationError:
+      type: object
+      properties:
+        workerNode:
+          type: string
+          description: Name of worker node where the error occurred.
+        entryName:
+          type: string
+          description: Name of the entry where the error occurred.
+        errorMessage:
+          type: string
+          description: Detailed error message.
+      description: Represents an error encountered during replication.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     ReplicationInfo:
       required:
       - name
@@ -303,12 +326,10 @@ components:
           items:
             type: string
         authConfig:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/AuthConfig'
           - description: Auth config of the connection to the source cluster.
         sslConfig:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/SslConfig'
           - description: SSL config of the connection to the source cluster.
@@ -322,17 +343,19 @@ components:
           type: string
           description: Name of the worker node on target cluster.
         schemaName:
-          type: string
+          type:
+          - string
+          - 'null'
           description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema.'
-          nullable: true
         status:
           allOf:
           - $ref: '#/components/schemas/ReplicationStatus'
           - description: Current status of the replication.
         tableStatuses:
-          type: array
+          type:
+          - array
+          - 'null'
           description: Status of the replication per table.
-          nullable: true
           items:
             $ref: '#/components/schemas/TableStatus'
         errors:
@@ -345,129 +368,6 @@ components:
           description: Progress of full state transfer. Indicates how much percent of initial data were transferred.
           format: int32
       description: Contains detailed information about a specific replication process.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    ReplicationStatus:
-      type: string
-      description: Current status of the replication.
-      enum:
-      - REPLICATING
-      - STOPPED
-      - FAILED
-      - WORKER_NODE_OUT
-    SslConfig:
-      type: object
-      properties:
-        ciphers:
-          type: array
-          description: ciphers
-          nullable: true
-          items:
-            type: string
-        keyStorePath:
-          type: string
-          description: Key store path that will be used to setup SSL connection.
-          nullable: true
-        keyStorePassword:
-          type: string
-          description: Key store password.
-          nullable: true
-        trustStorePath:
-          type: string
-          description: Trust store path that will be used to setup SSL connection..
-          nullable: true
-        trustStorePassword:
-          type: string
-          description: Trust store password.
-          nullable: true
-      description: SSL config of the connection to the source cluster.
-    ReplicationError:
-      type: object
-      properties:
-        workerNode:
-          type: string
-          description: Name of worker node where the error occurred.
-        entryName:
-          type: string
-          description: Name of the entry where the error occurred.
-        errorMessage:
-          type: string
-          description: Detailed error message.
-      description: Represents an error encountered during replication.
-    CreateReplicationRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Replication name.
-        sourceClusterAddresses:
-          type: array
-          description: List of node addresses of the source cluster.
-          items:
-            type: string
-        authConfig:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/AuthConfig'
-          - description: Auth config of the connection to the source cluster.
-        sslConfig:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/SslConfig'
-          - description: SSL config of the connection to the source cluster.
-        replicationNodes:
-          type: array
-          description: List of replication nodes names on target cluster.
-          items:
-            type: string
-      description: DTO for creating a cluster replication request.
-    AuthConfig:
-      required:
-      - password
-      - username
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-        password:
-          type: string
-          description: Password
-      description: Auth config of the connection to the source cluster.
-    StartStopReplicationRequest:
-      type: object
-      properties:
-        schemaName:
-          type: string
-          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema. If specified, acts as default schema for unqualified table names or as schema filter for allTables=true.'
-          nullable: true
-        allTables:
-          type: boolean
-          description: If true, all tables will be replicated.
-          nullable: true
-        tables:
-          type: array
-          description: List of table names to be replicated.
-          nullable: true
-          items:
-            type: string
-      description: DTO for creating a cluster replication request.
-    FlushRequest:
-      type: object
-      properties:
-        flushPoint:
-          type: string
-          description: Flush point timestamp.
-          format: date-time
-      description: DTO for flush request.
     Problem:
       type: object
       properties:
@@ -500,6 +400,35 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    StartStopReplicationRequest:
+      type: object
+      properties:
+        schemaName:
+          type:
+          - string
+          - 'null'
+          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema. If specified, acts as default schema for unqualified table names or as schema filter for allTables=true.'
+        allTables:
+          type:
+          - boolean
+          - 'null'
+          description: If true, all tables will be replicated.
+        tables:
+          type:
+          - array
+          - 'null'
+          description: List of table names to be replicated.
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    FlushRequest:
+      type: object
+      properties:
+        flushPoint:
+          type: string
+          description: Flush point timestamp.
+          format: date-time
+      description: DTO for flush request.
     TableStatus:
       required:
       - status
@@ -514,6 +443,83 @@ components:
           type: string
           description: Table name
       description: Contains detailed information about a specific table replication process.
+    AuthConfig:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: Auth config of the connection to the source cluster.
+    SslConfig:
+      type: object
+      properties:
+        ciphers:
+          type:
+          - array
+          - 'null'
+          description: ciphers
+          items:
+            type: string
+        keyStorePath:
+          type:
+          - string
+          - 'null'
+          description: Key store path that will be used to setup SSL connection.
+        keyStorePassword:
+          type:
+          - string
+          - 'null'
+          description: Key store password.
+        trustStorePath:
+          type:
+          - string
+          - 'null'
+          description: Trust store path that will be used to setup SSL connection..
+        trustStorePassword:
+          type:
+          - string
+          - 'null'
+          description: Trust store password.
+      description: SSL config of the connection to the source cluster.
+    CreateReplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Replication name.
+        sourceClusterAddresses:
+          type: array
+          description: List of node addresses of the source cluster.
+          items:
+            type: string
+        authConfig:
+          allOf:
+          - $ref: '#/components/schemas/AuthConfig'
+          - description: Auth config of the connection to the source cluster.
+        sslConfig:
+          allOf:
+          - $ref: '#/components/schemas/SslConfig'
+          - description: SSL config of the connection to the source cluster.
+        replicationNodes:
+          type: array
+          description: List of replication nodes names on target cluster.
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    ReplicationStatus:
+      type: string
+      description: Current status of the replication.
+      enum:
+      - REPLICATING
+      - STOPPED
+      - FAILED
+      - WORKER_NODE_OUT
   securitySchemes:
     basicAuth:
       type: http
