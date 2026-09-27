@@ -736,16 +736,81 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    InvalidParam:
+    ReplicationMode:
+      type: string
+      description: 'CDC replication mode.
+
+
+        `ALL` - replicates all data from the source to the sink.
+
+
+        `NEW_DATA` - replicates only new data that appears in the source after the replication is started.
+
+        {@see org.gridgain.internal.cdc.api.replication.CdcReplicationMode}.'
+      enum:
+      - ALL
+      - NEW_DATA
+    SourceType:
+      type: string
+      description: Type
+      enum:
+      - GRIDGAIN
+    CdcReplicationStatus:
+      type: string
+      description: CDC replication status. {@see org.gridgain.internal.cdc.api.replication.CdcReplicationStatus}
+      enum:
+      - CREATED
+      - RUNNING
+      - STOPPED
+      - FAILED
+    SinkStatus:
       type: object
       properties:
+        sink:
+          allOf:
+          - $ref: '#/components/schemas/Sink'
+          - description: Sink
+        checks:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Sink status
+    Sink:
+      type: object
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SinkType'
+          - description: Type
         name:
           type: string
-          description: Parameter name.
-        reason:
+          description: Name
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Parameters
+        createTableIfNotExists:
+          type: boolean
+          description: Create table if not exists
+          default: true
+      description: Sink
+    SourceTable:
+      type: object
+      properties:
+        schema:
           type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
+          description: Table schema
+        name:
+          type: string
+          description: Table name
+      description: Source Table
+    SinkType:
+      type: string
+      description: Type
+      enum:
+      - ICEBERG
+      - GRIDGAIN_8
     CheckResult:
       type: object
       properties:
@@ -758,6 +823,16 @@ components:
           - 'null'
           description: Error details
       description: Cdc sink/source check result
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -790,60 +865,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    SinkStatus:
-      type: object
-      properties:
-        sink:
-          allOf:
-          - $ref: '#/components/schemas/Sink'
-          - description: Sink
-        checks:
-          type: array
-          description: Checks
-          items:
-            $ref: '#/components/schemas/CheckResult'
-      description: Sink status
-    SourceStatus:
-      type: object
-      properties:
-        source:
-          allOf:
-          - $ref: '#/components/schemas/Source'
-          - description: Source
-        violations:
-          type: array
-          description: Checks
-          items:
-            $ref: '#/components/schemas/CheckResult'
-      description: Source status
-    ReplicationMode:
-      type: string
-      description: 'CDC replication mode.
-
-
-        `ALL` - replicates all data from the source to the sink.
-
-
-        `NEW_DATA` - replicates only new data that appears in the source after the replication is started.
-
-        {@see org.gridgain.internal.cdc.api.replication.CdcReplicationMode}.'
-      enum:
-      - ALL
-      - NEW_DATA
-    CdcReplicationStatus:
-      type: string
-      description: CDC replication status. {@see org.gridgain.internal.cdc.api.replication.CdcReplicationStatus}
-      enum:
-      - CREATED
-      - RUNNING
-      - STOPPED
-      - FAILED
-    SinkType:
-      type: string
-      description: Type
-      enum:
-      - ICEBERG
-      - GRIDGAIN_8
     Replication:
       required:
       - executionNodes
@@ -893,40 +914,19 @@ components:
           items:
             $ref: '#/components/schemas/SourceTable'
       description: Source
-    SourceTable:
+    SourceStatus:
       type: object
       properties:
-        schema:
-          type: string
-          description: Table schema
-        name:
-          type: string
-          description: Table name
-      description: Source Table
-    SourceType:
-      type: string
-      description: Type
-      enum:
-      - GRIDGAIN
-    Sink:
-      type: object
-      properties:
-        type:
+        source:
           allOf:
-          - $ref: '#/components/schemas/SinkType'
-          - description: Type
-        name:
-          type: string
-          description: Name
-        parameters:
-          type: object
-          additionalProperties: true
-          description: Parameters
-        createTableIfNotExists:
-          type: boolean
-          description: Create table if not exists
-          default: true
-      description: Sink
+          - $ref: '#/components/schemas/Source'
+          - description: Source
+        violations:
+          type: array
+          description: Checks
+          items:
+            $ref: '#/components/schemas/CheckResult'
+      description: Source status
   securitySchemes:
     basicAuth:
       type: http

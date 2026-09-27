@@ -243,16 +243,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     UserRoles:
       type: object
       properties:
@@ -264,6 +254,47 @@ components:
           items:
             $ref: '#/components/schemas/Role'
       description: UserRoles
+    RoleAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        usernames:
+          type: array
+          description: Usernames
+          items:
+            type: string
+      description: Role assignment
+    Privilege:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+        'on':
+          type: string
+          description: Selector
+      description: Privilege
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -296,30 +327,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    Privilege:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action
-        'on':
-          type: string
-          description: Selector
-      description: Privilege
-    RoleAssignment:
-      type: object
-      properties:
-        roleNames:
-          type: array
-          description: Role names
-          items:
-            type: string
-        usernames:
-          type: array
-          description: Usernames
-          items:
-            type: string
-      description: Role assignment
     Role:
       type: object
       properties:
@@ -327,13 +334,6 @@ components:
           type: string
           description: Role name
       description: Role
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-      description: User
     RoleView:
       required:
       - role

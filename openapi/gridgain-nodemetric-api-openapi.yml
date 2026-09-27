@@ -124,6 +124,33 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    MetricSet:
+      required:
+      - metrics
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric set name.
+        metrics:
+          type: array
+          description: Metrics.
+          items:
+            $ref: '#/components/schemas/Metric'
+      description: Metrics set representation.
+    Metric:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric name.
+        desc:
+          type:
+          - string
+          - 'null'
+          description: Metric description.
+      description: Metric representation.
     InvalidParam:
       type: object
       properties:
@@ -166,33 +193,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    Metric:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Metric name.
-        desc:
-          type:
-          - string
-          - 'null'
-          description: Metric description.
-      description: Metric representation.
-    MetricSet:
-      required:
-      - metrics
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Metric set name.
-        metrics:
-          type: array
-          description: Metrics.
-          items:
-            $ref: '#/components/schemas/Metric'
-      description: Metrics set representation.
     MetricSource:
       required:
       - enabled

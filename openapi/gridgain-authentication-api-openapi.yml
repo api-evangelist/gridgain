@@ -118,6 +118,16 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
+    LoginBody:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: DTO of login request body.
     Problem:
       type: object
       properties:
@@ -150,16 +160,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    LoginBody:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-        password:
-          type: string
-          description: Password
-      description: DTO of login request body.
   securitySchemes:
     basicAuth:
       type: http

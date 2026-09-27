@@ -114,6 +114,42 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    ClusterTag:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: Unique cluster UUID. Generated automatically.
+          format: uuid
+        clusterName:
+          type: string
+          description: Unique cluster name.
+      description: Unique tag that identifies the cluster.
+    InitCommand:
+      required:
+      - license
+      type: object
+      properties:
+        metaStorageNodes:
+          type: array
+          description: A list of RAFT metastorage nodes.
+          items:
+            type: string
+        cmgNodes:
+          type: array
+          description: A list of RAFT cluster management nodes.
+          items:
+            type: string
+        clusterName:
+          type: string
+          description: The name of the cluster.
+        clusterConfiguration:
+          type: string
+          description: Cluster configuration in HOCON format.
+        license:
+          type: string
+          description: Cluster license.
+      description: Cluster initialization configuration.
     InvalidParam:
       type: object
       properties:
@@ -185,42 +221,6 @@ components:
             type: string
             format: uuid
       description: Information about current cluster state.
-    InitCommand:
-      required:
-      - license
-      type: object
-      properties:
-        metaStorageNodes:
-          type: array
-          description: A list of RAFT metastorage nodes.
-          items:
-            type: string
-        cmgNodes:
-          type: array
-          description: A list of RAFT cluster management nodes.
-          items:
-            type: string
-        clusterName:
-          type: string
-          description: The name of the cluster.
-        clusterConfiguration:
-          type: string
-          description: Cluster configuration in HOCON format.
-        license:
-          type: string
-          description: Cluster license.
-      description: Cluster initialization configuration.
-    ClusterTag:
-      type: object
-      properties:
-        clusterId:
-          type: string
-          description: Unique cluster UUID. Generated automatically.
-          format: uuid
-        clusterName:
-          type: string
-          description: Unique cluster name.
-      description: Unique tag that identifies the cluster.
   securitySchemes:
     basicAuth:
       type: http

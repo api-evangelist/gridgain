@@ -355,6 +355,68 @@ components:
         state:
           type: string
       description: Information about global zone partition state.
+    LocalZonePartitionStateResponse:
+      required:
+      - estimatedRows
+      - nodeName
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        nodeName:
+          type: string
+        state:
+          type: string
+        estimatedRows:
+          type: integer
+          format: int64
+      description: Information about local zone partition state.
+    TablesRecoveryRequest:
+      required:
+      - tables
+      - timestamp
+      type: object
+      properties:
+        tables:
+          type: array
+          description: List of fully-qualified names of the tables to recover. Without quotes, case-sensitive.
+          items:
+            type: string
+        timestamp:
+          type: string
+          description: Point-in-Time recovery timestamp.
+          format: date-time
+      description: Tables recovery request.
+    TableRecoveryStatus:
+      type: string
+      description: Tables recovery status response.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - FAILED
+    GlobalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalZonePartitionStateResponse'
+      description: Information about global zone partition states.
+    LocalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalZonePartitionStateResponse'
+      description: Information about local zone partition states.
     InvalidParam:
       type: object
       properties:
@@ -365,14 +427,23 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    TableRecoveryStatus:
-      type: string
-      description: Tables recovery status response.
-      enum:
-      - PREPARED
-      - STARTED
-      - COMPLETED
-      - FAILED
+    ResetClusterRequest:
+      type: object
+      properties:
+        cmgNodeNames:
+          type:
+          - array
+          - 'null'
+          description: Names of the proposed CMG nodes. Optional if the MG group is being repaired. If not specified, the current CMG nodes are used.
+          items:
+            type: string
+        metastorageReplicationFactor:
+          type:
+          - integer
+          - 'null'
+          description: Number of nodes in the voting member set of the Metastorage RAFT group.
+          format: int32
+      description: Reset cluster.
     Problem:
       type: object
       properties:
@@ -423,95 +494,6 @@ components:
             type: integer
             format: int32
       description: restart partitions configuration.
-    TablesRecoveryResponse:
-      required:
-      - operationId
-      type: object
-      properties:
-        operationId:
-          type: string
-          description: Id of Point-in-Time recovery process to recover tables.
-          format: uuid
-      description: Tables recovery response.
-    LocalZonePartitionStatesResponse:
-      type: object
-      properties:
-        states:
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalZonePartitionStateResponse'
-      description: Information about local zone partition states.
-    ResetZonePartitionsRequest:
-      type: object
-      properties:
-        zoneName:
-          type: string
-          description: Name of the zone to reset partitions of. Without quotes, case-sensitive.
-        partitionIds:
-          type: array
-          description: IDs of partitions to reset. All if empty.
-          items:
-            type: integer
-            format: int32
-      description: Reset zone partitions configuration.
-    TablesRecoveryRequest:
-      required:
-      - tables
-      - timestamp
-      type: object
-      properties:
-        tables:
-          type: array
-          description: List of fully-qualified names of the tables to recover. Without quotes, case-sensitive.
-          items:
-            type: string
-        timestamp:
-          type: string
-          description: Point-in-Time recovery timestamp.
-          format: date-time
-      description: Tables recovery request.
-    TablesRecoveryStateResponse:
-      required:
-      - recoveryProgress
-      - recoveryStatus
-      type: object
-      properties:
-        recoveryProgress:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-          description: Progress of the recovery process to recover tables, for each table.
-        recoveryStatus:
-          allOf:
-          - $ref: '#/components/schemas/TableRecoveryStatus'
-          - description: Status of the recovery.
-      description: Tables recovery state response.
-    GlobalZonePartitionStatesResponse:
-      type: object
-      properties:
-        states:
-          type: array
-          items:
-            $ref: '#/components/schemas/GlobalZonePartitionStateResponse'
-      description: Information about global zone partition states.
-    ResetClusterRequest:
-      type: object
-      properties:
-        cmgNodeNames:
-          type:
-          - array
-          - 'null'
-          description: Names of the proposed CMG nodes. Optional if the MG group is being repaired. If not specified, the current CMG nodes are used.
-          items:
-            type: string
-        metastorageReplicationFactor:
-          type:
-          - integer
-          - 'null'
-          description: Number of nodes in the voting member set of the Metastorage RAFT group.
-          format: int32
-      description: Reset cluster.
     MigrateRequest:
       type: object
       properties:
@@ -544,28 +526,46 @@ components:
             type: string
             format: uuid
       description: Migrate nodes to new cluster.
-    LocalZonePartitionStateResponse:
+    TablesRecoveryResponse:
       required:
-      - estimatedRows
-      - nodeName
-      - partitionId
-      - state
-      - zoneName
+      - operationId
       type: object
       properties:
-        partitionId:
-          type: integer
-          format: int32
+        operationId:
+          type: string
+          description: Id of Point-in-Time recovery process to recover tables.
+          format: uuid
+      description: Tables recovery response.
+    ResetZonePartitionsRequest:
+      type: object
+      properties:
         zoneName:
           type: string
-        nodeName:
-          type: string
-        state:
-          type: string
-        estimatedRows:
-          type: integer
-          format: int64
-      description: Information about local zone partition state.
+          description: Name of the zone to reset partitions of. Without quotes, case-sensitive.
+        partitionIds:
+          type: array
+          description: IDs of partitions to reset. All if empty.
+          items:
+            type: integer
+            format: int32
+      description: Reset zone partitions configuration.
+    TablesRecoveryStateResponse:
+      required:
+      - recoveryProgress
+      - recoveryStatus
+      type: object
+      properties:
+        recoveryProgress:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Progress of the recovery process to recover tables, for each table.
+        recoveryStatus:
+          allOf:
+          - $ref: '#/components/schemas/TableRecoveryStatus'
+          - description: Status of the recovery.
+      description: Tables recovery state response.
   securitySchemes:
     basicAuth:
       type: http

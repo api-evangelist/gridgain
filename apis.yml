@@ -61,7 +61,7 @@ apis:
   - type: GettingStarted
     url: https://www.gridgain.com/docs/gridgain8/latest/getting-started/quick-start/restapi
 - aid: gridgain:gridgain-authentication-api
-  name: GridGain authentication API
+  name: GridGain Authentication API
   description: The authentication API from GridGain — 3 operation(s) for authentication.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -79,7 +79,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-cdcmanagement-api
-  name: GridGain cdcManagement API
+  name: GridGain Cdc Management API
   description: The cdcManagement API from GridGain — 9 operation(s) for cdcmanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -96,7 +96,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-clusterconfiguration-api
-  name: GridGain clusterConfiguration API
+  name: GridGain Cluster Configuration API
   description: The clusterConfiguration API from GridGain — 2 operation(s) for clusterconfiguration.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -113,7 +113,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-clustermetric-api
-  name: GridGain clusterMetric API
+  name: GridGain Cluster Metric API
   description: The clusterMetric API from GridGain — 3 operation(s) for clustermetric.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -130,7 +130,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-compute-api
-  name: GridGain compute API
+  name: GridGain Compute API
   description: The compute API from GridGain — 3 operation(s) for compute.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -148,7 +148,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-dcr-api
-  name: GridGain dcr API
+  name: GridGain Dcr API
   description: The dcr API from GridGain — 6 operation(s) for dcr.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -166,7 +166,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-deployment-api
-  name: GridGain deployment API
+  name: GridGain Deployment API
   description: The deployment API from GridGain — 7 operation(s) for deployment.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -184,7 +184,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-distribution-api
-  name: GridGain distribution API
+  name: GridGain Distribution API
   description: The distribution API from GridGain — 1 operation(s) for distribution.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -202,7 +202,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-nodemanagement-api
-  name: GridGain nodeManagement API
+  name: GridGain Node Management API
   description: The nodeManagement API from GridGain — 3 operation(s) for nodemanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -219,7 +219,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-nodemetric-api
-  name: GridGain nodeMetric API
+  name: GridGain Node Metric API
   description: The nodeMetric API from GridGain — 4 operation(s) for nodemetric.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -236,7 +236,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-privilegesgrants-api
-  name: GridGain privilegesGrants API
+  name: GridGain Privileges Grants API
   description: The privilegesGrants API from GridGain — 3 operation(s) for privilegesgrants.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -253,7 +253,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-recovery-api
-  name: GridGain recovery API
+  name: GridGain Recovery API
   description: The recovery API from GridGain — 9 operation(s) for recovery.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -271,7 +271,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-snapshotmanagement-api
-  name: GridGain snapshotManagement API
+  name: GridGain Snapshot Management API
   description: The snapshotManagement API from GridGain — 6 operation(s) for snapshotmanagement.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -288,7 +288,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-sql-api
-  name: GridGain sql API
+  name: GridGain Sql API
   description: The sql API from GridGain — 3 operation(s) for sql.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -306,7 +306,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-system-api
-  name: GridGain system API
+  name: GridGain System API
   description: The system API from GridGain — 2 operation(s) for system.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -324,7 +324,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-topology-api
-  name: GridGain topology API
+  name: GridGain Topology API
   description: The topology API from GridGain — 2 operation(s) for topology.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -342,7 +342,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-transactions-api
-  name: GridGain transactions API
+  name: GridGain Transactions API
   description: The transactions API from GridGain — 2 operation(s) for transactions.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite
@@ -360,7 +360,7 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 - aid: gridgain:gridgain-upgrade-api
-  name: GridGain upgrade API
+  name: GridGain Upgrade API
   description: The upgrade API from GridGain — 4 operation(s) for upgrade.
   humanURL: https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi
   baseURL: http://localhost:8080/ignite

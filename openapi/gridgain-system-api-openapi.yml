@@ -82,48 +82,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MigrateRequest:
-      type: object
-      properties:
-        cmgNodes:
-          type: array
-          description: Names of the CMG node names.
-          items:
-            type: string
-        metaStorageNodes:
-          type: array
-          description: Names of the Metastorage node names.
-          items:
-            type: string
-        version:
-          type: string
-          description: Ignite version.
-        clusterId:
-          type: string
-          description: ID of the cluster.
-          format: uuid
-        clusterName:
-          type: string
-          description: Name of the cluster.
-        formerClusterIds:
-          type:
-          - array
-          - 'null'
-          description: IDs the cluster had before. If CMG/Metastorage group were never repaired, this is null.
-          items:
-            type: string
-            format: uuid
-      description: Migrate nodes to new cluster.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     ResetClusterRequest:
       type: object
       properties:
@@ -173,6 +131,48 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    MigrateRequest:
+      type: object
+      properties:
+        cmgNodes:
+          type: array
+          description: Names of the CMG node names.
+          items:
+            type: string
+        metaStorageNodes:
+          type: array
+          description: Names of the Metastorage node names.
+          items:
+            type: string
+        version:
+          type: string
+          description: Ignite version.
+        clusterId:
+          type: string
+          description: ID of the cluster.
+          format: uuid
+        clusterName:
+          type: string
+          description: Name of the cluster.
+        formerClusterIds:
+          type:
+          - array
+          - 'null'
+          description: IDs the cluster had before. If CMG/Metastorage group were never repaired, this is null.
+          items:
+            type: string
+            format: uuid
+      description: Migrate nodes to new cluster.
   securitySchemes:
     basicAuth:
       type: http

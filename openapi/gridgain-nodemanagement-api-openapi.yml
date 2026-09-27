@@ -84,6 +84,47 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    NodeState:
+      required:
+      - name
+      - state
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          - description: Node state.
+      description: Node state.
+    NodeVersion:
+      required:
+      - product
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Node version.
+        product:
+          type: string
+          description: Node product.
+      description: Node version.
+    NodeInfo:
+      required:
+      - jdbcPort
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        jdbcPort:
+          type: integer
+          description: Node JDBC port.
+          format: int32
+      description: Node info.
     InvalidParam:
       type: object
       properties:
@@ -126,20 +167,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    NodeState:
-      required:
-      - name
-      - state
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique node name.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/State'
-          - description: Node state.
-      description: Node state.
     State:
       type: string
       description: Possible node states.
@@ -147,33 +174,6 @@ components:
       - STARTING
       - STARTED
       - STOPPING
-    NodeInfo:
-      required:
-      - jdbcPort
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique node name.
-        jdbcPort:
-          type: integer
-          description: Node JDBC port.
-          format: int32
-      description: Node info.
-    NodeVersion:
-      required:
-      - product
-      - version
-      type: object
-      properties:
-        version:
-          type: string
-          description: Node version.
-        product:
-          type: string
-          description: Node product.
-      description: Node version.
   securitySchemes:
     basicAuth:
       type: http
