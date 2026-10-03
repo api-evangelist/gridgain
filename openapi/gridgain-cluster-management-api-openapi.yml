@@ -114,17 +114,35 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    ClusterTag:
+    ClusterState:
       type: object
       properties:
-        clusterId:
+        cmgNodes:
+          type: array
+          description: List of cluster management group nodes. These nodes are responsible for maintaining RAFT cluster topology.
+          items:
+            type: string
+        msNodes:
+          type: array
+          description: List of metastorage nodes. These nodes are responsible for storing RAFT cluster metadata.
+          items:
+            type: string
+        igniteVersion:
           type: string
-          description: Unique cluster UUID. Generated automatically.
-          format: uuid
-        clusterName:
-          type: string
-          description: Unique cluster name.
-      description: Unique tag that identifies the cluster.
+          description: Version of Apache Ignite that the cluster was created on.
+        clusterTag:
+          allOf:
+          - $ref: '#/components/schemas/ClusterTag'
+          - description: Unique tag that identifies the cluster.
+        formerClusterIds:
+          type:
+          - array
+          - 'null'
+          description: IDs the cluster had before.
+          items:
+            type: string
+            format: uuid
+      description: Information about current cluster state.
     InitCommand:
       required:
       - license
@@ -150,16 +168,6 @@ components:
           type: string
           description: Cluster license.
       description: Cluster initialization configuration.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -192,35 +200,27 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    ClusterState:
+    ClusterTag:
       type: object
       properties:
-        cmgNodes:
-          type: array
-          description: List of cluster management group nodes. These nodes are responsible for maintaining RAFT cluster topology.
-          items:
-            type: string
-        msNodes:
-          type: array
-          description: List of metastorage nodes. These nodes are responsible for storing RAFT cluster metadata.
-          items:
-            type: string
-        igniteVersion:
+        clusterId:
           type: string
-          description: Version of Apache Ignite that the cluster was created on.
-        clusterTag:
-          allOf:
-          - $ref: '#/components/schemas/ClusterTag'
-          - description: Unique tag that identifies the cluster.
-        formerClusterIds:
-          type:
-          - array
-          - 'null'
-          description: IDs the cluster had before.
-          items:
-            type: string
-            format: uuid
-      description: Information about current cluster state.
+          description: Unique cluster UUID. Generated automatically.
+          format: uuid
+        clusterName:
+          type: string
+          description: Unique cluster name.
+      description: Unique tag that identifies the cluster.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

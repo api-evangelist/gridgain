@@ -395,35 +395,12 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    UnitVersionStatus:
-      required:
-      - status
-      - version
-      type: object
-      properties:
-        version:
-          type: string
-          description: Unit version.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/DeploymentStatus'
-          - description: Unit status.
-      description: Unit version and status.
-    UnitStatus:
-      required:
-      - id
-      - versionToStatus
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unit identifier.
-        versionToStatus:
-          type: array
-          description: Map from unit version to unit deployment status.
-          items:
-            $ref: '#/components/schemas/UnitVersionStatus'
-      description: Unit status.
+    deployMode:
+      type: string
+      description: Initial set of nodes to deploy.
+      enum:
+      - MAJORITY
+      - ALL
     UnitEntry:
       type: object
       description: Unit content entry.
@@ -432,49 +409,6 @@ components:
       oneOf:
       - $ref: '#/components/schemas/UnitFile'
       - $ref: '#/components/schemas/UnitFolder'
-    UnitFolder:
-      required:
-      - children
-      - name
-      - size
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Entry type discriminator.
-          enum:
-          - folder
-        name:
-          type: string
-          description: Unit content folder name.
-        children:
-          type: array
-          description: Unit content folder elements.
-          items:
-            $ref: '#/components/schemas/UnitEntry'
-        size:
-          type: integer
-          description: Total size of folder contents in bytes (computed as sum of all children).
-          format: int64
-          readOnly: true
-      description: Unit content folder.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    deployMode:
-      type: string
-      description: Initial set of nodes to deploy.
-      enum:
-      - MAJORITY
-      - ALL
     Problem:
       type: object
       properties:
@@ -515,6 +449,72 @@ components:
       - DEPLOYED
       - OBSOLETE
       - REMOVING
+    UnitStatus:
+      required:
+      - id
+      - versionToStatus
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unit identifier.
+        versionToStatus:
+          type: array
+          description: Map from unit version to unit deployment status.
+          items:
+            $ref: '#/components/schemas/UnitVersionStatus'
+      description: Unit status.
+    UnitVersionStatus:
+      required:
+      - status
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Unit version.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/DeploymentStatus'
+          - description: Unit status.
+      description: Unit version and status.
+    UnitFolder:
+      required:
+      - children
+      - name
+      - size
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Entry type discriminator.
+          enum:
+          - folder
+        name:
+          type: string
+          description: Unit content folder name.
+        children:
+          type: array
+          description: Unit content folder elements.
+          items:
+            $ref: '#/components/schemas/UnitEntry'
+        size:
+          type: integer
+          description: Total size of folder contents in bytes (computed as sum of all children).
+          format: int64
+          readOnly: true
+      description: Unit content folder.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     UnitFile:
       required:
       - name

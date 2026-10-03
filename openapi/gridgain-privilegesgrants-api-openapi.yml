@@ -168,19 +168,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    RolePrivileges:
-      required:
-      - privileges
-      type: object
-      properties:
-        role:
-          type: string
-          description: Role
-        privileges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Privilege'
-      description: RolePrivileges
     Privilege:
       type: object
       properties:
@@ -191,30 +178,6 @@ components:
           type: string
           description: Selector
       description: Privilege
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    PrivilegeAssignment:
-      type: object
-      properties:
-        roleNames:
-          type: array
-          description: Role names
-          items:
-            type: string
-        privileges:
-          type: array
-          description: Privileges
-          items:
-            $ref: '#/components/schemas/Privilege'
-      description: Privilege assignment
     Problem:
       type: object
       properties:
@@ -247,6 +210,43 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    RolePrivileges:
+      required:
+      - privileges
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RolePrivileges
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    PrivilegeAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        privileges:
+          type: array
+          description: Privileges
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: Privilege assignment
   securitySchemes:
     basicAuth:
       type: http

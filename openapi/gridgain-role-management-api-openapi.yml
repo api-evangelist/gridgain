@@ -194,6 +194,13 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
+    Role:
+      type: object
+      properties:
+        roleName:
+          type: string
+          description: Role name
+      description: Role
     Problem:
       type: object
       properties:
@@ -226,13 +233,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    Role:
-      type: object
-      properties:
-        roleName:
-          type: string
-          description: Role name
-      description: Role
   securitySchemes:
     basicAuth:
       type: http

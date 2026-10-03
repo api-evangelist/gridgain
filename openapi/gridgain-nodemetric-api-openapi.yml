@@ -124,43 +124,19 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    MetricSet:
+    MetricSource:
       required:
-      - metrics
+      - enabled
       - name
       type: object
       properties:
         name:
           type: string
-          description: Metric set name.
-        metrics:
-          type: array
-          description: Metrics.
-          items:
-            $ref: '#/components/schemas/Metric'
-      description: Metrics set representation.
-    Metric:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Metric name.
-        desc:
-          type:
-          - string
-          - 'null'
-          description: Metric description.
-      description: Metric representation.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
+          description: Metric source name.
+        enabled:
+          type: boolean
+          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
+      description: A list of metric sources provided by modules.
     Problem:
       type: object
       properties:
@@ -193,19 +169,43 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    MetricSource:
+    Metric:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric name.
+        desc:
+          type:
+          - string
+          - 'null'
+          description: Metric description.
+      description: Metric representation.
+    MetricSet:
       required:
-      - enabled
+      - metrics
       - name
       type: object
       properties:
         name:
           type: string
-          description: Metric source name.
-        enabled:
-          type: boolean
-          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
-      description: A list of metric sources provided by modules.
+          description: Metric set name.
+        metrics:
+          type: array
+          description: Metrics.
+          items:
+            $ref: '#/components/schemas/Metric'
+      description: Metrics set representation.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
   securitySchemes:
     basicAuth:
       type: http

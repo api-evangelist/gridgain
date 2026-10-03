@@ -98,43 +98,6 @@ components:
           - $ref: '#/components/schemas/State'
           - description: Node state.
       description: Node state.
-    NodeVersion:
-      required:
-      - product
-      - version
-      type: object
-      properties:
-        version:
-          type: string
-          description: Node version.
-        product:
-          type: string
-          description: Node product.
-      description: Node version.
-    NodeInfo:
-      required:
-      - jdbcPort
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Unique node name.
-        jdbcPort:
-          type: integer
-          description: Node JDBC port.
-          format: int32
-      description: Node info.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -167,6 +130,43 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    NodeInfo:
+      required:
+      - jdbcPort
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique node name.
+        jdbcPort:
+          type: integer
+          description: Node JDBC port.
+          format: int32
+      description: Node info.
+    NodeVersion:
+      required:
+      - product
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+          description: Node version.
+        product:
+          type: string
+          description: Node product.
+      description: Node version.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     State:
       type: string
       description: Possible node states.

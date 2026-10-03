@@ -221,25 +221,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    LicenseId:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-      description: License Id
-    LicenseFeatureSet:
-      required:
-      - features
-      type: object
-      properties:
-        features:
-          type: array
-          description: License features set.
-          items:
-            $ref: '#/components/schemas/LicenseFeature'
-      description: License features set representation.
     License:
       type: object
       properties:
@@ -270,19 +251,42 @@ components:
           - $ref: '#/components/schemas/LicenseLimits'
           - description: License limitations
       description: License information
-    LicenseFeature:
+    LicenseFeatureSet:
       required:
-      - id
-      - name
+      - features
       type: object
       properties:
-        id:
+        features:
+          type: array
+          description: License features set.
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+      description: License features set representation.
+    LicenseInfo:
+      type: object
+      properties:
+        companyName:
           type: string
-          description: Feature identifier.
-        name:
+          description: Name of the company
+        companyWebsite:
           type: string
-          description: Feature name.
-      description: License feature representation.
+          description: Company's website URL
+        contactEmail:
+          type: string
+          description: Contact person's email address
+        contactName:
+          type: string
+          description: Contact person's name
+        contractEndDate:
+          type: string
+          description: Contract end date
+        contractStartDate:
+          type: string
+          description: Contract start date
+        licenseNote:
+          type: string
+          description: Additional notes about the license
+      description: License information fields
     LicenseLimits:
       type: object
       properties:
@@ -321,41 +325,6 @@ components:
           description: Maximum on-disk size allowed
           format: int64
       description: License limitations
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    LicenseInfo:
-      type: object
-      properties:
-        companyName:
-          type: string
-          description: Name of the company
-        companyWebsite:
-          type: string
-          description: Company's website URL
-        contactEmail:
-          type: string
-          description: Contact person's email address
-        contactName:
-          type: string
-          description: Contact person's name
-        contractEndDate:
-          type: string
-          description: Contract end date
-        contractStartDate:
-          type: string
-          description: Contract start date
-        licenseNote:
-          type: string
-          description: Additional notes about the license
-      description: License information fields
     Problem:
       type: object
       properties:
@@ -388,6 +357,14 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    LicenseId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+      description: License Id
     Signatures:
       required:
       - signature_1
@@ -396,6 +373,29 @@ components:
         signature_1:
           type: string
       description: DTO for license signatures.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    LicenseFeature:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Feature identifier.
+        name:
+          type: string
+          description: Feature name.
+      description: License feature representation.
   securitySchemes:
     basicAuth:
       type: http

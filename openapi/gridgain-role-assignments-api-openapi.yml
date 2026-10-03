@@ -254,20 +254,6 @@ components:
           items:
             $ref: '#/components/schemas/Role'
       description: UserRoles
-    RoleAssignment:
-      type: object
-      properties:
-        roleNames:
-          type: array
-          description: Role names
-          items:
-            type: string
-        usernames:
-          type: array
-          description: Usernames
-          items:
-            type: string
-      description: Role assignment
     Privilege:
       type: object
       properties:
@@ -278,23 +264,6 @@ components:
           type: string
           description: Selector
       description: Privilege
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-      description: User
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -327,6 +296,37 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    RoleAssignment:
+      type: object
+      properties:
+        roleNames:
+          type: array
+          description: Role names
+          items:
+            type: string
+        usernames:
+          type: array
+          description: Usernames
+          items:
+            type: string
+      description: Role assignment
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Role:
       type: object
       properties:
