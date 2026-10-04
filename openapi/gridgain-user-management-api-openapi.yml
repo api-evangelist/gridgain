@@ -240,13 +240,6 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-      description: User
     CreateUserRequest:
       type: object
       properties:
@@ -289,6 +282,13 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
   securitySchemes:
     basicAuth:
       type: http

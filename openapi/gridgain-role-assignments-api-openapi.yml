@@ -254,6 +254,16 @@ components:
           items:
             $ref: '#/components/schemas/Role'
       description: UserRoles
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Privilege:
       type: object
       properties:
@@ -264,6 +274,30 @@ components:
           type: string
           description: Selector
       description: Privilege
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    RoleView:
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          type: string
+          description: Role
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        privileges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Privilege'
+      description: RoleUsers
     Problem:
       type: object
       properties:
@@ -296,13 +330,13 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    User:
+    Role:
       type: object
       properties:
-        username:
+        roleName:
           type: string
-          description: Username
-      description: User
+          description: Role name
+      description: Role
     RoleAssignment:
       type: object
       properties:
@@ -317,40 +351,6 @@ components:
           items:
             type: string
       description: Role assignment
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    Role:
-      type: object
-      properties:
-        roleName:
-          type: string
-          description: Role name
-      description: Role
-    RoleView:
-      required:
-      - role
-      type: object
-      properties:
-        role:
-          type: string
-          description: Role
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        privileges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Privilege'
-      description: RoleUsers
   securitySchemes:
     basicAuth:
       type: http

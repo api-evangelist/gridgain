@@ -84,6 +84,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     NodeState:
       required:
       - name
@@ -144,6 +154,13 @@ components:
           description: Node JDBC port.
           format: int32
       description: Node info.
+    State:
+      type: string
+      description: Possible node states.
+      enum:
+      - STARTING
+      - STARTED
+      - STOPPING
     NodeVersion:
       required:
       - product
@@ -157,23 +174,6 @@ components:
           type: string
           description: Node product.
       description: Node version.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    State:
-      type: string
-      description: Possible node states.
-      enum:
-      - STARTING
-      - STARTED
-      - STOPPING
   securitySchemes:
     basicAuth:
       type: http

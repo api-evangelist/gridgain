@@ -284,6 +284,167 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    StartStopReplicationRequest:
+      type: object
+      properties:
+        schemaName:
+          type:
+          - string
+          - 'null'
+          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema. If specified, acts as default schema for unqualified table names or as schema filter for allTables=true.'
+        allTables:
+          type:
+          - boolean
+          - 'null'
+          description: If true, all tables will be replicated.
+        tables:
+          type:
+          - array
+          - 'null'
+          description: List of table names to be replicated.
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
+    FlushRequest:
+      type: object
+      properties:
+        flushPoint:
+          type: string
+          description: Flush point timestamp.
+          format: date-time
+      description: DTO for flush request.
+    ReplicationError:
+      type: object
+      properties:
+        workerNode:
+          type: string
+          description: Name of worker node where the error occurred.
+        entryName:
+          type: string
+          description: Name of the entry where the error occurred.
+        errorMessage:
+          type: string
+          description: Detailed error message.
+      description: Represents an error encountered during replication.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    AuthConfig:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+        password:
+          type: string
+          description: Password
+      description: Auth config of the connection to the source cluster.
+    ReplicationStatus:
+      type: string
+      description: Current status of the replication.
+      enum:
+      - REPLICATING
+      - STOPPED
+      - FAILED
+      - WORKER_NODE_OUT
+    SslConfig:
+      type: object
+      properties:
+        ciphers:
+          type:
+          - array
+          - 'null'
+          description: ciphers
+          items:
+            type: string
+        keyStorePath:
+          type:
+          - string
+          - 'null'
+          description: Key store path that will be used to setup SSL connection.
+        keyStorePassword:
+          type:
+          - string
+          - 'null'
+          description: Key store password.
+        trustStorePath:
+          type:
+          - string
+          - 'null'
+          description: Trust store path that will be used to setup SSL connection..
+        trustStorePassword:
+          type:
+          - string
+          - 'null'
+          description: Trust store password.
+      description: SSL config of the connection to the source cluster.
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    CreateReplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Replication name.
+        sourceClusterAddresses:
+          type: array
+          description: List of node addresses of the source cluster.
+          items:
+            type: string
+        authConfig:
+          allOf:
+          - $ref: '#/components/schemas/AuthConfig'
+          - description: Auth config of the connection to the source cluster.
+        sslConfig:
+          allOf:
+          - $ref: '#/components/schemas/SslConfig'
+          - description: SSL config of the connection to the source cluster.
+        replicationNodes:
+          type: array
+          description: List of replication nodes names on target cluster.
+          items:
+            type: string
+      description: DTO for creating a cluster replication request.
     ReplicationInfo:
       required:
       - name
@@ -345,95 +506,6 @@ components:
           description: Progress of full state transfer. Indicates how much percent of initial data were transferred.
           format: int32
       description: Contains detailed information about a specific replication process.
-    ReplicationError:
-      type: object
-      properties:
-        workerNode:
-          type: string
-          description: Name of worker node where the error occurred.
-        entryName:
-          type: string
-          description: Name of the entry where the error occurred.
-        errorMessage:
-          type: string
-          description: Detailed error message.
-      description: Represents an error encountered during replication.
-    Problem:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Short summary of the issue.
-        status:
-          type: integer
-          description: Returned HTTP status code.
-          format: int32
-        code:
-          type: string
-          description: Ignite 3 error code.
-        type:
-          type: string
-          description: URI to documentation regarding the issue.
-        detail:
-          type: string
-          description: Extended explanation of the issue.
-        node:
-          type: string
-          description: Name of the node the issue happened on.
-        traceId:
-          type: string
-          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
-          format: uuid
-        invalidParams:
-          type: array
-          description: A list of parameters that did not pass validation and the reason for it.
-          items:
-            $ref: '#/components/schemas/InvalidParam'
-      description: Extended description of the problem with the request.
-    SslConfig:
-      type: object
-      properties:
-        ciphers:
-          type:
-          - array
-          - 'null'
-          description: ciphers
-          items:
-            type: string
-        keyStorePath:
-          type:
-          - string
-          - 'null'
-          description: Key store path that will be used to setup SSL connection.
-        keyStorePassword:
-          type:
-          - string
-          - 'null'
-          description: Key store password.
-        trustStorePath:
-          type:
-          - string
-          - 'null'
-          description: Trust store path that will be used to setup SSL connection..
-        trustStorePassword:
-          type:
-          - string
-          - 'null'
-          description: Trust store password.
-      description: SSL config of the connection to the source cluster.
-    AuthConfig:
-      required:
-      - password
-      - username
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-        password:
-          type: string
-          description: Password
-      description: Auth config of the connection to the source cluster.
     TableStatus:
       required:
       - status
@@ -448,78 +520,6 @@ components:
           type: string
           description: Table name
       description: Contains detailed information about a specific table replication process.
-    ReplicationStatus:
-      type: string
-      description: Current status of the replication.
-      enum:
-      - REPLICATING
-      - STOPPED
-      - FAILED
-      - WORKER_NODE_OUT
-    StartStopReplicationRequest:
-      type: object
-      properties:
-        schemaName:
-          type:
-          - string
-          - 'null'
-          description: 'Schema name for replication. If null: for allTables=true, no schema filtering is applied (replicates all schemas); for explicit table lists, unqualified table names default to PUBLIC schema. If specified, acts as default schema for unqualified table names or as schema filter for allTables=true.'
-        allTables:
-          type:
-          - boolean
-          - 'null'
-          description: If true, all tables will be replicated.
-        tables:
-          type:
-          - array
-          - 'null'
-          description: List of table names to be replicated.
-          items:
-            type: string
-      description: DTO for creating a cluster replication request.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    FlushRequest:
-      type: object
-      properties:
-        flushPoint:
-          type: string
-          description: Flush point timestamp.
-          format: date-time
-      description: DTO for flush request.
-    CreateReplicationRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Replication name.
-        sourceClusterAddresses:
-          type: array
-          description: List of node addresses of the source cluster.
-          items:
-            type: string
-        authConfig:
-          allOf:
-          - $ref: '#/components/schemas/AuthConfig'
-          - description: Auth config of the connection to the source cluster.
-        sslConfig:
-          allOf:
-          - $ref: '#/components/schemas/SslConfig'
-          - description: SSL config of the connection to the source cluster.
-        replicationNodes:
-          type: array
-          description: List of replication nodes names on target cluster.
-          items:
-            type: string
-      description: DTO for creating a cluster replication request.
   securitySchemes:
     basicAuth:
       type: http
