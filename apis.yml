@@ -32,6 +32,9 @@ accessModel:
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gridgain.png
+x-docs-platform: redocly
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
   - Caching
   - Data Grid
@@ -490,6 +493,9 @@ apis:
   - type: JSONSchema
     url: json-schema/gridgain-schema-index.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/gridgain-capability-edges.yml
+    name: GridGain Business Capability Map
   - type: AgenticAccess
     url: agentic-access/gridgain-agentic-access.yml
   - type: DomainSecurity
