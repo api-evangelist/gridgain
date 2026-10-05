@@ -1,0 +1,55 @@
+slug: gridgain
+provider: GridGain
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Role Assignments
+  spec_file: gridgain-role-assignments-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /management/v1/rbac/ra  assignRoles  Assign roles to users; DELETE ... revokeRoles  Revoke
+    roles from users
+  reason: Explicit RBAC surface assigning and revoking roles for users and listing privileges (User, Role,
+    Privilege, RoleAssignment schemas). This is access administration — Identity & Access Management.
+- tag: Role Management
+  spec_file: gridgain-role-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /management/v1/rbac/roles  createRole  Create role
+  reason: CRUD over RBAC roles under /rbac/roles with a Role schema — definition of access roles, squarely
+    Identity & Access Management.
+- tag: privilegesGrants
+  spec_file: gridgain-privilegesgrants-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /management/v1/rbac/pg grantPrivileges Grant privileges; DELETE revokePrivileges Revoke
+    privileges; GET /management/v1/rbac/pg/roles getRolesWithPrivileges
+  reason: Granting and revoking privileges to roles with a RolePrivileges/PrivilegeAssignment model is
+    authorisation administration — squarely Identity & Access Management.
+- tag: User Management
+  spec_file: gridgain-user-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /management/v1/rbac/users createUser Create user; DELETE /management/v1/rbac/users/{username}
+    deleteUser
+  reason: 'Operations create, read, update and delete user accounts under an /rbac/ path — administration
+    of identities and their access to the platform, i.e. Identity & Access Management. Not an HR/customer
+    capability: the ''User'' schema is a platform principal, not a person record.'
