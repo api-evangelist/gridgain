@@ -1,20 +1,30 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/gridgain-openapi.yml
+source: openapi/gridgain-authentication-api-openapi.yml, openapi/gridgain-cdcmanagement-api-openapi.yml,
+  openapi/gridgain-cluster-management-api-openapi.yml, openapi/gridgain-clusterconfiguration-api-openapi.yml,
+  openapi/gridgain-clustermetric-api-openapi.yml, openapi/gridgain-compute-api-openapi.yml,
+  openapi/gridgain-data-nodes-api-openapi.yml, openapi/gridgain-dcr-api-openapi.yml, openapi/gridgain-deployment-api-openapi.yml,
+  openapi/gridgain-distribution-api-openapi.yml, openapi/gridgain-license-management-api-openapi.yml,
+  openapi/gridgain-node-configuration-api-openapi.yml, openapi/gridgain-nodemanagement-api-openapi.yml,
+  openapi/gridgain-nodemetric-api-openapi.yml, openapi/gridgain-privilegesgrants-api-openapi.yml,
+  openapi/gridgain-recovery-api-openapi.yml, openapi/gridgain-role-assignments-api-openapi.yml,
+  openapi/gridgain-role-management-api-openapi.yml, openapi/gridgain-snapshotmanagement-api-openapi.yml,
+  openapi/gridgain-sql-api-openapi.yml, openapi/gridgain-system-api-openapi.yml, openapi/gridgain-topology-api-openapi.yml,
+  openapi/gridgain-transactions-api-openapi.yml, openapi/gridgain-upgrade-api-openapi.yml, openapi/gridgain-user-management-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 117
+  operations: 119
   by_action_class:
-    acting: 59
-    connected: 58
+    acting: 60
+    connected: 59
   by_consequence:
-    safety-critical: 15
+    safety-critical: 16
+    read: 59
     write: 41
-    read: 58
     physical: 3
-  human_in_the_loop_required: 15
+  human_in_the_loop_required: 16
 operations:
 - path: /management/v1/authentication/jwt
   method: delete
@@ -52,18 +62,12 @@ operations:
   method: post
   operationId: login
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /management/v1/cdc/replications
   method: get
   operationId: getCdcReplications
@@ -346,9 +350,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /management/v1/cluster/topology/logical
+- path: /management/v1/configuration/cluster
   method: get
-  operationId: logical
+  operationId: getClusterConfiguration
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -356,9 +360,67 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /management/v1/cluster/topology/physical
+- path: /management/v1/configuration/cluster
+  method: patch
+  operationId: updateClusterConfiguration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/configuration/cluster/{path}
   method: get
-  operationId: physical
+  operationId: getClusterConfigurationByPath
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/metric/cluster/disable
+  method: post
+  operationId: disableClusterMetric
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /management/v1/metric/cluster/enable
+  method: post
+  operationId: enableClusterMetric
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/metric/cluster/source
+  method: get
+  operationId: listClusterMetricSources
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -418,35 +480,25 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /management/v1/configuration/cluster
-  method: get
-  operationId: getClusterConfiguration
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/configuration/cluster
-  method: patch
-  operationId: updateClusterConfiguration
+- path: /management/v1/zones/datanodes/reset
+  method: post
+  operationId: resetDataNodesForZones
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /management/v1/configuration/cluster/{path}
+- path: /management/v1/zones/{zoneName}/datanodes
   method: get
-  operationId: getClusterConfigurationByPath
+  operationId: getDataNodesForZone
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -454,42 +506,22 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /management/v1/configuration/node
-  method: get
-  operationId: getNodeConfiguration
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/configuration/node
-  method: patch
-  operationId: updateNodeConfiguration
+- path: /management/v1/zones/{zoneName}/datanodes/reset
+  method: post
+  operationId: resetDataNodesForZone
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: safety-critical
     subject: required
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
     escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
+      human-in-the-loop: required
     audit: required
-- path: /management/v1/configuration/node/{path}
-  method: get
-  operationId: getNodeConfigurationByPath
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /management/v1/dcr/replications
   method: get
   operationId: listReplications
@@ -792,25 +824,19 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /management/v1/metric/cluster/disable
-  method: post
-  operationId: disableClusterMetric
+- path: /management/v1/configuration/node
+  method: get
+  operationId: getNodeConfiguration
   x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /management/v1/metric/cluster/enable
-  method: post
-  operationId: enableClusterMetric
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/configuration/node
+  method: patch
+  operationId: updateNodeConfiguration
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -824,9 +850,39 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /management/v1/metric/cluster/source
+- path: /management/v1/configuration/node/{path}
   method: get
-  operationId: listClusterMetricSources
+  operationId: getNodeConfigurationByPath
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/node/info
+  method: get
+  operationId: nodeInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/node/state
+  method: get
+  operationId: nodeState
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/node/version
+  method: get
+  operationId: nodeVersion
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -886,36 +942,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /management/v1/node/info
-  method: get
-  operationId: nodeInfo
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/node/state
-  method: get
-  operationId: nodeState
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/node/version
-  method: get
-  operationId: nodeVersion
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /management/v1/rbac/pg
   method: post
   operationId: grantPrivileges
@@ -961,6 +987,132 @@ operations:
 - path: /management/v1/rbac/pg/{roleName}
   method: get
   operationId: getPrivileges
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/recovery/cluster/migrate
+  method: post
+  operationId: migrate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/recovery/cluster/reset
+  method: post
+  operationId: resetCluster
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /management/v1/recovery/tables
+  method: post
+  operationId: recoverTables
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/recovery/tables/state/{operationId}
+  method: get
+  operationId: getTablesRecoveryState
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/recovery/zone/partitions/reset
+  method: post
+  operationId: resetZonePartitions
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /management/v1/recovery/zone/partitions/restart
+  method: post
+  operationId: restartZonePartitions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/recovery/zone/partitions/restartWithCleanup
+  method: post
+  operationId: restartZonePartitionsWithCleanup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/recovery/zone/state/global
+  method: get
+  operationId: getZoneGlobalPartitionStates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/recovery/zone/state/local
+  method: get
+  operationId: getZoneLocalPartitionStates
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1092,200 +1244,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /management/v1/rbac/users
-  method: get
-  operationId: getUsers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/rbac/users
-  method: post
-  operationId: createUser
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/rbac/users/{username}
-  method: get
-  operationId: getUser
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/rbac/users/{username}
-  method: put
-  operationId: updateUser
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/rbac/users/{username}
-  method: delete
-  operationId: deleteUser
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/recovery/cluster/migrate
-  method: post
-  operationId: migrate
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/recovery/cluster/reset
-  method: post
-  operationId: resetCluster
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /management/v1/recovery/tables
-  method: post
-  operationId: recoverTables
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/recovery/tables/state/{operationId}
-  method: get
-  operationId: getTablesRecoveryState
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/recovery/zone/partitions/reset
-  method: post
-  operationId: resetZonePartitions
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /management/v1/recovery/zone/partitions/restart
-  method: post
-  operationId: restartZonePartitions
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/recovery/zone/partitions/restartWithCleanup
-  method: post
-  operationId: restartZonePartitionsWithCleanup
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /management/v1/recovery/zone/state/global
-  method: get
-  operationId: getZoneGlobalPartitionStates
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /management/v1/recovery/zone/state/local
-  method: get
-  operationId: getZoneLocalPartitionStates
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /management/v1/snapshot/create
   method: post
   operationId: create
@@ -1410,6 +1368,58 @@ operations:
     escalation:
       human-in-the-loop: required
     audit: required
+- path: /management/v1/recovery/cluster/migrate
+  method: post
+  operationId: migrate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/recovery/cluster/reset
+  method: post
+  operationId: resetCluster
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /management/v1/cluster/topology/logical
+  method: get
+  operationId: logical
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/cluster/topology/physical
+  method: get
+  operationId: physical
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /management/v1/transactions
   method: get
   operationId: transactions
@@ -1504,25 +1514,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /management/v1/zones/datanodes/reset
-  method: post
-  operationId: resetDataNodesForZones
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /management/v1/zones/{zoneName}/datanodes
+- path: /management/v1/rbac/users
   method: get
-  operationId: getDataNodesForZone
+  operationId: getUsers
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1530,19 +1524,61 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /management/v1/zones/{zoneName}/datanodes/reset
+- path: /management/v1/rbac/users
   method: post
-  operationId: resetDataNodesForZone
+  operationId: createUser
   x-agentic-access:
     action-class: acting
-    consequence: safety-critical
+    consequence: write
     subject: required
     audience: null
     token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
+      max-ttl: 900
     escalation:
-      human-in-the-loop: required
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/rbac/users/{username}
+  method: get
+  operationId: getUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /management/v1/rbac/users/{username}
+  method: put
+  operationId: updateUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /management/v1/rbac/users/{username}
+  method: delete
+  operationId: deleteUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
     audit: required
