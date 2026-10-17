@@ -124,31 +124,17 @@ components:
           type: string
           description: The issue with the parameter.
       description: Information about invalid request parameter.
-    InitCommand:
-      required:
-      - license
+    ClusterTag:
       type: object
       properties:
-        metaStorageNodes:
-          type: array
-          description: A list of RAFT metastorage nodes.
-          items:
-            type: string
-        cmgNodes:
-          type: array
-          description: A list of RAFT cluster management nodes.
-          items:
-            type: string
+        clusterId:
+          type: string
+          description: Unique cluster UUID. Generated automatically.
+          format: uuid
         clusterName:
           type: string
-          description: The name of the cluster.
-        clusterConfiguration:
-          type: string
-          description: Cluster configuration in HOCON format.
-        license:
-          type: string
-          description: Cluster license.
-      description: Cluster initialization configuration.
+          description: Unique cluster name.
+      description: Unique tag that identifies the cluster.
     Problem:
       type: object
       properties:
@@ -181,6 +167,31 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    InitCommand:
+      required:
+      - license
+      type: object
+      properties:
+        metaStorageNodes:
+          type: array
+          description: A list of RAFT metastorage nodes.
+          items:
+            type: string
+        cmgNodes:
+          type: array
+          description: A list of RAFT cluster management nodes.
+          items:
+            type: string
+        clusterName:
+          type: string
+          description: The name of the cluster.
+        clusterConfiguration:
+          type: string
+          description: Cluster configuration in HOCON format.
+        license:
+          type: string
+          description: Cluster license.
+      description: Cluster initialization configuration.
     ClusterState:
       type: object
       properties:
@@ -210,17 +221,6 @@ components:
             type: string
             format: uuid
       description: Information about current cluster state.
-    ClusterTag:
-      type: object
-      properties:
-        clusterId:
-          type: string
-          description: Unique cluster UUID. Generated automatically.
-          format: uuid
-        clusterName:
-          type: string
-          description: Unique cluster name.
-      description: Unique tag that identifies the cluster.
   securitySchemes:
     basicAuth:
       type: http

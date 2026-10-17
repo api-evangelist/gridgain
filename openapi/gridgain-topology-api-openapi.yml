@@ -74,16 +74,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     NetworkAddress:
       type: object
       properties:
@@ -95,6 +85,31 @@ components:
           description: Port the node runs on.
           format: int32
       description: Node network address information.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    NodeMetadata:
+      type: object
+      properties:
+        restHost:
+          type: string
+          description: The host exposed to REST API.
+        httpPort:
+          type: integer
+          description: The HTTP port exposed to REST API.
+          format: int32
+        httpsPort:
+          type: integer
+          description: The HTTPS port exposed to REST API.
+          format: int32
+      description: Node metadata information.
     ClusterNode:
       type: object
       properties:
@@ -114,21 +129,6 @@ components:
           - $ref: '#/components/schemas/NodeMetadata'
           - description: Node metadata information.
       description: Information about the cluster node.
-    NodeMetadata:
-      type: object
-      properties:
-        restHost:
-          type: string
-          description: The host exposed to REST API.
-        httpPort:
-          type: integer
-          description: The HTTP port exposed to REST API.
-          format: int32
-        httpsPort:
-          type: integer
-          description: The HTTPS port exposed to REST API.
-          format: int32
-      description: Node metadata information.
     Problem:
       type: object
       properties:

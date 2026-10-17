@@ -340,104 +340,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GlobalZonePartitionStatesResponse:
-      type: object
-      properties:
-        states:
-          type: array
-          items:
-            $ref: '#/components/schemas/GlobalZonePartitionStateResponse'
-      description: Information about global zone partition states.
-    GlobalZonePartitionStateResponse:
-      required:
-      - partitionId
-      - state
-      - zoneName
-      type: object
-      properties:
-        partitionId:
-          type: integer
-          format: int32
-        zoneName:
-          type: string
-        state:
-          type: string
-      description: Information about global zone partition state.
-    LocalZonePartitionStateResponse:
-      required:
-      - estimatedRows
-      - nodeName
-      - partitionId
-      - state
-      - zoneName
-      type: object
-      properties:
-        partitionId:
-          type: integer
-          format: int32
-        zoneName:
-          type: string
-        nodeName:
-          type: string
-        state:
-          type: string
-        estimatedRows:
-          type: integer
-          format: int64
-      description: Information about local zone partition state.
-    TablesRecoveryResponse:
-      required:
-      - operationId
-      type: object
-      properties:
-        operationId:
-          type: string
-          description: Id of Point-in-Time recovery process to recover tables.
-          format: uuid
-      description: Tables recovery response.
-    ResetClusterRequest:
-      type: object
-      properties:
-        cmgNodeNames:
-          type:
-          - array
-          - 'null'
-          description: Names of the proposed CMG nodes. Optional if the MG group is being repaired. If not specified, the current CMG nodes are used.
-          items:
-            type: string
-        metastorageReplicationFactor:
-          type:
-          - integer
-          - 'null'
-          description: Number of nodes in the voting member set of the Metastorage RAFT group.
-          format: int32
-      description: Reset cluster.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    TablesRecoveryRequest:
-      required:
-      - tables
-      - timestamp
-      type: object
-      properties:
-        tables:
-          type: array
-          description: List of fully-qualified names of the tables to recover. Without quotes, case-sensitive.
-          items:
-            type: string
-        timestamp:
-          type: string
-          description: Point-in-Time recovery timestamp.
-          format: date-time
-      description: Tables recovery request.
     ResetZonePartitionsRequest:
       type: object
       properties:
@@ -451,24 +353,16 @@ components:
             type: integer
             format: int32
       description: Reset zone partitions configuration.
-    RestartZonePartitionsRequest:
+    InvalidParam:
       type: object
       properties:
-        nodeNames:
-          type: array
-          description: Names specifying nodes to restart zone partitions. Case-sensitive. If empty/omitted, partitions on all nodes are restarted.
-          items:
-            type: string
-        zoneName:
+        name:
           type: string
-          description: Name of the zone to restart partitions of. Without quotes, case-sensitive.
-        partitionIds:
-          type: array
-          description: IDs of partitions to restart. If empty/omitted, all partitions will be restarted.
-          items:
-            type: integer
-            format: int32
-      description: restart partitions configuration.
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     TablesRecoveryStateResponse:
       required:
       - recoveryProgress
@@ -486,38 +380,6 @@ components:
           - $ref: '#/components/schemas/TableRecoveryStatus'
           - description: Status of the recovery.
       description: Tables recovery state response.
-    Problem:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Short summary of the issue.
-        status:
-          type: integer
-          description: Returned HTTP status code.
-          format: int32
-        code:
-          type: string
-          description: Ignite 3 error code.
-        type:
-          type: string
-          description: URI to documentation regarding the issue.
-        detail:
-          type: string
-          description: Extended explanation of the issue.
-        node:
-          type: string
-          description: Name of the node the issue happened on.
-        traceId:
-          type: string
-          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
-          format: uuid
-        invalidParams:
-          type: array
-          description: A list of parameters that did not pass validation and the reason for it.
-          items:
-            $ref: '#/components/schemas/InvalidParam'
-      description: Extended description of the problem with the request.
     MigrateRequest:
       type: object
       properties:
@@ -550,14 +412,6 @@ components:
             type: string
             format: uuid
       description: Migrate nodes to new cluster.
-    TableRecoveryStatus:
-      type: string
-      description: Tables recovery status response.
-      enum:
-      - PREPARED
-      - STARTED
-      - COMPLETED
-      - FAILED
     LocalZonePartitionStatesResponse:
       type: object
       properties:
@@ -566,6 +420,152 @@ components:
           items:
             $ref: '#/components/schemas/LocalZonePartitionStateResponse'
       description: Information about local zone partition states.
+    LocalZonePartitionStateResponse:
+      required:
+      - estimatedRows
+      - nodeName
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        nodeName:
+          type: string
+        state:
+          type: string
+        estimatedRows:
+          type: integer
+          format: int64
+      description: Information about local zone partition state.
+    TableRecoveryStatus:
+      type: string
+      description: Tables recovery status response.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - FAILED
+    GlobalZonePartitionStateResponse:
+      required:
+      - partitionId
+      - state
+      - zoneName
+      type: object
+      properties:
+        partitionId:
+          type: integer
+          format: int32
+        zoneName:
+          type: string
+        state:
+          type: string
+      description: Information about global zone partition state.
+    RestartZonePartitionsRequest:
+      type: object
+      properties:
+        nodeNames:
+          type: array
+          description: Names specifying nodes to restart zone partitions. Case-sensitive. If empty/omitted, partitions on all nodes are restarted.
+          items:
+            type: string
+        zoneName:
+          type: string
+          description: Name of the zone to restart partitions of. Without quotes, case-sensitive.
+        partitionIds:
+          type: array
+          description: IDs of partitions to restart. If empty/omitted, all partitions will be restarted.
+          items:
+            type: integer
+            format: int32
+      description: restart partitions configuration.
+    GlobalZonePartitionStatesResponse:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlobalZonePartitionStateResponse'
+      description: Information about global zone partition states.
+    TablesRecoveryResponse:
+      required:
+      - operationId
+      type: object
+      properties:
+        operationId:
+          type: string
+          description: Id of Point-in-Time recovery process to recover tables.
+          format: uuid
+      description: Tables recovery response.
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Short summary of the issue.
+        status:
+          type: integer
+          description: Returned HTTP status code.
+          format: int32
+        code:
+          type: string
+          description: Ignite 3 error code.
+        type:
+          type: string
+          description: URI to documentation regarding the issue.
+        detail:
+          type: string
+          description: Extended explanation of the issue.
+        node:
+          type: string
+          description: Name of the node the issue happened on.
+        traceId:
+          type: string
+          description: Unique issue identifier. This identifier can be used to find logs related to the issue.
+          format: uuid
+        invalidParams:
+          type: array
+          description: A list of parameters that did not pass validation and the reason for it.
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+      description: Extended description of the problem with the request.
+    ResetClusterRequest:
+      type: object
+      properties:
+        cmgNodeNames:
+          type:
+          - array
+          - 'null'
+          description: Names of the proposed CMG nodes. Optional if the MG group is being repaired. If not specified, the current CMG nodes are used.
+          items:
+            type: string
+        metastorageReplicationFactor:
+          type:
+          - integer
+          - 'null'
+          description: Number of nodes in the voting member set of the Metastorage RAFT group.
+          format: int32
+      description: Reset cluster.
+    TablesRecoveryRequest:
+      required:
+      - tables
+      - timestamp
+      type: object
+      properties:
+        tables:
+          type: array
+          description: List of fully-qualified names of the tables to recover. Without quotes, case-sensitive.
+          items:
+            type: string
+        timestamp:
+          type: string
+          description: Point-in-Time recovery timestamp.
+          format: date-time
+      description: Tables recovery request.
   securitySchemes:
     basicAuth:
       type: http

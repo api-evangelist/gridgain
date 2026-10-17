@@ -274,69 +274,23 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    DeleteCommand:
+    SnapshotType:
+      type: string
+      description: Type of the snapshot, FULL or INCREMENTAL.
+      enum:
+      - NOT_SPECIFIED
+      - FULL
+      - INCREMENTAL
+    InvalidParam:
       type: object
       properties:
-        snapshotId:
+        name:
           type: string
-          description: ID of the snapshot to delete
-          format: uuid
-      description: Snapshot restoration configuration.
-    CreateCommand:
-      type: object
-      properties:
-        snapshotType:
-          allOf:
-          - $ref: '#/components/schemas/SnapshotType'
-          - description: Type of the snapshot, FULL or INCREMENTAL.
-        tableNames:
-          type: array
-          description: Set of fully-qualified table names that will be parts of the snapshot. If both this and structureNames are empty, all tables will be snapshotted.
-          items:
-            type: string
-        structureNames:
-          type: array
-          description: Set of fully-qualified structure names that will be parts of the snapshot. If both this and tableNames are empty, all structures will be snapshotted.
-          items:
-            type: string
-        timestampEpochMilli:
-          type: integer
-          description: Time for which the Snapshot should be taken in milliseconds since Unix Epoch format. If null, current time will be used
-          format: int64
-        destination:
+          description: Parameter name.
+        reason:
           type: string
-          description: The name of the snapshot path to the snapshot; null to use the default path.
-        encryptionProvider:
-          type: string
-          description: The encryption provider name.
-      description: Snapshot creation configuration.
-    RestoreCommand:
-      type: object
-      properties:
-        snapshotId:
-          type: string
-          description: ID of the snapshot to restore
-          format: uuid
-        tableNames:
-          type: array
-          description: Set of fully-qualified table names to restore. If both this and structureNames are empty, restores all tables from the snapshot.
-          items:
-            type: string
-        structureNames:
-          type: array
-          description: Set of fully-qualified structure names to restore. If both this and tableNames are empty, restores all structures from the snapshot.
-          items:
-            type: string
-        source:
-          type: string
-          description: The name of the snapshot path to restore the snapshot from; null to use the default path.
-        decryptionProvider:
-          type: string
-          description: The decription provider name.
-        force:
-          type: boolean
-          description: If set to false, operation will fail if there are existing structures that would be overwritten by the restore.
-      description: Snapshot restoration configuration.
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     SnapshotListItem:
       required:
       - creationTime
@@ -416,6 +370,14 @@ components:
           items:
             type: string
       description: Snapshot list command item.
+    DeleteCommand:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+          description: ID of the snapshot to delete
+          format: uuid
+      description: Snapshot restoration configuration.
     SnapshotOperation:
       required:
       - operation
@@ -494,38 +456,34 @@ components:
           type: boolean
           description: If force flag was used.
       description: Snapshot operation info.
-    PathType:
-      type: string
-      description: The path type used in the snapshot operation (LOCAL or REMOTE).
-      enum:
-      - LOCAL
-      - REMOTE
-    InvalidParam:
+    CreateCommand:
       type: object
       properties:
-        name:
+        snapshotType:
+          allOf:
+          - $ref: '#/components/schemas/SnapshotType'
+          - description: Type of the snapshot, FULL or INCREMENTAL.
+        tableNames:
+          type: array
+          description: Set of fully-qualified table names that will be parts of the snapshot. If both this and structureNames are empty, all tables will be snapshotted.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Set of fully-qualified structure names that will be parts of the snapshot. If both this and tableNames are empty, all structures will be snapshotted.
+          items:
+            type: string
+        timestampEpochMilli:
+          type: integer
+          description: Time for which the Snapshot should be taken in milliseconds since Unix Epoch format. If null, current time will be used
+          format: int64
+        destination:
           type: string
-          description: Parameter name.
-        reason:
+          description: The name of the snapshot path to the snapshot; null to use the default path.
+        encryptionProvider:
           type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    SnapshotStatus:
-      type: string
-      description: Status of the operation.
-      enum:
-      - PREPARED
-      - STARTED
-      - COMPLETED
-      - DELETED
-      - FAILED
-    SnapshotType:
-      type: string
-      description: Type of the snapshot, FULL or INCREMENTAL.
-      enum:
-      - NOT_SPECIFIED
-      - FULL
-      - INCREMENTAL
+          description: The encryption provider name.
+      description: Snapshot creation configuration.
     Problem:
       type: object
       properties:
@@ -558,6 +516,42 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    RestoreCommand:
+      type: object
+      properties:
+        snapshotId:
+          type: string
+          description: ID of the snapshot to restore
+          format: uuid
+        tableNames:
+          type: array
+          description: Set of fully-qualified table names to restore. If both this and structureNames are empty, restores all tables from the snapshot.
+          items:
+            type: string
+        structureNames:
+          type: array
+          description: Set of fully-qualified structure names to restore. If both this and tableNames are empty, restores all structures from the snapshot.
+          items:
+            type: string
+        source:
+          type: string
+          description: The name of the snapshot path to restore the snapshot from; null to use the default path.
+        decryptionProvider:
+          type: string
+          description: The decription provider name.
+        force:
+          type: boolean
+          description: If set to false, operation will fail if there are existing structures that would be overwritten by the restore.
+      description: Snapshot restoration configuration.
+    SnapshotStatus:
+      type: string
+      description: Status of the operation.
+      enum:
+      - PREPARED
+      - STARTED
+      - COMPLETED
+      - DELETED
+      - FAILED
     SnapshotOperationType:
       type: string
       description: Type of the operation.
@@ -565,6 +559,12 @@ components:
       - CREATE
       - RESTORE
       - DELETE
+    PathType:
+      type: string
+      description: The path type used in the snapshot operation (LOCAL or REMOTE).
+      enum:
+      - LOCAL
+      - REMOTE
   securitySchemes:
     basicAuth:
       type: http

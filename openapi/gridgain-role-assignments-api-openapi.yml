@@ -243,6 +243,16 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     UserRoles:
       type: object
       properties:
@@ -254,33 +264,6 @@ components:
           items:
             $ref: '#/components/schemas/Role'
       description: UserRoles
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    Privilege:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action
-        'on':
-          type: string
-          description: Selector
-      description: Privilege
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-      description: User
     RoleView:
       required:
       - role
@@ -298,6 +281,13 @@ components:
           items:
             $ref: '#/components/schemas/Privilege'
       description: RoleUsers
+    Role:
+      type: object
+      properties:
+        roleName:
+          type: string
+          description: Role name
+      description: Role
     Problem:
       type: object
       properties:
@@ -330,13 +320,16 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    Role:
+    Privilege:
       type: object
       properties:
-        roleName:
+        action:
           type: string
-          description: Role name
-      description: Role
+          description: Action
+        'on':
+          type: string
+          description: Selector
+      description: Privilege
     RoleAssignment:
       type: object
       properties:
@@ -351,6 +344,13 @@ components:
           items:
             type: string
       description: Role assignment
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
   securitySchemes:
     basicAuth:
       type: http

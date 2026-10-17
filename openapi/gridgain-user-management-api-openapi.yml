@@ -230,16 +230,6 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
     CreateUserRequest:
       type: object
       properties:
@@ -250,6 +240,23 @@ components:
           type: string
           description: Plain password
       description: Create user request
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+      description: User
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
     Problem:
       type: object
       properties:
@@ -282,13 +289,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Username
-      description: User
   securitySchemes:
     basicAuth:
       type: http

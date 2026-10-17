@@ -221,6 +221,39 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    Signatures:
+      required:
+      - signature_1
+      type: object
+      properties:
+        signature_1:
+          type: string
+      description: DTO for license signatures.
+    LicenseInfo:
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the company
+        companyWebsite:
+          type: string
+          description: Company's website URL
+        contactEmail:
+          type: string
+          description: Contact person's email address
+        contactName:
+          type: string
+          description: Contact person's name
+        contractEndDate:
+          type: string
+          description: Contract end date
+        contractStartDate:
+          type: string
+          description: Contract start date
+        licenseNote:
+          type: string
+          description: Additional notes about the license
+      description: License information fields
     LicenseFeatureSet:
       required:
       - features
@@ -232,6 +265,37 @@ components:
           items:
             $ref: '#/components/schemas/LicenseFeature'
       description: License features set representation.
+    InvalidParam:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name.
+        reason:
+          type: string
+          description: The issue with the parameter.
+      description: Information about invalid request parameter.
+    LicenseId:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+      description: License Id
+    LicenseFeature:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Feature identifier.
+        name:
+          type: string
+          description: Feature name.
+      description: License feature representation.
     License:
       type: object
       properties:
@@ -262,57 +326,6 @@ components:
           - $ref: '#/components/schemas/LicenseLimits'
           - description: License limitations
       description: License information
-    LicenseInfo:
-      type: object
-      properties:
-        companyName:
-          type: string
-          description: Name of the company
-        companyWebsite:
-          type: string
-          description: Company's website URL
-        contactEmail:
-          type: string
-          description: Contact person's email address
-        contactName:
-          type: string
-          description: Contact person's name
-        contractEndDate:
-          type: string
-          description: Contract end date
-        contractStartDate:
-          type: string
-          description: Contract start date
-        licenseNote:
-          type: string
-          description: Additional notes about the license
-      description: License information fields
-    Signatures:
-      required:
-      - signature_1
-      type: object
-      properties:
-        signature_1:
-          type: string
-      description: DTO for license signatures.
-    InvalidParam:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Parameter name.
-        reason:
-          type: string
-          description: The issue with the parameter.
-      description: Information about invalid request parameter.
-    LicenseId:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-      description: License Id
     Problem:
       type: object
       properties:
@@ -345,19 +358,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    LicenseFeature:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          description: Feature identifier.
-        name:
-          type: string
-          description: Feature name.
-      description: License feature representation.
     LicenseLimits:
       type: object
       properties:

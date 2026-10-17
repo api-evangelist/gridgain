@@ -101,6 +101,37 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    Transaction:
+      required:
+      - id
+      - node
+      - priority
+      - startTime
+      - state
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Transaction ID.
+          format: uuid
+        node:
+          type: string
+          description: Coordinator node.
+        state:
+          type: string
+          description: State.
+        type:
+          type: string
+          description: Type.
+        priority:
+          type: string
+          description: Priority.
+        startTime:
+          type: string
+          description: Start time.
+          format: date-time
+      description: Rest representation of transaction.
     InvalidParam:
       type: object
       properties:
@@ -143,37 +174,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    Transaction:
-      required:
-      - id
-      - node
-      - priority
-      - startTime
-      - state
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-          description: Transaction ID.
-          format: uuid
-        node:
-          type: string
-          description: Coordinator node.
-        state:
-          type: string
-          description: State.
-        type:
-          type: string
-          description: Type.
-        priority:
-          type: string
-          description: Priority.
-        startTime:
-          type: string
-          description: Start time.
-          format: date-time
-      description: Rest representation of transaction.
   securitySchemes:
     basicAuth:
       type: http

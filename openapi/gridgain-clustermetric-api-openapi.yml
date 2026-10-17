@@ -102,6 +102,34 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    MetricSource:
+      required:
+      - enabled
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric source name.
+        enabled:
+          type: boolean
+          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
+      description: A list of metric sources provided by modules.
+    NodeMetricSources:
+      required:
+      - node
+      - sources
+      type: object
+      properties:
+        node:
+          type: string
+          description: Consistent id of the node.
+        sources:
+          type: array
+          description: Metric sources.
+          items:
+            $ref: '#/components/schemas/MetricSource'
+      description: A list of metric sources for a node.
     InvalidParam:
       type: object
       properties:
@@ -144,34 +172,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    MetricSource:
-      required:
-      - enabled
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Metric source name.
-        enabled:
-          type: boolean
-          description: If True, the metric is tracked. Otherwise, the metric is not tracked.
-      description: A list of metric sources provided by modules.
-    NodeMetricSources:
-      required:
-      - node
-      - sources
-      type: object
-      properties:
-        node:
-          type: string
-          description: Consistent id of the node.
-        sources:
-          type: array
-          description: Metric sources.
-          items:
-            $ref: '#/components/schemas/MetricSource'
-      description: A list of metric sources for a node.
   securitySchemes:
     basicAuth:
       type: http

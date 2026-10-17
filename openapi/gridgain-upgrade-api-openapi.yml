@@ -140,6 +140,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    UpgradeStateResponse:
+      required:
+      - currentVersion
+      - currentVersionNodes
+      - nextVersion
+      - nextVersionNodes
+      type: object
+      properties:
+        currentVersion:
+          type: string
+          description: Current cluster version.
+        nextVersion:
+          type: string
+          description: Next cluster version.
+        currentVersionNodes:
+          type: array
+          description: Current cluster version nodes.
+          items:
+            type: string
+        nextVersionNodes:
+          type: array
+          description: Next cluster version nodes.
+          items:
+            type: string
+      description: Cluster Upgrade State.
     InvalidParam:
       type: object
       properties:
@@ -182,31 +207,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    UpgradeStateResponse:
-      required:
-      - currentVersion
-      - currentVersionNodes
-      - nextVersion
-      - nextVersionNodes
-      type: object
-      properties:
-        currentVersion:
-          type: string
-          description: Current cluster version.
-        nextVersion:
-          type: string
-          description: Next cluster version.
-        currentVersionNodes:
-          type: array
-          description: Current cluster version nodes.
-          items:
-            type: string
-        nextVersionNodes:
-          type: array
-          description: Next cluster version nodes.
-          items:
-            type: string
-      description: Cluster Upgrade State.
   securitySchemes:
     basicAuth:
       type: http

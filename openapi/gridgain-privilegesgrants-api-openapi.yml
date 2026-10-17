@@ -191,16 +191,6 @@ components:
           items:
             $ref: '#/components/schemas/Privilege'
       description: RolePrivileges
-    Privilege:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Action
-        'on':
-          type: string
-          description: Selector
-      description: Privilege
     PrivilegeAssignment:
       type: object
       properties:
@@ -247,6 +237,16 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
+    Privilege:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Action
+        'on':
+          type: string
+          description: Selector
+      description: Privilege
   securitySchemes:
     basicAuth:
       type: http

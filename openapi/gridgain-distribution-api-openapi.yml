@@ -46,6 +46,17 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    ResetDistributionRequest:
+      required:
+      - zoneNames
+      type: object
+      properties:
+        zoneNames:
+          type: array
+          description: List of zone names to reset distribution in.
+          items:
+            type: string
+      description: Reset partition distribution.
     InvalidParam:
       type: object
       properties:
@@ -88,17 +99,6 @@ components:
           items:
             $ref: '#/components/schemas/InvalidParam'
       description: Extended description of the problem with the request.
-    ResetDistributionRequest:
-      required:
-      - zoneNames
-      type: object
-      properties:
-        zoneNames:
-          type: array
-          description: List of zone names to reset distribution in.
-          items:
-            type: string
-      description: Reset partition distribution.
   securitySchemes:
     basicAuth:
       type: http
