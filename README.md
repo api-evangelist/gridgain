@@ -1,4 +1,4 @@
-# GridGain (gridgain)
+# GridGain
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,83 +66,173 @@
 
 GridGain is a unified real-time data platform that provides in-memory computing for transactions, analytics, and AI workloads. Built on top of Apache Ignite, it offers distributed database, caching, and computing capabilities for high-performance data-intensive applications.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/gridgain/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/gridgain/refs/heads/main/apis.yml)
+**Areas:** Caching · Data Grid · Distributed Database · In-Memory Computing · Real-Time
 
-## Scope
+## GridGain on APIs.io
 
-- **Type:** Index
+Everything profiled for GridGain is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/gridgain/](https://apis.io/providers/gridgain/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (26)
 
-- Caching
-- Data Grid
-- Distributed Database
-- In-Memory Computing
-- Real-Time
+- [GridGain REST API](https://apis.io/apis/gridgain/gridgain-rest-api/) — Legacy GridGain 8 / Apache Ignite REST API for cache operations, SQL and scan queries, cluster activation, and node management over HTTP.
+- [GridGain Authentication API](https://apis.io/apis/gridgain/gridgain-authentication-api/) — The authentication API from GridGain — 3 operation(s) for authentication.
+- [GridGain Cdc Management API](https://apis.io/apis/gridgain/gridgain-cdcmanagement-api/) — The cdcManagement API from GridGain — 9 operation(s) for cdcmanagement.
+- [GridGain Cluster Configuration API](https://apis.io/apis/gridgain/gridgain-clusterconfiguration-api/) — The clusterConfiguration API from GridGain — 2 operation(s) for clusterconfiguration.
+- [GridGain Cluster Metric API](https://apis.io/apis/gridgain/gridgain-clustermetric-api/) — The clusterMetric API from GridGain — 3 operation(s) for clustermetric.
+- [GridGain Compute API](https://apis.io/apis/gridgain/gridgain-compute-api/) — The compute API from GridGain — 3 operation(s) for compute.
+- [GridGain Dcr API](https://apis.io/apis/gridgain/gridgain-dcr-api/) — The dcr API from GridGain — 6 operation(s) for dcr.
+- [GridGain Deployment API](https://apis.io/apis/gridgain/gridgain-deployment-api/) — The deployment API from GridGain — 7 operation(s) for deployment.
+- [GridGain Distribution API](https://apis.io/apis/gridgain/gridgain-distribution-api/) — The distribution API from GridGain — 1 operation(s) for distribution.
+- [GridGain Node Management API](https://apis.io/apis/gridgain/gridgain-nodemanagement-api/) — The nodeManagement API from GridGain — 3 operation(s) for nodemanagement.
+- [GridGain Node Metric API](https://apis.io/apis/gridgain/gridgain-nodemetric-api/) — The nodeMetric API from GridGain — 4 operation(s) for nodemetric.
+- [GridGain Privileges Grants API](https://apis.io/apis/gridgain/gridgain-privilegesgrants-api/) — The privilegesGrants API from GridGain — 3 operation(s) for privilegesgrants.
+- [GridGain Recovery API](https://apis.io/apis/gridgain/gridgain-recovery-api/) — The recovery API from GridGain — 9 operation(s) for recovery.
+- [GridGain Snapshot Management API](https://apis.io/apis/gridgain/gridgain-snapshotmanagement-api/) — The snapshotManagement API from GridGain — 6 operation(s) for snapshotmanagement.
+- [GridGain Sql API](https://apis.io/apis/gridgain/gridgain-sql-api/) — The sql API from GridGain — 3 operation(s) for sql.
+- [GridGain System API](https://apis.io/apis/gridgain/gridgain-system-api/) — The system API from GridGain — 2 operation(s) for system.
+- [GridGain Topology API](https://apis.io/apis/gridgain/gridgain-topology-api/) — The topology API from GridGain — 2 operation(s) for topology.
+- [GridGain Transactions API](https://apis.io/apis/gridgain/gridgain-transactions-api/) — The transactions API from GridGain — 2 operation(s) for transactions.
+- [GridGain Upgrade API](https://apis.io/apis/gridgain/gridgain-upgrade-api/) — The upgrade API from GridGain — 4 operation(s) for upgrade.
+- [GridGain Cluster Management API](https://apis.io/apis/gridgain/gridgain-cluster-management-api/) — The Cluster Management API from GridGain — 3 operation(s) for cluster management.
+- [GridGain Data Nodes API](https://apis.io/apis/gridgain/gridgain-data-nodes-api/) — The Data Nodes API from GridGain — 3 operation(s) for data nodes.
+- [GridGain License Management API](https://apis.io/apis/gridgain/gridgain-license-management-api/) — The License Management API from GridGain — 6 operation(s) for license management.
+- [GridGain Node Configuration API](https://apis.io/apis/gridgain/gridgain-node-configuration-api/) — The Node Configuration API from GridGain — 2 operation(s) for node configuration.
+- [GridGain Role Assignments API](https://apis.io/apis/gridgain/gridgain-role-assignments-api/) — The Role Assignments API from GridGain — 5 operation(s) for role assignments.
+- [GridGain Role Management API](https://apis.io/apis/gridgain/gridgain-role-management-api/) — The Role Management API from GridGain — 2 operation(s) for role management.
+- [GridGain User Management API](https://apis.io/apis/gridgain/gridgain-user-management-api/) — The User Management API from GridGain — 2 operation(s) for user management.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-08-19
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### GridGain REST API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Legacy GridGain 8 / Apache Ignite REST API for cache operations, SQL and scan queries, cluster activation, and node management over HTTP.
+- [Gridgain Agentic Access](https://apis.io/agentic-access/gridgain/gridgain-agentic-access/)
 
-- **Human URL:** [https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi](https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi)
-- **Base URL:** `http://localhost:8080/ignite`
+#### Collections (26)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Caching
-- Distributed Database
-- In-Memory Computing
-- REST
+- [GridGain REST module](https://apis.io/collections/gridgain/open-gridgain/)
+- [GridGain REST module authentication API](https://apis.io/collections/gridgain/open-gridgain-authentication-api/)
+- [GridGain REST module authentication cdcManagement API](https://apis.io/collections/gridgain/open-gridgain-cdcmanagement-api/)
+- [GridGain REST module authentication clusterConfiguration API](https://apis.io/collections/gridgain/open-gridgain-clusterconfiguration-api/)
+- [GridGain REST module authentication clusterManagement API](https://apis.io/collections/gridgain/open-gridgain-clustermanagement-api/)
+- [GridGain REST module authentication clusterMetric API](https://apis.io/collections/gridgain/open-gridgain-clustermetric-api/)
+- [GridGain REST module authentication compute API](https://apis.io/collections/gridgain/open-gridgain-compute-api/)
+- [GridGain REST module authentication dataNodes API](https://apis.io/collections/gridgain/open-gridgain-datanodes-api/)
+- [GridGain REST module authentication dcr API](https://apis.io/collections/gridgain/open-gridgain-dcr-api/)
+- [GridGain REST module authentication deployment API](https://apis.io/collections/gridgain/open-gridgain-deployment-api/)
+- [GridGain REST module authentication distribution API](https://apis.io/collections/gridgain/open-gridgain-distribution-api/)
+- [GridGain REST module authentication licenseManagement API](https://apis.io/collections/gridgain/open-gridgain-licensemanagement-api/)
+- [GridGain REST module authentication nodeConfiguration API](https://apis.io/collections/gridgain/open-gridgain-nodeconfiguration-api/)
+- [GridGain REST module authentication nodeManagement API](https://apis.io/collections/gridgain/open-gridgain-nodemanagement-api/)
+- [GridGain REST module authentication nodeMetric API](https://apis.io/collections/gridgain/open-gridgain-nodemetric-api/)
+- [GridGain REST module authentication privilegesGrants API](https://apis.io/collections/gridgain/open-gridgain-privilegesgrants-api/)
+- [GridGain REST module authentication recovery API](https://apis.io/collections/gridgain/open-gridgain-recovery-api/)
+- [GridGain REST module authentication roleAssignments API](https://apis.io/collections/gridgain/open-gridgain-roleassignments-api/)
+- [GridGain REST module authentication roleManagement API](https://apis.io/collections/gridgain/open-gridgain-rolemanagement-api/)
+- [GridGain REST module authentication snapshotManagement API](https://apis.io/collections/gridgain/open-gridgain-snapshotmanagement-api/)
+- [GridGain REST module authentication sql API](https://apis.io/collections/gridgain/open-gridgain-sql-api/)
+- [GridGain REST module authentication system API](https://apis.io/collections/gridgain/open-gridgain-system-api/)
+- [GridGain REST module authentication topology API](https://apis.io/collections/gridgain/open-gridgain-topology-api/)
+- [GridGain REST module authentication transactions API](https://apis.io/collections/gridgain/open-gridgain-transactions-api/)
+- [GridGain REST module authentication upgrade API](https://apis.io/collections/gridgain/open-gridgain-upgrade-api/)
+- …and 1 more published on APIs.io
 
-#### Properties
+#### Governance rules (1)
 
-- [Documentation](https://www.gridgain.com/docs/gridgain8/latest/developers-guide/restapi)
-- [Getting Started](https://www.gridgain.com/docs/gridgain8/latest/getting-started/quick-start/restapi)
-- [Postman Collection](collections/gridgain.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gridgain.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Spectral rulesets for the provider's contracts.
 
-### GridGain 9 Management API
+- [GridGain API Rules](https://apis.io/rules/gridgain/gridgain-rules/)
 
-The GridGain 9 management API exposes cluster initialization, node and cluster configuration, authentication and JWT, RBAC, snapshots, CDC, compute jobs, recovery, deployment units, SQL monitoring, and license management for production GridGain 9 clusters.
+#### Security (2)
 
-- **Human URL:** [https://www.gridgain.com/sdk/gridgain9/latest/openapi.html](https://www.gridgain.com/sdk/gridgain9/latest/openapi.html)
-- **Base URL:** `http://localhost:10300/management/v1`
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags
+- [Gridgain Authentication](https://apis.io/security/gridgain/gridgain-authentication/)
+- [Gridgain Domain Security](https://apis.io/security/gridgain/gridgain-domain-security/)
 
-- Cluster Management
-- In-Memory Computing
-- Management
-- REST
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation](https://www.gridgain.com/sdk/gridgain9/latest/openapi.html)
-- [OpenAPI](openapi/gridgain-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/gridgain.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/gridgain.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Capabilities](capabilities/gridgain-capabilities.yml)
-- [Rules](rules/gridgain-rules.yml)
-- [JSON Schema](json-schema/gridgain-schema-index.yml) — [JSON Schema](https://json-schema.org/specification)
+- [Gridgain Plans Pricing](https://apis.io/plans/gridgain/gridgain-plans-pricing/)
 
-## Common Properties
+#### Rate limits (1)
 
-- [LinkedIn](https://www.linkedin.com/company/gridgain-systems)
+Published request limits.
+
+- [Gridgain Rate Limits](https://apis.io/rate-limits/gridgain/gridgain-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Gridgain Finops](https://apis.io/finops/gridgain/gridgain-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.gridgain.com/)
 - [Documentation](https://www.gridgain.com/docs/latest/)
-- [Getting Started](https://www.gridgain.com/docs/latest/getting-started/quick-start/java)
+- [Getting started](https://www.gridgain.com/docs/latest/getting-started/quick-start/java)
 - [Support](https://www.gridgain.com/support)
 - [Blog](https://www.gridgain.com/resources/blog)
-- [GitHub Organization](https://github.com/gridgain)
+- [GitHub](https://github.com/gridgain)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 48.4 |
+| Contract governance | 7.6 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 40.5 |
+| Access clarity | 7.9 |
+
+**Agent readiness 25.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 9.8** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/gridgain/](https://apis.io/providers/gridgain/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for GridGain: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/gridgain/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
